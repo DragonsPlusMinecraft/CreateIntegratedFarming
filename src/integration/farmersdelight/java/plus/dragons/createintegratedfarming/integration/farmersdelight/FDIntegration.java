@@ -38,7 +38,7 @@ import plus.dragons.createintegratedfarming.integration.farmersdelight.registry.
 @Mod(CIFCommon.ID)
 public class FDIntegration {
     public FDIntegration(IEventBus modBus) {
-        if (ModIntegration.MYNETHERSDELIGHT.enabled()) {
+        if (ModIntegration.MY_NETHERS_DELIGHT.enabled()) {
             modBus.register(new Common());
             modBus.register(FDBlockEntities.class);
             if (FMLLoader.getDist() == Dist.CLIENT)

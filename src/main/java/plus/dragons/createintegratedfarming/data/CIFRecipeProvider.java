@@ -49,7 +49,7 @@ public class CIFRecipeProvider extends RegistrateRecipeProvider {
                 .pattern("#c#")
                 .pattern("b#b")
                 .unlockedBy("has_hay_block", has(HAY_BLOCK))
-                .withCondition(ModIntegration.FARMERSDELIGHT.invertedCondition())
+                .withCondition(ModIntegration.FARMERS_DELIGHT.invertedCondition())
                 .accept(output);
         shaped().output(FISHING_NET, 2)
                 .withId(CIFCommon.asResource("fallback_fishing_net"))
@@ -60,7 +60,7 @@ public class CIFRecipeProvider extends RegistrateRecipeProvider {
                 .pattern("/a")
                 .unlockedBy("has_brown_wool", has(BROWN_WOOL))
                 .unlockedBy("has_andesite_alloy", has(ANDESITE_ALLOY))
-                .withCondition(ModIntegration.FARMERSDELIGHT.invertedCondition())
+                .withCondition(ModIntegration.FARMERS_DELIGHT.invertedCondition())
                 .accept(output);
     }
 

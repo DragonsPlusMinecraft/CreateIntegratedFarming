@@ -33,7 +33,7 @@ import plus.dragons.createintegratedfarming.integration.ModIntegration;
 public class MNDBlockSpoutingBehaviors {
     public static void register() {
         BlockSpoutingBehaviour.BY_BLOCK.register(
-                BuiltInRegistries.BLOCK.get(ModIntegration.MYNETHERSDELIGHT.asResource("letios_compost")),
+                BuiltInRegistries.BLOCK.get(ModIntegration.MY_NETHERS_DELIGHT.asResource("letios_compost")),
                 MNDBlockSpoutingBehaviors::fillLetiosCompost);
     }
 

@@ -27,7 +27,8 @@ var integrationMods = [
         ["netherdepthsupgrade"],
         ["mynethersdelight","farmersdelight"],
         ["corndelight","farmersdelight"],
-        ["createenchantablemachinery"]
+        ["createenchantablemachinery"],
+        ["crabberdelight","farmersdelight"],
 ]
 
 integrationMods.forEach {integrationMod ->
@@ -164,6 +165,7 @@ dependencies {
 
     localImplementation("maven.modrinth:farmers-delight:${farmers_delight_version}")
     localImplementation("maven.modrinth:my-nethers-delight:${my_nethers_delight_version}")
+    localImplementation("maven.modrinth:crabbers-delight:${crabbers_delight_version}")
     localImplementation("maven.modrinth:mmlib:${mmlib_version}")
     localRuntime("maven.modrinth:corn-delight:${corn_delight_version}")
     compileOnly("maven.modrinth:create-enchantable-machinery:${create_enchantable_machinery_version}")

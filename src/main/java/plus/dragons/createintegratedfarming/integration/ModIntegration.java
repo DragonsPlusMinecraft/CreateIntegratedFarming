@@ -24,12 +24,13 @@ import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
 import net.neoforged.neoforge.common.conditions.NotCondition;
 
 public enum ModIntegration {
-    FARMERSDELIGHT(Mods.FARMERS_DELIGHT),
-    MYNETHERSDELIGHT(Mods.MY_NETHERS_DELIGHT),
+    FARMERS_DELIGHT(Mods.FARMERS_DELIGHT),
+    MY_NETHERS_DELIGHT(Mods.MY_NETHERS_DELIGHT),
     MMLIB(Mods.MMLIB),
     CREATE_ENCHANTABLE_MACHINERY(Mods.CREATE_ENCHANTABLE_MACHINERY),
     CREATE_CRAFT_AND_ADDITIONS(Mods.CREATE_CRAFT_AND_ADDITIONS),
-    NETHER_DEPTHS_UPGRADE(Mods.NETHER_DEPTHS_UPGRADE);
+    NETHER_DEPTHS_UPGRADE(Mods.NETHER_DEPTHS_UPGRADE),
+    CRABBERS_DELIGHT(Mods.CRABBERS_DELIGHT);
 
     private final String id;
 
@@ -64,5 +65,6 @@ public enum ModIntegration {
         public static final String CREATE_ENCHANTABLE_MACHINERY = "createenchantablemachinery";
         public static final String CREATE_CRAFT_AND_ADDITIONS = "createadditions";
         public static final String NETHER_DEPTHS_UPGRADE = "netherdepthsupgrade";
+        public static final String CRABBERS_DELIGHT = "crabbersdelight";
     }
 }

@@ -16,25 +16,23 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package plus.dragons.createintegratedfarming.integration.mynethersdelight;
+package plus.dragons.createintegratedfarming.integration.crabbersdelight;
 
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
 import net.neoforged.fml.loading.FMLLoader;
 import plus.dragons.createintegratedfarming.common.CIFCommon;
 import plus.dragons.createintegratedfarming.integration.ModIntegration;
-import plus.dragons.createintegratedfarming.integration.mynethersdelight.ponder.MNDPonderPlugin;
-import plus.dragons.createintegratedfarming.integration.mynethersdelight.registry.MNDArmInteractionPointTypes;
-import plus.dragons.createintegratedfarming.integration.mynethersdelight.registry.MNDBlockSpoutingBehaviors;
+import plus.dragons.createintegratedfarming.integration.crabbersdelight.ponder.CrabbersDelightPonderPlugin;
+import plus.dragons.createintegratedfarming.integration.crabbersdelight.registry.CrabbersDelightArmInteractionPointTypes;
 
 @Mod(CIFCommon.ID)
-public class MNDIntegration {
-    public MNDIntegration(IEventBus modBus) {
-        if (ModIntegration.MY_NETHERS_DELIGHT.enabled()) {
+public class CrabbersDelightIntegration {
+    public CrabbersDelightIntegration(IEventBus modBus) {
+        if (ModIntegration.CRABBERS_DELIGHT.enabled()) {
             modBus.register(new Common());
             if (FMLLoader.getDist() == Dist.CLIENT)
                 modBus.register(new Client());
@@ -44,19 +42,14 @@ public class MNDIntegration {
     public static class Common {
         @SubscribeEvent
         public void construct(final FMLConstructModEvent event) {
-            MNDArmInteractionPointTypes.register();
-        }
-
-        @SubscribeEvent
-        public void commonSetup(final FMLCommonSetupEvent event) {
-            MNDBlockSpoutingBehaviors.register();
+            CrabbersDelightArmInteractionPointTypes.register();
         }
     }
 
     public static class Client {
         @SubscribeEvent
         public void construct(final FMLConstructModEvent event) {
-            MNDPonderPlugin.register();
+            CrabbersDelightPonderPlugin.register();
         }
     }
 }

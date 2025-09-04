@@ -52,7 +52,7 @@ public class FDRecipeProvider extends RegistrateRecipeProvider {
                 .pattern("#c#")
                 .pattern("b#b")
                 .unlockedBy("has_canvas", has(CANVAS.get()))
-                .withCondition(ModIntegration.FARMERSDELIGHT.condition())
+                .withCondition(ModIntegration.FARMERS_DELIGHT.condition())
                 .accept(output);
         shaped().output(FISHING_NET, 2)
                 .define('#', SAFETY_NET.get())
@@ -62,7 +62,7 @@ public class FDRecipeProvider extends RegistrateRecipeProvider {
                 .pattern("/a")
                 .unlockedBy("has_safety_net", has(SAFETY_NET.get()))
                 .unlockedBy("has_andesite_alloy", has(ANDESITE_ALLOY))
-                .withCondition(ModIntegration.FARMERSDELIGHT.condition())
+                .withCondition(ModIntegration.FARMERS_DELIGHT.condition())
                 .accept(output);
     }
 
