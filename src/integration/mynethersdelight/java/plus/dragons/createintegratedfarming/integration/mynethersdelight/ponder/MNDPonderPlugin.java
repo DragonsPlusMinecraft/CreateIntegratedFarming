@@ -18,6 +18,8 @@
 
 package plus.dragons.createintegratedfarming.integration.mynethersdelight.ponder;
 
+import static com.simibubi.create.infrastructure.ponder.AllCreatePonderTags.ARM_TARGETS;
+
 import com.simibubi.create.AllBlocks;
 import com.soytutta.mynethersdelight.common.registry.MNDBlocks;
 import net.createmod.ponder.api.registration.PonderSceneRegistrationHelper;
@@ -26,8 +28,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import plus.dragons.createintegratedfarming.client.ponder.CIFPonderPlugin;
 import plus.dragons.createintegratedfarming.client.ponder.CIFPonderTags;
-
-import static com.simibubi.create.infrastructure.ponder.AllCreatePonderTags.ARM_TARGETS;
 
 public class MNDPonderPlugin {
     public static void register() {

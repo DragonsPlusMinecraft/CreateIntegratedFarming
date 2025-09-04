@@ -70,5 +70,4 @@ public class MNDPonderScenes {
         scene.idle(20);
         scene.world().modifyBlock(leteosCompost, bs -> MNDBlocks.RESURGENT_SOIL.get().defaultBlockState(), false);
     }
-
 }

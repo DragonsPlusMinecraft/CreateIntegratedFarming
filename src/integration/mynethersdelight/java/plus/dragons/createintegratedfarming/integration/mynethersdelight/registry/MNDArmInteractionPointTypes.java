@@ -18,12 +18,12 @@
 
 package plus.dragons.createintegratedfarming.integration.mynethersdelight.registry;
 
+import static plus.dragons.createintegratedfarming.common.registry.CIFArmInteractionPoints.holder;
+
 import com.simibubi.create.content.kinetics.mechanicalArm.ArmInteractionPointType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import plus.dragons.createintegratedfarming.common.registry.CIFArmInteractionPoints;
 import plus.dragons.createintegratedfarming.integration.mynethersdelight.farming.harvest.PowderyCannonArmInteractionPoint;
-
-import static plus.dragons.createintegratedfarming.common.registry.CIFArmInteractionPoints.holder;
 
 public class MNDArmInteractionPointTypes {
     //spotless:off

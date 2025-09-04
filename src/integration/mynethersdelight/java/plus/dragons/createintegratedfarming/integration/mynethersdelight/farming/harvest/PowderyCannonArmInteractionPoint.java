@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2025  DragonsPlus
+ * SPDX-License-Identifier: LGPL-3.0-or-later
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package plus.dragons.createintegratedfarming.integration.mynethersdelight.farming.harvest;
 
 import com.simibubi.create.content.kinetics.mechanicalArm.ArmBlockEntity;
@@ -26,13 +44,13 @@ public class PowderyCannonArmInteractionPoint extends ArmInteractionPoint {
     @Override
     public ItemStack extract(ArmBlockEntity armBlockEntity, int slot, int amount, boolean simulate) {
         BlockState state = level.getBlockState(pos);
-        if((state.getBlock() instanceof PowderyCaneBlock || state.getBlock() instanceof PowderyCannonBlock) && state.getValue(BlockStateProperties.LIT)) {
-            if(!simulate) {
+        if ((state.getBlock() instanceof PowderyCaneBlock || state.getBlock() instanceof PowderyCannonBlock) && state.getValue(BlockStateProperties.LIT)) {
+            if (!simulate) {
                 state = state.setValue(BlockStateProperties.LIT, false);
                 level.setBlockAndUpdate(pos, state);
             }
             int j = 1 + level.random.nextInt(2);
-            return new ItemStack(MNDItems.BULLET_PEPPER.get(),j);
+            return new ItemStack(MNDItems.BULLET_PEPPER.get(), j);
         }
         return ItemStack.EMPTY;
     }

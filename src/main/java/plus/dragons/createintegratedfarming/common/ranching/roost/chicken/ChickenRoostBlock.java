@@ -161,7 +161,7 @@ public class ChickenRoostBlock extends RoostBlock implements IBE<ChickenRoostBlo
             if (player.hasInfiniteMaterials())
                 player.getInventory().placeItemBackInInventory(new ItemStack(this));
             else {
-                if(stack.getCount()==1) player.setItemInHand(hand,new ItemStack(this));
+                if (stack.getCount() == 1) player.setItemInHand(hand, new ItemStack(this));
                 else {
                     player.getInventory().placeItemBackInInventory(new ItemStack(this));
                     stack.shrink(1);

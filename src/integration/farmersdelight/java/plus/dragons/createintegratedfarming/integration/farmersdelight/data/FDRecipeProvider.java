@@ -18,16 +18,6 @@
 
 package plus.dragons.createintegratedfarming.integration.farmersdelight.data;
 
-import com.tterrag.registrate.providers.RegistrateRecipeProvider;
-import net.minecraft.core.HolderLookup.Provider;
-import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.RecipeOutput;
-import net.neoforged.neoforge.common.Tags;
-import plus.dragons.createintegratedfarming.common.CIFCommon;
-import plus.dragons.createintegratedfarming.integration.ModIntegration;
-
-import java.util.concurrent.CompletableFuture;
-
 import static com.simibubi.create.AllItems.ANDESITE_ALLOY;
 import static net.minecraft.world.item.Items.BAMBOO;
 import static net.minecraft.world.item.Items.WHEAT;
@@ -36,6 +26,15 @@ import static plus.dragons.createintegratedfarming.common.registry.CIFBlocks.FIS
 import static plus.dragons.createintegratedfarming.common.registry.CIFBlocks.ROOST;
 import static vectorwing.farmersdelight.common.registry.ModItems.CANVAS;
 import static vectorwing.farmersdelight.common.registry.ModItems.SAFETY_NET;
+
+import com.tterrag.registrate.providers.RegistrateRecipeProvider;
+import java.util.concurrent.CompletableFuture;
+import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.neoforged.neoforge.common.Tags;
+import plus.dragons.createintegratedfarming.common.CIFCommon;
+import plus.dragons.createintegratedfarming.integration.ModIntegration;
 
 public class FDRecipeProvider extends RegistrateRecipeProvider {
     public FDRecipeProvider(PackOutput output, CompletableFuture<Provider> registries) {

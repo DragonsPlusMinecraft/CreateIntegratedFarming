@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2025  DragonsPlus
+ * SPDX-License-Identifier: LGPL-3.0-or-later
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package plus.dragons.createintegratedfarming.integration.crabbersdelight.fishing;
 
 import alabaster.crabbersdelight.common.block.entity.CrabTrapBlockEntity;
@@ -19,18 +37,18 @@ public class CrabTrapArmInteractionPoint extends ArmInteractionPoint {
 
     @Override
     public ItemStack insert(ArmBlockEntity armBlockEntity, ItemStack stack, boolean simulate) {
-        if(level.getBlockEntity(pos) instanceof CrabTrapBlockEntity interaction){
+        if (level.getBlockEntity(pos) instanceof CrabTrapBlockEntity interaction) {
             var cap = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, level.getBlockState(pos), interaction, Direction.UP);
-            if(cap!=null) return cap.insertItem(0, stack, simulate);
+            if (cap != null) return cap.insertItem(0, stack, simulate);
         }
         return stack;
     }
 
     @Override
     public ItemStack extract(ArmBlockEntity armBlockEntity, int slot, int amount, boolean simulate) {
-        if(level.getBlockEntity(pos) instanceof CrabTrapBlockEntity interaction){
+        if (level.getBlockEntity(pos) instanceof CrabTrapBlockEntity interaction) {
             var cap = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, level.getBlockState(pos), interaction, Direction.DOWN);
-            if(cap!=null) return cap.extractItem(slot, amount, simulate);
+            if (cap != null) return cap.extractItem(slot, amount, simulate);
         }
         return ItemStack.EMPTY;
     }

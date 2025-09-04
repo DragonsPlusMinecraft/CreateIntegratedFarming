@@ -18,14 +18,14 @@
 
 package plus.dragons.createintegratedfarming.integration.crabbersdelight.ponder;
 
+import static com.simibubi.create.infrastructure.ponder.AllCreatePonderTags.ARM_TARGETS;
+
 import alabaster.crabbersdelight.common.registry.CDModBlocks;
 import net.createmod.ponder.api.registration.PonderTagRegistrationHelper;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import plus.dragons.createintegratedfarming.client.ponder.CIFPonderPlugin;
 import plus.dragons.createintegratedfarming.client.ponder.CIFPonderTags;
-
-import static com.simibubi.create.infrastructure.ponder.AllCreatePonderTags.ARM_TARGETS;
 
 public class CrabbersDelightPonderPlugin {
     public static void register() {

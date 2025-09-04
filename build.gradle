@@ -263,7 +263,6 @@ publishMods {
         requires {
             slug = "create"
             slug = "create-dragons-plus"
-            slug = "farmers-delight"
         }
     }
 
@@ -275,7 +274,6 @@ publishMods {
         requires {
             slug = "create"
             slug = "create-dragons-plus"
-            slug = "farmers-delight"
         }
     }
 }

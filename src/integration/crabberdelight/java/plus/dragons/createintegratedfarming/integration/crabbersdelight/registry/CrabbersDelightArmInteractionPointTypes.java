@@ -18,12 +18,12 @@
 
 package plus.dragons.createintegratedfarming.integration.crabbersdelight.registry;
 
+import static plus.dragons.createintegratedfarming.common.registry.CIFArmInteractionPoints.holder;
+
 import com.simibubi.create.content.kinetics.mechanicalArm.ArmInteractionPointType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import plus.dragons.createintegratedfarming.common.registry.CIFArmInteractionPoints;
 import plus.dragons.createintegratedfarming.integration.crabbersdelight.fishing.CrabTrapArmInteractionPoint;
-
-import static plus.dragons.createintegratedfarming.common.registry.CIFArmInteractionPoints.holder;
 
 public class CrabbersDelightArmInteractionPointTypes {
     //spotless:off
