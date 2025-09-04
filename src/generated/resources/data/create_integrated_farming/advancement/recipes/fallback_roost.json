@@ -1,16 +1,19 @@
 {
   "neoforge:conditions": [
     {
-      "type": "neoforge:mod_loaded",
-      "modid": "farmersdelight"
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:mod_loaded",
+        "modid": "farmersdelight"
+      }
     }
   ],
   "criteria": {
-    "has_canvas": {
+    "has_hay_block": {
       "conditions": {
         "items": [
           {
-            "items": "farmersdelight:canvas"
+            "items": "minecraft:hay_block"
           }
         ]
       },
@@ -18,7 +21,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "create_integrated_farming:roost"
+        "recipe": "create_integrated_farming:fallback_roost"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,12 +29,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_canvas"
+      "has_hay_block"
     ]
   ],
   "rewards": {
     "recipes": [
-      "create_integrated_farming:roost"
+      "create_integrated_farming:fallback_roost"
     ]
   },
   "sends_telemetry_event": true

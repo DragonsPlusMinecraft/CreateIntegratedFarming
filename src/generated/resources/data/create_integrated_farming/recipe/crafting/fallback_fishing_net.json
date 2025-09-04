@@ -1,15 +1,18 @@
 {
   "neoforge:conditions": [
     {
-      "type": "neoforge:mod_loaded",
-      "modid": "farmersdelight"
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:mod_loaded",
+        "modid": "farmersdelight"
+      }
     }
   ],
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
     "#": {
-      "item": "farmersdelight:safety_net"
+      "item": "minecraft:brown_wool"
     },
     "/": {
       "tag": "c:rods/wooden"

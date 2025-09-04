@@ -1,7 +1,0 @@
-// 1.21.1	2025-04-30T09:39:28.7221745	Recipes
-d58edb11de877681da2a9226f7b52b5635bc161f data/create_integrated_farming/advancement/recipes/fishing_net.json
-f4828aaf174672c6a4bd3a55ddbbb779849d3046 data/create_integrated_farming/advancement/recipes/lava_fishing_net.json
-719343b2002f31fb4d340319fac5ea41fc6009d6 data/create_integrated_farming/advancement/recipes/roost.json
-8ad7aa4799990cef9f355424f99591b5f485bb80 data/create_integrated_farming/recipe/crafting/fishing_net.json
-a9e8185fbf8ea6ccf90753ac98078ca07c9a16cc data/create_integrated_farming/recipe/crafting/lava_fishing_net.json
-ad1e44b0b95a8601e8c2c96312b56e0d6bc4bff1 data/create_integrated_farming/recipe/crafting/roost.json

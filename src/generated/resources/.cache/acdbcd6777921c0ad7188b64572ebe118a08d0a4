@@ -1,0 +1,5 @@
+// 1.21.1	2025-09-04T14:17:02.3933834	Create: Integrated Farming Fallback Recipes
+ffba1e59a001e2ae706bf88fc946ddbb9d0abefd data/create_integrated_farming/advancement/recipes/fallback_fishing_net.json
+08ed8f02a405519b87aeb50fd3e58a9b46ba099b data/create_integrated_farming/advancement/recipes/fallback_roost.json
+8170e13b444c9c777d60ddd22375ad6e7a932de3 data/create_integrated_farming/recipe/crafting/fallback_fishing_net.json
+50465ebf3a003c2caaf6a1545892f9e763e4b148 data/create_integrated_farming/recipe/crafting/fallback_roost.json

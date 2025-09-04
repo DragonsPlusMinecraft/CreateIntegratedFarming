@@ -30,7 +30,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import plus.dragons.createintegratedfarming.integration.ModIntegration;
 
 public class MNDBlockSpoutingBehaviors {
-    public static void registerMyNethersDelight() {
+    public static void register() {
         BlockSpoutingBehaviour.BY_BLOCK.register(
                 BuiltInRegistries.BLOCK.get(ModIntegration.MYNETHERSDELIGHT.asResource("letios_compost")),
                 MNDBlockSpoutingBehaviors::fillLetiosCompost);

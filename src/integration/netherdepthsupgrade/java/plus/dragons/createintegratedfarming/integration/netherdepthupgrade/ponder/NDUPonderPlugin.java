@@ -19,16 +19,12 @@
 package plus.dragons.createintegratedfarming.integration.netherdepthupgrade.ponder;
 
 import com.simibubi.create.infrastructure.ponder.AllCreatePonderTags;
-import net.createmod.catnip.registry.RegisteredObjectsHelper;
 import net.createmod.ponder.api.registration.PonderSceneRegistrationHelper;
 import net.createmod.ponder.api.registration.PonderTagRegistrationHelper;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.ItemLike;
 import plus.dragons.createintegratedfarming.client.ponder.CIFPonderPlugin;
 import plus.dragons.createintegratedfarming.client.ponder.CIFPonderTags;
 import plus.dragons.createintegratedfarming.integration.netherdepthupgrade.registry.NDUBlocks;
-
-import static com.simibubi.create.infrastructure.ponder.AllCreatePonderTags.CONTRAPTION_ACTOR;
 
 public class NDUPonderPlugin {
     public static void register() {
@@ -43,16 +39,8 @@ public class NDUPonderPlugin {
     }
 
     private static void registerTags(PonderTagRegistrationHelper<ResourceLocation> helper) {
-        PonderTagRegistrationHelper<ItemLike> itemHelper = helper.withKeyFunction(
-                RegisteredObjectsHelper::getKeyOrThrow);
-
-        itemHelper.addToTag(AllCreatePonderTags.ARM_TARGETS)
-                .add(NDUBlocks.LAVA_FISHING_NET);
-
-        itemHelper.addToTag(CONTRAPTION_ACTOR)
-                .add(NDUBlocks.LAVA_FISHING_NET);
-
-        itemHelper.addToTag(CIFPonderTags.FISHING_APPLIANCES)
-                .add(NDUBlocks.LAVA_FISHING_NET);
+        helper.addToTag(AllCreatePonderTags.ARM_TARGETS).add(NDUBlocks.LAVA_FISHING_NET.getId());
+        helper.addToTag(AllCreatePonderTags.CONTRAPTION_ACTOR).add(NDUBlocks.LAVA_FISHING_NET.getId());
+        helper.addToTag(CIFPonderTags.FISHING_APPLIANCES).add(NDUBlocks.LAVA_FISHING_NET.getId());
     }
 }

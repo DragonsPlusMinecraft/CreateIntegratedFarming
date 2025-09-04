@@ -21,7 +21,7 @@ package plus.dragons.createintegratedfarming.integration.mmlib;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import plus.dragons.createintegratedfarming.common.CIFCommon;
 import plus.dragons.createintegratedfarming.integration.ModIntegration;
 import plus.dragons.createintegratedfarming.integration.mmlib.registry.CornDelightHarvestBehaviours;
@@ -36,7 +36,7 @@ public class CornDelightIntegration {
 
     public static class Common {
         @SubscribeEvent
-        public void construct(final FMLConstructModEvent event) {
+        public void commonSetup(final FMLCommonSetupEvent event) {
             CornDelightHarvestBehaviours.register();
         }
     }

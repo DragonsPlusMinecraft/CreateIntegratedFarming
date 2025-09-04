@@ -70,6 +70,11 @@ integrationMods.forEach {integrationMod ->
                 sourceSet(sourceSets."${integrationMod.getFirst()}")
             }
         }
+        runs {
+            data {
+                programArguments.addAll '--existing', file("src/integration/${integrationMod.getFirst()}/resources/").getAbsolutePath()
+            }
+        }
     }
 }
 
@@ -109,7 +114,8 @@ neoForge {
                     '--existing', file('src/main/translations/').getAbsolutePath(),
                     "--existing-mod", "create",
                     "--existing-mod", "create_dragons_plus",
-                    "--existing-mod", "farmersdelight"
+                    "--existing-mod", "farmersdelight",
+                    "--existing-mod", "netherdepthsupgrade"
         }
 
         configureEach {

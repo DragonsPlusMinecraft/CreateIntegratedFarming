@@ -65,4 +65,9 @@ public class FDRecipeProvider extends RegistrateRecipeProvider {
                 .withCondition(ModIntegration.FARMERSDELIGHT.condition())
                 .accept(output);
     }
+
+    @Override
+    public String getName() {
+        return "Create: Integrated Farming Farmer's Delight Integration Recipes";
+    }
 }

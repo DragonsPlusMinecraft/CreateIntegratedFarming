@@ -22,7 +22,6 @@ import static com.simibubi.create.AllItems.*;
 import static net.minecraft.world.item.Items.*;
 import static plus.dragons.createdragonsplus.data.recipe.VanillaRecipeBuilders.*;
 import static plus.dragons.createintegratedfarming.common.registry.CIFBlocks.*;
-import static vectorwing.farmersdelight.common.registry.ModItems.*;
 
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import java.util.concurrent.CompletableFuture;
@@ -42,24 +41,31 @@ public class CIFRecipeProvider extends RegistrateRecipeProvider {
     @Override
     protected void buildRecipes(RecipeOutput output) {
         shaped().output(ROOST)
-                .define('#', CANVAS.get())
+                .withId(CIFCommon.asResource("fallback_roost"))
+                .define('#', HAY_BLOCK)
                 .define('b', BAMBOO)
                 .define('c', WHEAT)
                 .pattern("b b")
                 .pattern("#c#")
                 .pattern("b#b")
-                .unlockedBy("has_canvas", has(CANVAS.get()))
+                .unlockedBy("has_hay_block", has(HAY_BLOCK))
                 .withCondition(ModIntegration.FARMERSDELIGHT.invertedCondition())
                 .accept(output);
         shaped().output(FISHING_NET, 2)
-                .define('#', SAFETY_NET.get())
+                .withId(CIFCommon.asResource("fallback_fishing_net"))
+                .define('#', BROWN_WOOL)
                 .define('/', Tags.Items.RODS_WOODEN)
                 .define('a', ANDESITE_ALLOY)
                 .pattern("#/")
                 .pattern("/a")
-                .unlockedBy("has_safety_net", has(SAFETY_NET.get()))
+                .unlockedBy("has_brown_wool", has(BROWN_WOOL))
                 .unlockedBy("has_andesite_alloy", has(ANDESITE_ALLOY))
                 .withCondition(ModIntegration.FARMERSDELIGHT.invertedCondition())
                 .accept(output);
+    }
+
+    @Override
+    public String getName() {
+        return "Create: Integrated Farming Fallback Recipes";
     }
 }

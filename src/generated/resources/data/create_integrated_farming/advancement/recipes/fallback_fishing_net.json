@@ -1,8 +1,11 @@
 {
   "neoforge:conditions": [
     {
-      "type": "neoforge:mod_loaded",
-      "modid": "farmersdelight"
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:mod_loaded",
+        "modid": "farmersdelight"
+      }
     }
   ],
   "criteria": {
@@ -16,11 +19,11 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_safety_net": {
+    "has_brown_wool": {
       "conditions": {
         "items": [
           {
-            "items": "farmersdelight:safety_net"
+            "items": "minecraft:brown_wool"
           }
         ]
       },
@@ -28,7 +31,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "create_integrated_farming:fishing_net"
+        "recipe": "create_integrated_farming:fallback_fishing_net"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -36,13 +39,13 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_safety_net",
+      "has_brown_wool",
       "has_andesite_alloy"
     ]
   ],
   "rewards": {
     "recipes": [
-      "create_integrated_farming:fishing_net"
+      "create_integrated_farming:fallback_fishing_net"
     ]
   },
   "sends_telemetry_event": true

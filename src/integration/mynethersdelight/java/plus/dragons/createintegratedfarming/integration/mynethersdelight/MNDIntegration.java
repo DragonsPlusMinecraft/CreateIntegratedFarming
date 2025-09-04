@@ -22,6 +22,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
 import net.neoforged.fml.loading.FMLLoader;
 import plus.dragons.createintegratedfarming.common.CIFCommon;
@@ -41,8 +42,8 @@ public class MNDIntegration {
 
     public static class Common {
         @SubscribeEvent
-        public void construct(final FMLConstructModEvent event) {
-            MNDBlockSpoutingBehaviors.registerMyNethersDelight();
+        public void commonSetup(final FMLCommonSetupEvent event) {
+            MNDBlockSpoutingBehaviors.register();
         }
     }
 

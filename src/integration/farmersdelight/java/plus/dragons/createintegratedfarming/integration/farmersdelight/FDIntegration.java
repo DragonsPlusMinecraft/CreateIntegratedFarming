@@ -22,6 +22,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
 import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
@@ -46,7 +47,7 @@ public class FDIntegration {
 
     public static class Common {
         @SubscribeEvent
-        public void construct(final FMLConstructModEvent event) {
+        public void commonSetup(final FMLCommonSetupEvent event) {
             FDHarvestBehaviors.register();
             FDBlockSpoutingBehaviours.register();
         }

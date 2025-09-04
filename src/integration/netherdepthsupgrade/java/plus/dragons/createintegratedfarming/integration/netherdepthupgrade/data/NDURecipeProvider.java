@@ -51,4 +51,9 @@ public class NDURecipeProvider extends RegistrateRecipeProvider {
                 .withCondition(ModIntegration.NETHER_DEPTHS_UPGRADE.condition())
                 .accept(output);
     }
+
+    @Override
+    public String getName() {
+        return "Create: Integrated Farming Nether Depths Upgrade Integration Recipes";
+    }
 }

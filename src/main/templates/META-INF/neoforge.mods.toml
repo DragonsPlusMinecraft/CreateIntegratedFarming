@@ -20,8 +20,8 @@ issueTrackerURL="${mod_github}/issues"
 [[mixins]]
     config="${mod_id}.netherdepthsupgrade.mixins.json"
 
-#[[accessTransformers]]
-#file="META-INF/accesstransformer.cfg"
+[[accessTransformers]]
+    file="META-INF/accesstransformer.cfg"
 
 #[modproperties.${mod_id}]
 
