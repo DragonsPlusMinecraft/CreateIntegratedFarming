@@ -30,6 +30,7 @@ import plus.dragons.createintegratedfarming.common.CIFCommon;
 import plus.dragons.createintegratedfarming.integration.ModIntegration;
 import plus.dragons.createintegratedfarming.integration.farmersdelight.data.FDRecipeProvider;
 import plus.dragons.createintegratedfarming.integration.farmersdelight.ponder.FDPonderPlugin;
+import plus.dragons.createintegratedfarming.integration.farmersdelight.registry.FDArmInteractionPointTypes;
 import plus.dragons.createintegratedfarming.integration.farmersdelight.registry.FDBlockEntities;
 import plus.dragons.createintegratedfarming.integration.farmersdelight.registry.FDBlockSpoutingBehaviours;
 import plus.dragons.createintegratedfarming.integration.farmersdelight.registry.FDHarvestBehaviors;
@@ -46,6 +47,11 @@ public class FDIntegration {
     }
 
     public static class Common {
+        @SubscribeEvent
+        public void construct(final FMLConstructModEvent event) {
+            FDArmInteractionPointTypes.register();
+        }
+
         @SubscribeEvent
         public void commonSetup(final FMLCommonSetupEvent event) {
             FDHarvestBehaviors.register();

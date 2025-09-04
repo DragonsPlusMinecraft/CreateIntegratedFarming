@@ -27,6 +27,8 @@ import net.minecraft.resources.ResourceLocation;
 import plus.dragons.createintegratedfarming.client.ponder.CIFPonderPlugin;
 import plus.dragons.createintegratedfarming.client.ponder.CIFPonderTags;
 
+import static com.simibubi.create.infrastructure.ponder.AllCreatePonderTags.ARM_TARGETS;
+
 public class MNDPonderPlugin {
     public static void register() {
         CIFPonderPlugin.SCENES.add(MNDPonderPlugin::registerScenes);
@@ -38,5 +40,8 @@ public class MNDPonderPlugin {
                 .addStoryBoard("mynethersdelight/letios_compost_catalyze", MNDPonderScenes::catalyze, CIFPonderTags.FARMING_APPLIANCES);
     }
 
-    private static void registerTags(PonderTagRegistrationHelper<ResourceLocation> helper) {}
+    private static void registerTags(PonderTagRegistrationHelper<ResourceLocation> helper) {
+        helper.addToTag(ARM_TARGETS)
+                .add(BuiltInRegistries.BLOCK.getKey(MNDBlocks.POWDERY_CANNON.get()));
+    }
 }

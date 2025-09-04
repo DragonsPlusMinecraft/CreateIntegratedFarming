@@ -26,6 +26,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
 import plus.dragons.createintegratedfarming.integration.ModIntegration;
 
@@ -37,7 +38,7 @@ public class MNDBlockSpoutingBehaviors {
     }
 
     private static int fillLetiosCompost(Level level, BlockPos pos, SpoutBlockEntity spout, FluidStack fluid, boolean simulate) {
-        if (!fluid.is(MNDTags.LETEOS_BOOSTER) || !level.dimensionType().ultraWarm())
+        if (!(fluid.is(MNDTags.LETEOS_BOOSTER) || fluid.is(Fluids.LAVA)) || !level.dimensionType().ultraWarm()) // TODO Remove fluid.is(Fluids.LAVA) when https://github.com/SoyTutta/MyNethersDelight/pull/112 is merged
             return 0;
         if (!simulate && level instanceof ServerLevel) {
             BlockState state = level.getBlockState(pos);

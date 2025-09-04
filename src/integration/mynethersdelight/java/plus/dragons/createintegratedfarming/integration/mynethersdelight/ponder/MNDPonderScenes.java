@@ -18,60 +18,57 @@
 
 package plus.dragons.createintegratedfarming.integration.mynethersdelight.ponder;
 
-import static vectorwing.farmersdelight.common.block.OrganicCompostBlock.COMPOSTING;
+import static com.soytutta.mynethersdelight.common.block.LetiosCompostBlock.FORGOTING;
 
 import com.simibubi.create.content.fluids.spout.SpoutBlockEntity;
-import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
 import com.simibubi.create.foundation.ponder.CreateSceneBuilder;
+import com.soytutta.mynethersdelight.common.registry.MNDBlocks;
 import net.createmod.ponder.api.scene.SceneBuilder;
 import net.createmod.ponder.api.scene.SceneBuildingUtil;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.material.Fluids;
-import net.neoforged.neoforge.fluids.FluidStack;
-import vectorwing.farmersdelight.common.registry.ModBlocks;
 
 public class MNDPonderScenes {
     public static void catalyze(SceneBuilder builder, SceneBuildingUtil util) {
         CreateSceneBuilder scene = new CreateSceneBuilder(builder);
-        scene.title("spout.catalyze_organic_compost", "Catalyzing Organic Compost");
+        scene.title("spout.catalyze_letios_compost", "Catalyzing Leteos Compost");
         scene.configureBasePlate(0, 0, 3);
-
-        scene.world().modifyBlockEntity(util.grid().at(1, 3, 1), SpoutBlockEntity.class, be -> {
-            var tank = be.getBehaviour(SmartFluidTankBehaviour.TYPE);
-            tank.getPrimaryHandler().setFluid(new FluidStack(Fluids.WATER, 1000));
-        });
         scene.world().showSection(util.select().everywhere(), Direction.DOWN);
-
         var spout = util.select().position(1, 3, 1);
-        var compost = util.grid().at(1, 1, 1);
+        var leteosCompost = util.grid().at(1, 1, 1);
 
         scene.overlay().showText(100)
-                .text("Degradation process of Organic Compost can be speed up via Spout")
+                .text("Forgetting process of Leteos Compost can be speed up via Spout in ultra warm dimension")
                 .pointAt(util.vector().centerOf(1, 3, 1))
                 .placeNearTarget();
 
         scene.world().modifyBlockEntityNBT(spout, SpoutBlockEntity.class, nbt -> nbt.putInt("ProcessingTicks", 20));
         scene.idle(20);
-        scene.world().modifyBlock(compost, bs -> bs.setValue(COMPOSTING, 1), false);
+        scene.world().modifyBlock(leteosCompost, bs -> bs.setValue(FORGOTING, 2), false);
         scene.idle(10);
 
         scene.world().modifyBlockEntityNBT(spout, SpoutBlockEntity.class, nbt -> nbt.putInt("ProcessingTicks", 20));
         scene.idle(20);
-        scene.world().modifyBlock(compost, bs -> bs.setValue(COMPOSTING, 3), false);
+        scene.world().modifyBlock(leteosCompost, bs -> bs.setValue(FORGOTING, 4), false);
         scene.idle(10);
 
         scene.world().modifyBlockEntityNBT(spout, SpoutBlockEntity.class, nbt -> nbt.putInt("ProcessingTicks", 20));
         scene.idle(20);
-        scene.world().modifyBlock(compost, bs -> bs.setValue(COMPOSTING, 5), false);
+        scene.world().modifyBlock(leteosCompost, bs -> bs.setValue(FORGOTING, 7), false);
         scene.idle(10);
 
         scene.world().modifyBlockEntityNBT(spout, SpoutBlockEntity.class, nbt -> nbt.putInt("ProcessingTicks", 20));
         scene.idle(20);
-        scene.world().modifyBlock(compost, bs -> bs.setValue(COMPOSTING, 7), false);
+        scene.world().modifyBlock(leteosCompost, bs -> bs.setValue(FORGOTING, 9), false);
         scene.idle(10);
 
         scene.world().modifyBlockEntityNBT(spout, SpoutBlockEntity.class, nbt -> nbt.putInt("ProcessingTicks", 20));
         scene.idle(20);
-        scene.world().modifyBlock(compost, bs -> ModBlocks.RICH_SOIL.get().defaultBlockState(), false);
+        scene.world().modifyBlock(leteosCompost, bs -> bs.setValue(FORGOTING, 9), false);
+        scene.idle(10);
+
+        scene.world().modifyBlockEntityNBT(spout, SpoutBlockEntity.class, nbt -> nbt.putInt("ProcessingTicks", 20));
+        scene.idle(20);
+        scene.world().modifyBlock(leteosCompost, bs -> MNDBlocks.RESURGENT_SOIL.get().defaultBlockState(), false);
     }
+
 }

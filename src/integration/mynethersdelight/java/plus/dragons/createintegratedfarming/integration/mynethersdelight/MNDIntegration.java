@@ -28,6 +28,7 @@ import net.neoforged.fml.loading.FMLLoader;
 import plus.dragons.createintegratedfarming.common.CIFCommon;
 import plus.dragons.createintegratedfarming.integration.ModIntegration;
 import plus.dragons.createintegratedfarming.integration.mynethersdelight.ponder.MNDPonderPlugin;
+import plus.dragons.createintegratedfarming.integration.mynethersdelight.registry.MNDArmInteractionPointTypes;
 import plus.dragons.createintegratedfarming.integration.mynethersdelight.registry.MNDBlockSpoutingBehaviors;
 
 @Mod(CIFCommon.ID)
@@ -41,6 +42,11 @@ public class MNDIntegration {
     }
 
     public static class Common {
+        @SubscribeEvent
+        public void construct(final FMLConstructModEvent event) {
+            MNDArmInteractionPointTypes.register();
+        }
+
         @SubscribeEvent
         public void commonSetup(final FMLCommonSetupEvent event) {
             MNDBlockSpoutingBehaviors.register();
