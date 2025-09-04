@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "priority": 1000,
+  "package": "plus.dragons.createintegratedfarming.mixin.createenchantablemachinery",
+  "plugin": "plus.dragons.createintegratedfarming.mixin.createenchantablemachinery.CreateEnchantableMachineryIntegrationMixinConfigPlugin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "EnchantableHarvesterMovementBehaviourMixin",
+    "EnchantableSawMovementBehaviourMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.8"
+}

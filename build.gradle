@@ -17,7 +17,61 @@ base {
     archivesName = mod_artifact_id
 }
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
+    withSourcesJar()
+}
+
+var integrationMods = [
+        ["farmersdelight"],
+        ["netherdepthsupgrade"],
+        ["mynethersdelight","farmersdelight"],
+        ["corndelight","farmersdelight"],
+        ["createenchantablemachinery"]
+]
+
+integrationMods.forEach {integrationMod ->
+    sourceSets {
+        "${integrationMod.getFirst()}" {
+            java {
+                srcDir "src/integration/${integrationMod.getFirst()}/java"
+            }
+            resources {
+                srcDir "src/integration/${integrationMod.getFirst()}/resources"
+            }
+            compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+            if(integrationMod.size()>1){
+                integrationMod.forEach {dependencyMod ->
+                    if(dependencyMod == integrationMod.getFirst()) return
+                    compileClasspath += sourceSets."${dependencyMod}".output + sourceSets."${dependencyMod}".compileClasspath
+                }
+            }
+        }
+        main {
+            runtimeClasspath += sourceSets."${integrationMod.getFirst()}".output
+        }
+    }
+
+    classes {
+        finalizedBy(tasks."${integrationMod.getFirst()}Classes")
+    }
+
+    jar {
+        from sourceSets."${integrationMod.getFirst()}".output
+    }
+
+    tasks.sourcesJar {
+        from sourceSets."${integrationMod.getFirst()}".allJava
+    }
+
+    neoForge {
+        mods {
+            "${mod_id}" {
+                sourceSet(sourceSets."${integrationMod.getFirst()}")
+            }
+        }
+    }
+}
 
 neoForge {
     version = project.neo_version

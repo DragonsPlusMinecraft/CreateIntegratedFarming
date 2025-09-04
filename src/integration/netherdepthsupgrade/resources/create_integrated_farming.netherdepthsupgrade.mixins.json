@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "priority": 1000,
+  "package": "plus.dragons.createintegratedfarming.mixin.netherdepthupgrade",
+  "plugin": "plus.dragons.createintegratedfarming.mixin.netherdepthupgrade.NDUIntegrationMixinConfigPlugin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "ForgeEventsMixin",
+    "LavaFishingBobberEntityInvoker"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.8"
+}

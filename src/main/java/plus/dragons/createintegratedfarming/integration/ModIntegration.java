@@ -19,42 +19,17 @@
 package plus.dragons.createintegratedfarming.integration;
 
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
-import plus.dragons.createintegratedfarming.common.registry.CIFBlockSpoutingBehaviours;
-import plus.dragons.createintegratedfarming.common.registry.CIFHarvestBehaviours;
-import plus.dragons.createintegratedfarming.integration.netherdepthsupgrade.NethersDepthsUpgradeIntegration;
+import net.neoforged.neoforge.common.conditions.NotCondition;
 
 public enum ModIntegration {
-    FARMERSDELIGHT(Constants.FARMERS_DELIGHT) {
-        @Override
-        public void onCommonSetup() {
-            CIFHarvestBehaviours.registerFarmersDelight();
-            CIFBlockSpoutingBehaviours.registerFarmersDelight();
-        }
-    },
-    MYNETHERSDELIGHT(Constants.MY_NETHERS_DELIGHT) {
-        @Override
-        public void onCommonSetup() {
-            CIFBlockSpoutingBehaviours.registerMyNethersDelight();
-        }
-    },
-    MMLIB(Constants.MMLIB) {
-        @Override
-        public void onCommonSetup() {
-            CIFHarvestBehaviours.registerMmlib();
-        }
-    },
-    CREATE_ENCHANTABLE_MACHINERY(Constants.CREATE_ENCHANTABLE_MACHINERY),
-    CREATE_CRAFT_AND_ADDITIONS(Constants.CREATE_CRAFT_AND_ADDITIONS),
-    NETHER_DEPTHS_UPGRADE(Constants.NETHER_DEPTHS_UPGRADE) {
-        @Override
-        public void onConstructMod() {
-            NethersDepthsUpgradeIntegration.register();
-        }
-    };
+    FARMERSDELIGHT(Mods.FARMERS_DELIGHT),
+    MYNETHERSDELIGHT(Mods.MY_NETHERS_DELIGHT),
+    MMLIB(Mods.MMLIB),
+    CREATE_ENCHANTABLE_MACHINERY(Mods.CREATE_ENCHANTABLE_MACHINERY),
+    CREATE_CRAFT_AND_ADDITIONS(Mods.CREATE_CRAFT_AND_ADDITIONS),
+    NETHER_DEPTHS_UPGRADE(Mods.NETHER_DEPTHS_UPGRADE);
 
     private final String id;
 
@@ -78,14 +53,11 @@ public enum ModIntegration {
         return new ModLoadedCondition(id);
     }
 
-    public void onConstructMod() {}
+    public NotCondition invertedCondition() {
+        return new NotCondition(new ModLoadedCondition(id));
+    }
 
-    public void onCommonSetup() {}
-
-    @OnlyIn(Dist.CLIENT)
-    public void onClientSetup() {}
-
-    public static class Constants {
+    public static class Mods {
         public static final String FARMERS_DELIGHT = "farmersdelight";
         public static final String MY_NETHERS_DELIGHT = "mynethersdelight";
         public static final String MMLIB = "mysterious_mountain_lib";

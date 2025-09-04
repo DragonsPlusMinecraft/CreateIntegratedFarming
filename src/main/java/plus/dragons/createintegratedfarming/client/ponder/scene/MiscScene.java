@@ -18,10 +18,6 @@
 
 package plus.dragons.createintegratedfarming.client.ponder.scene;
 
-import static vectorwing.farmersdelight.common.block.OrganicCompostBlock.COMPOSTING;
-
-import com.simibubi.create.content.fluids.spout.SpoutBlockEntity;
-import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
 import com.simibubi.create.foundation.ponder.CreateSceneBuilder;
 import net.createmod.catnip.math.Pointing;
 import net.createmod.ponder.api.element.ElementLink;
@@ -32,9 +28,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.material.Fluids;
-import net.neoforged.neoforge.fluids.FluidStack;
-import vectorwing.farmersdelight.common.registry.ModBlocks;
 
 public class MiscScene {
     public static void fishing(SceneBuilder builder, SceneBuildingUtil util) {
@@ -92,49 +85,5 @@ public class MiscScene {
         scene.overlay().showControls(util.vector().centerOf(4, 3, 4), Pointing.UP, 60).rightClick()
                 .withItem(Items.SALMON.getDefaultInstance());
         scene.idle(82);
-    }
-
-    public static void spoutCatalyze(SceneBuilder builder, SceneBuildingUtil util) {
-        CreateSceneBuilder scene = new CreateSceneBuilder(builder);
-        scene.title("spout.catalyze_organic_compost", "Catalyzing Organic Compost");
-        scene.configureBasePlate(0, 0, 3);
-
-        scene.world().modifyBlockEntity(util.grid().at(1, 3, 1), SpoutBlockEntity.class, be -> {
-            var tank = be.getBehaviour(SmartFluidTankBehaviour.TYPE);
-            tank.getPrimaryHandler().setFluid(new FluidStack(Fluids.WATER, 1000));
-        });
-        scene.world().showSection(util.select().everywhere(), Direction.DOWN);
-
-        var spout = util.select().position(1, 3, 1);
-        var compost = util.grid().at(1, 1, 1);
-
-        scene.overlay().showText(100)
-                .text("Degradation process of Organic Compost can be speed up via Spout")
-                .pointAt(util.vector().centerOf(1, 3, 1))
-                .placeNearTarget();
-
-        scene.world().modifyBlockEntityNBT(spout, SpoutBlockEntity.class, nbt -> nbt.putInt("ProcessingTicks", 20));
-        scene.idle(20);
-        scene.world().modifyBlock(compost, bs -> bs.setValue(COMPOSTING, 1), false);
-        scene.idle(10);
-
-        scene.world().modifyBlockEntityNBT(spout, SpoutBlockEntity.class, nbt -> nbt.putInt("ProcessingTicks", 20));
-        scene.idle(20);
-        scene.world().modifyBlock(compost, bs -> bs.setValue(COMPOSTING, 3), false);
-        scene.idle(10);
-
-        scene.world().modifyBlockEntityNBT(spout, SpoutBlockEntity.class, nbt -> nbt.putInt("ProcessingTicks", 20));
-        scene.idle(20);
-        scene.world().modifyBlock(compost, bs -> bs.setValue(COMPOSTING, 5), false);
-        scene.idle(10);
-
-        scene.world().modifyBlockEntityNBT(spout, SpoutBlockEntity.class, nbt -> nbt.putInt("ProcessingTicks", 20));
-        scene.idle(20);
-        scene.world().modifyBlock(compost, bs -> bs.setValue(COMPOSTING, 7), false);
-        scene.idle(10);
-
-        scene.world().modifyBlockEntityNBT(spout, SpoutBlockEntity.class, nbt -> nbt.putInt("ProcessingTicks", 20));
-        scene.idle(20);
-        scene.world().modifyBlock(compost, bs -> ModBlocks.RICH_SOIL.get().defaultBlockState(), false);
     }
 }

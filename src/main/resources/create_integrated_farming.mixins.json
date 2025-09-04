@@ -2,21 +2,14 @@
   "required": true,
   "priority": 1000,
   "package": "plus.dragons.createintegratedfarming.mixin",
-  "plugin": "plus.dragons.createintegratedfarming.mixin.CIFMixinConfigPlugin",
   "compatibilityLevel": "JAVA_21",
-  "refmap": "create_integrated_farming.refmap.json",
   "mixins": [
     "create.BlockBreakingMovementBehaviourMixin",
     "create.HarvesterMovementBehaviourMixin",
     "create.SawBlockEntityMixin",
     "create.SawMovementBehaviourMixin",
     "create.SeatBlockMixin",
-    "create.TreeCutterMixin",
-    "createenchantablemachinery.EnchantableHarvesterMovementBehaviourMixin",
-    "createenchantablemachinery.EnchantableSawMovementBehaviourMixin",
-    "farmersdelight.BasketBlockEntityAccessor",
-    "nethersdepthsupgrate.ForgeEventsMixin",
-    "nethersdepthsupgrate.LavaFishingBobberEntityInvoker"
+    "create.TreeCutterMixin"
   ],
   "client": [],
   "injectors": {

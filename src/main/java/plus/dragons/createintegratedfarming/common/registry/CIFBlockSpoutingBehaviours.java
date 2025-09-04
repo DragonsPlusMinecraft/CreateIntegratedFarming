@@ -21,15 +21,9 @@ package plus.dragons.createintegratedfarming.common.registry;
 import com.simibubi.create.api.behaviour.spouting.BlockSpoutingBehaviour;
 import com.simibubi.create.content.fluids.spout.SpoutBlockEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidStack;
 import plus.dragons.createintegratedfarming.common.ranching.roost.chicken.ChickenRoostBlockEntity;
-import plus.dragons.createintegratedfarming.integration.ModIntegration;
-import vectorwing.farmersdelight.common.registry.ModBlocks;
 
 public class CIFBlockSpoutingBehaviours {
     public static void register() {
@@ -38,42 +32,10 @@ public class CIFBlockSpoutingBehaviours {
                 CIFBlockSpoutingBehaviours::fillChickenCoop);
     }
 
-    public static void registerFarmersDelight() {
-        BlockSpoutingBehaviour.BY_BLOCK.register(
-                ModBlocks.ORGANIC_COMPOST.get(),
-                CIFBlockSpoutingBehaviours::fillOrganicCompost);
-    }
-
-    public static void registerMyNethersDelight() {
-        BlockSpoutingBehaviour.BY_BLOCK.register(
-                BuiltInRegistries.BLOCK.get(ModIntegration.MYNETHERSDELIGHT.asResource("letios_compost")),
-                CIFBlockSpoutingBehaviours::fillLetiosCompost);
-    }
-
     private static int fillChickenCoop(Level level, BlockPos pos, SpoutBlockEntity spout, FluidStack fluid, boolean simulate) {
         if (level.getBlockEntity(pos) instanceof ChickenRoostBlockEntity coop) {
             return coop.feedFluid(fluid, simulate);
         }
         return 0;
-    }
-
-    private static int fillOrganicCompost(Level level, BlockPos pos, SpoutBlockEntity spout, FluidStack fluid, boolean simulate) {
-        if (!fluid.is(FluidTags.WATER))
-            return 0;
-        if (!simulate && level instanceof ServerLevel) {
-            BlockState state = level.getBlockState(pos);
-            state.randomTick((ServerLevel) level, pos, level.random);
-        }
-        return 250;
-    }
-
-    private static int fillLetiosCompost(Level level, BlockPos pos, SpoutBlockEntity spout, FluidStack fluid, boolean simulate) {
-        if (!fluid.is(FluidTags.LAVA) || !level.dimensionType().ultraWarm())
-            return 0;
-        if (!simulate && level instanceof ServerLevel) {
-            BlockState state = level.getBlockState(pos);
-            state.randomTick((ServerLevel) level, pos, level.random);
-        }
-        return 250;
     }
 }

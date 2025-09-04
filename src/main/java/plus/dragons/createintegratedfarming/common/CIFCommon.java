@@ -25,9 +25,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import plus.dragons.createdragonsplus.common.CDPRegistrate;
@@ -39,14 +37,15 @@ import plus.dragons.createintegratedfarming.common.registry.CIFCreativeModeTabs;
 import plus.dragons.createintegratedfarming.common.registry.CIFDataMaps;
 import plus.dragons.createintegratedfarming.common.registry.CIFRoostCapturables;
 import plus.dragons.createintegratedfarming.config.CIFConfig;
-import plus.dragons.createintegratedfarming.integration.ModIntegration;
 
 @Mod(CIFCommon.ID)
 public class CIFCommon {
     public static final String ID = "create_integrated_farming";
     public static final Logger LOGGER = LoggerFactory.getLogger("Create: Integrated Farming");
     public static final CDPRegistrate REGISTRATE = new CDPRegistrate(ID)
-            .setTooltipModifier(item -> new ItemDescription.Modifier(item, FontHelper.Palette.STANDARD_CREATE));
+            .setTooltipModifier(item -> new ItemDescription.Modifier(item, FontHelper.Palette.STANDARD_CREATE))
+            .registerBuiltinLocalization("tooltips")
+            .registerForeignLocalization();
 
     public CIFCommon(IEventBus modBus, ModContainer modContainer) {
         REGISTRATE.registerEventListeners(modBus);
@@ -60,29 +59,9 @@ public class CIFCommon {
     }
 
     @SubscribeEvent
-    public void onConstructMod(final FMLConstructModEvent event) {
-        for (ModIntegration integration : ModIntegration.values()) {
-            if (integration.enabled())
-                event.enqueueWork(integration::onConstructMod);
-        }
-    }
-
-    @SubscribeEvent
     public void onCommonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(CIFBlockSpoutingBehaviours::register);
         event.enqueueWork(CIFRoostCapturables::register);
-        for (ModIntegration integration : ModIntegration.values()) {
-            if (integration.enabled())
-                event.enqueueWork(integration::onCommonSetup);
-        }
-    }
-
-    @SubscribeEvent
-    public void onClientSetup(final FMLClientSetupEvent event) {
-        for (ModIntegration integration : ModIntegration.values()) {
-            if (integration.enabled())
-                event.enqueueWork(integration::onClientSetup);
-        }
     }
 
     public static ResourceLocation asResource(String path) {

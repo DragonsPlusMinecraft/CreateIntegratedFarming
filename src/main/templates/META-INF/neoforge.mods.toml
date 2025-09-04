@@ -15,9 +15,13 @@ issueTrackerURL="${mod_github}/issues"
 
 [[mixins]]
     config="${mod_id}.mixins.json"
+[[mixins]]
+    config="${mod_id}.createenchantablemachinery.mixins.json"
+[[mixins]]
+    config="${mod_id}.netherdepthsupgrade.mixins.json"
 
 #[[accessTransformers]]
-    file="META-INF/accesstransformer.cfg"
+#file="META-INF/accesstransformer.cfg"
 
 #[modproperties.${mod_id}]
 
@@ -51,7 +55,7 @@ issueTrackerURL="${mod_github}/issues"
 
 [[dependencies.${mod_id}]]
     modId="farmersdelight"
-    type="required"
+    type="optional"
     versionRange="${farmers_delight_version_range}"
     ordering="AFTER"
     side="BOTH"

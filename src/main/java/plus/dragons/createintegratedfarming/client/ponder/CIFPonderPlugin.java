@@ -18,6 +18,9 @@
 
 package plus.dragons.createintegratedfarming.client.ponder;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
 import net.createmod.ponder.api.registration.PonderPlugin;
 import net.createmod.ponder.api.registration.PonderSceneRegistrationHelper;
 import net.createmod.ponder.api.registration.PonderTagRegistrationHelper;
@@ -25,6 +28,9 @@ import net.minecraft.resources.ResourceLocation;
 import plus.dragons.createintegratedfarming.common.CIFCommon;
 
 public class CIFPonderPlugin implements PonderPlugin {
+    public static final List<Consumer<PonderSceneRegistrationHelper<ResourceLocation>>> SCENES = new ArrayList<>();
+    public static final List<Consumer<PonderTagRegistrationHelper<ResourceLocation>>> TAGS = new ArrayList<>();
+
     @Override
     public String getModId() {
         return CIFCommon.ID;
@@ -32,11 +38,13 @@ public class CIFPonderPlugin implements PonderPlugin {
 
     @Override
     public void registerScenes(PonderSceneRegistrationHelper<ResourceLocation> helper) {
-        CIFPonderScenes.register(helper);
+        for (var scene : SCENES)
+            scene.accept(helper);
     }
 
     @Override
     public void registerTags(PonderTagRegistrationHelper<ResourceLocation> helper) {
-        CIFPonderTags.register(helper);
+        for (var tag : TAGS)
+            tag.accept(helper);
     }
 }
