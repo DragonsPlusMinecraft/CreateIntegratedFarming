@@ -28,10 +28,10 @@ var integrationMods = [
         ["mynethersdelight","farmersdelight"],
         ["corndelight","farmersdelight"],
         ["createenchantablemachinery"],
-        ["crabberdelight","farmersdelight"],
+        ["crabberdelight","farmersdelight"]
 ]
 
-integrationMods.forEach {integrationMod ->
+integrationMods.each {integrationMod ->
     sourceSets {
         "${integrationMod.getFirst()}" {
             java {
@@ -41,9 +41,9 @@ integrationMods.forEach {integrationMod ->
                 srcDir "src/integration/${integrationMod.getFirst()}/resources"
             }
             compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
-            if(integrationMod.size()>1){
-                integrationMod.forEach {dependencyMod ->
-                    if(dependencyMod == integrationMod.getFirst()) return
+            if (integrationMod.size() > 1) {
+                integrationMod.each { dependencyMod ->
+                    if (dependencyMod == integrationMod.getFirst()) return
                     compileClasspath += sourceSets."${dependencyMod}".output + sourceSets."${dependencyMod}".compileClasspath
                 }
             }
@@ -222,10 +222,6 @@ spotless {
 }
 
 build.dependsOn(spotlessApply)
-
-java {
-    withSourcesJar()
-}
 
 publishing {
     publications {
