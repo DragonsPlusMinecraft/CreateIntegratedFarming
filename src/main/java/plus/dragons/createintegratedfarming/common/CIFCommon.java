@@ -43,9 +43,7 @@ public class CIFCommon {
     public static final String ID = "create_integrated_farming";
     public static final Logger LOGGER = LoggerFactory.getLogger("Create: Integrated Farming");
     public static final CDPRegistrate REGISTRATE = new CDPRegistrate(ID)
-            .setTooltipModifier(item -> new ItemDescription.Modifier(item, FontHelper.Palette.STANDARD_CREATE))
-            .registerBuiltinLocalization("tooltips")
-            .registerForeignLocalization();
+            .setTooltipModifier(item -> new ItemDescription.Modifier(item, FontHelper.Palette.STANDARD_CREATE));
 
     public CIFCommon(IEventBus modBus, ModContainer modContainer) {
         REGISTRATE.registerEventListeners(modBus);

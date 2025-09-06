@@ -26,6 +26,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.data.loading.DatagenModLoader;
+import plus.dragons.createintegratedfarming.client.ponder.CIFPonderPlugin;
 import plus.dragons.createintegratedfarming.common.CIFCommon;
 import plus.dragons.createintegratedfarming.common.registry.CIFLootTables;
 
@@ -35,6 +36,9 @@ public class CIFData {
         if (!DatagenModLoader.isRunningDataGen())
             return;
         REGISTRATE.addDataGenerator(ProviderType.LOOT, CIFLootTables::generate);
+        REGISTRATE.registerBuiltinLocalization("tooltips");
+        REGISTRATE.registerPonderLocalization(CIFPonderPlugin::new);
+        REGISTRATE.registerForeignLocalization();
         modBus.register(this);
     }
 

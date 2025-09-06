@@ -28,8 +28,6 @@
   "create_integrated_farming.ponder.roost.raise.text_2": "ベルトコンベアにより、巣箱の前面から給仕が可能です",
   "create_integrated_farming.ponder.roost.raise.text_3": "メカニカルアームでも給餌することが出来ます",
   "create_integrated_farming.ponder.roost.raise.text_4": "卵を生産するために餌を与え続けましょう",
-  "create_integrated_farming.ponder.spout.catalyze_letios_compost.header": "Catalyzing Leteos Compost",
-  "create_integrated_farming.ponder.spout.catalyze_letios_compost.text_1": "Forgetting process of Leteos Compost can be speed up via Spout in ultra warm dimension",
   "create_integrated_farming.ponder.spout.catalyze_organic_compost.header": "有機コンポストの触媒",
   "create_integrated_farming.ponder.spout.catalyze_organic_compost.text_1": "有機コンポストの分解プロセスはアイテム注液口を介して加速することができます",
   "create_integrated_farming.ponder.tag.farming_appliances": "農業用機器",
@@ -37,6 +35,5 @@
   "create_integrated_farming.ponder.tag.fishing_appliances": "釣り用機器",
   "create_integrated_farming.ponder.tag.fishing_appliances.description": "釣りに関するコンポーネント",
   "create_integrated_farming.ponder.tag.ranching_appliances": "牧場用機器",
-  "create_integrated_farming.ponder.tag.ranching_appliances.description": "牧場経営に関するコンポーネント",
-  "itemGroup.create_integrated_farming.base": "Create: Integrated Farming"
+  "create_integrated_farming.ponder.tag.ranching_appliances.description": "牧場経営に関するコンポーネント"
 }
