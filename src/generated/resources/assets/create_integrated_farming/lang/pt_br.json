@@ -1,0 +1,16 @@
+{
+  "block.create_integrated_farming.chicken_roost": "Poleiro de Galinha",
+  "block.create_integrated_farming.fishing_net": "Rede de Pesca",
+  "block.create_integrated_farming.lava_fishing_net": "Rede de Pesca de Lava",
+  "block.create_integrated_farming.lava_fishing_net.tooltip.summary": "Como a Vara de Pesca de Lava, a Rede de Pesca de Lava _só pode_ _pescar_ em _lava_.",
+  "block.create_integrated_farming.roost": "Poleiro",
+  "create_integrated_farming.ponder.lava_fishing_net.header": "Usando a Rede de Pesca de Lava em Dispositivos",
+  "create_integrated_farming.ponder.lava_fishing_net.text_1": "Sempre que as Redes de Pesca de Lava forem movidas como parte de um Dispositivo animado...",
+  "create_integrated_farming.ponder.lava_fishing_net.text_2": "Elas irão pescar em lava, como um jogador pescando com uma Vara de Pesca de Lava",
+  "create_integrated_farming.ponder.lava_fishing_net.text_3": "A Rede de Pesca de Lava pegará pequenos animais na lava",
+  "create_integrated_farming.ponder.spout.catalyze_letios_compost.header": "Catalisando Compostagem de Leteos",
+  "create_integrated_farming.ponder.spout.catalyze_letios_compost.text_1": "O processo de compostagem de Leteos pode ser acelerado via Spout em uma dimensão ultra quente",
+  "create_integrated_farming.ponder.spout.catalyze_organic_compost.header": "Catalisando Compostagem Orgânica",
+  "create_integrated_farming.ponder.spout.catalyze_organic_compost.text_1": "O processo de degradação da Compostagem Orgânica pode ser acelerado via Spout",
+  "itemGroup.create_integrated_farming.base": "Create: Integrated Farming"
+}
