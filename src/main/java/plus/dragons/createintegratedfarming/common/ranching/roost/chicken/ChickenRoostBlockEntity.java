@@ -50,6 +50,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 import plus.dragons.createintegratedfarming.common.registry.CIFDataMaps;
 import plus.dragons.createintegratedfarming.common.registry.CIFLootTables;
+import plus.dragons.createintegratedfarming.config.CIFConfig;
 
 public class ChickenRoostBlockEntity extends SmartBlockEntity {
     protected final ItemStackHandler inventory;
@@ -60,10 +61,10 @@ public class ChickenRoostBlockEntity extends SmartBlockEntity {
     public ChickenRoostBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         setLazyTickRate(20);
-        this.inventory = new ItemStackHandler(9) {
+        this.inventory = new ItemStackHandler(CIFConfig.server().roostingInventorySlotCount.get()) {
             @Override
             public int getSlotLimit(int slot) {
-                return 1;
+                return CIFConfig.server().roostingInventorySlotSize.get();
             }
         };
         this.outputHandler = new ItemHandlerWrapper(inventory) {

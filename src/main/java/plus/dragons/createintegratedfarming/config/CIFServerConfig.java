@@ -49,6 +49,12 @@ public class CIFServerConfig extends ConfigBase {
     public final ConfigBool leashedEntitySitsAutomatically = b(false,
             "leashedEntitySitsAutomatically",
             Comments.leashedEntitySitsAutomatically);
+    public final ConfigInt roostingInventorySlotCount = i(9, 1, 27,
+            "roostingInventorySlotCount",
+            Comments.roostingInventorySlotCount);
+    public final ConfigInt roostingInventorySlotSize = i(1, 1, 16,
+            "roostingInventorySlotSize",
+            Comments.roostingInventorySlotSize);
 
     @Override
     public String getName() {
@@ -90,5 +96,7 @@ public class CIFServerConfig extends ConfigBase {
                 "When enabled, falls back to vanilla Create behaviour.",
                 "When disabled, seated leashable entity can be dismounted by lead."
         };
+        static final String roostingInventorySlotCount = "The amount of Inventory Slot that the Chicken Roost has available.";
+        static final String roostingInventorySlotSize = "The amount of items per Inventory slot that the Chicken Roost can hold.";
     }
 }
