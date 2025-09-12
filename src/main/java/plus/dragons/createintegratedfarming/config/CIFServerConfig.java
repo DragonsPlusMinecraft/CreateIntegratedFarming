@@ -19,6 +19,7 @@
 package plus.dragons.createintegratedfarming.config;
 
 import net.createmod.catnip.config.ConfigBase;
+import net.createmod.catnip.config.ui.ConfigAnnotations;
 
 public class CIFServerConfig extends ConfigBase {
     public final ConfigGroup farming = group(1, "farming", Comments.farming);
@@ -51,10 +52,12 @@ public class CIFServerConfig extends ConfigBase {
             Comments.leashedEntitySitsAutomatically);
     public final ConfigInt roostingInventorySlotCount = i(9, 1, 27,
             "roostingInventorySlotCount",
-            Comments.roostingInventorySlotCount);
+            Comments.roostingInventorySlotCount,
+            ConfigAnnotations.RequiresRestart.SERVER.asComment());
     public final ConfigInt roostingInventorySlotSize = i(1, 1, 16,
             "roostingInventorySlotSize",
-            Comments.roostingInventorySlotSize);
+            Comments.roostingInventorySlotSize,
+            ConfigAnnotations.RequiresRestart.SERVER.asComment());
 
     @Override
     public String getName() {

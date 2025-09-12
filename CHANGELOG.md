@@ -1,11 +1,7 @@
-## Create: Integrated Farming 1.1.0
-
-**From 1.1.0, Farmer's Delight is not a hard requirement anymore, although it's highly recommended.** Which means this mod can run independently.  
-If Farmer's Delight is not installed, crafting recipes of Fishing Net and Roost will change.
+## Create: Integrated Farming 1.1.1
 
 ### Updates
-* Mechanical Arm supports Crab Trap from Crabber's Delight
-* Mechanical Arm supports picking Bullet Pepper from My Nether's Delight
+* Roost inventory size is now configurable (by NightPotato)
 
-### Fixes
-* Fix Roost vanish after pick chicken in certain situation
+### Translation
+* Add Brazilian Portuguese localization, by PrincessStellar
