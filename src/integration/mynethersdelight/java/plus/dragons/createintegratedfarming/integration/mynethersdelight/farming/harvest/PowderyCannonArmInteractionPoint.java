@@ -23,6 +23,8 @@ import com.simibubi.create.content.kinetics.mechanicalArm.ArmInteractionPoint;
 import com.simibubi.create.content.kinetics.mechanicalArm.ArmInteractionPointType;
 import com.soytutta.mynethersdelight.common.block.crops.PowderyCaneBlock;
 import com.soytutta.mynethersdelight.common.block.crops.PowderyCannonBlock;
+import com.soytutta.mynethersdelight.common.block.crops.PowderyFlowerBlock;
+import com.soytutta.mynethersdelight.common.block.utility.MNDBlockStateProperties;
 import com.soytutta.mynethersdelight.common.registry.MNDItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
@@ -32,6 +34,8 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.jetbrains.annotations.Nullable;
 
 public class PowderyCannonArmInteractionPoint extends ArmInteractionPoint {
+    private static final int MAX_HARVEST_SCAN_HEIGHT = 7;
+
     public PowderyCannonArmInteractionPoint(ArmInteractionPointType type, Level level, BlockPos pos, BlockState state) {
         super(type, level, pos, state);
     }
@@ -43,16 +47,16 @@ public class PowderyCannonArmInteractionPoint extends ArmInteractionPoint {
 
     @Override
     public ItemStack extract(ArmBlockEntity armBlockEntity, int slot, int amount, boolean simulate) {
-        BlockState state = level.getBlockState(pos);
-        if ((state.getBlock() instanceof PowderyCaneBlock || state.getBlock() instanceof PowderyCannonBlock) && state.getValue(BlockStateProperties.LIT)) {
-            if (!simulate) {
-                state = state.setValue(BlockStateProperties.LIT, false);
-                level.setBlockAndUpdate(pos, state);
-            }
-            int j = 1 + level.random.nextInt(2);
-            return new ItemStack(MNDItems.BULLET_PEPPER.get(), j);
+        BlockPos harvestPos = findHarvestPos();
+        if (harvestPos == null) {
+            return ItemStack.EMPTY;
         }
-        return ItemStack.EMPTY;
+        BlockState state = level.getBlockState(harvestPos);
+        if (!simulate) {
+            level.setBlockAndUpdate(harvestPos, resetHarvestedState(state));
+        }
+        int j = 1 + level.random.nextInt(2);
+        return new ItemStack(MNDItems.BULLET_PEPPER.get(), j);
     }
 
     @Override
@@ -60,10 +64,47 @@ public class PowderyCannonArmInteractionPoint extends ArmInteractionPoint {
         return 1;
     }
 
+    @Nullable
+    private BlockPos findHarvestPos() {
+        BlockPos currentPos = pos;
+        for (int i = 0; i < MAX_HARVEST_SCAN_HEIGHT && currentPos.getY() < level.getMaxBuildHeight(); i++) {
+            BlockState state = level.getBlockState(currentPos);
+            if (isHarvestable(state)) {
+                return currentPos;
+            }
+            if (!isPowderyCrop(state)) {
+                return null;
+            }
+            currentPos = currentPos.above();
+        }
+        return null;
+    }
+
+    private static boolean isHarvestable(BlockState state) {
+        return isPowderyCrop(state) && state.hasProperty(BlockStateProperties.LIT) && state.getValue(BlockStateProperties.LIT);
+    }
+
+    private static boolean isPowderyCrop(BlockState state) {
+        return state.getBlock() instanceof PowderyCaneBlock || state.getBlock() instanceof PowderyCannonBlock || state.getBlock() instanceof PowderyFlowerBlock;
+    }
+
+    private static BlockState resetHarvestedState(BlockState state) {
+        BlockState result = state.setValue(BlockStateProperties.LIT, false);
+        if (state.getBlock() instanceof PowderyFlowerBlock) {
+            if (result.hasProperty(BlockStateProperties.AGE_3)) {
+                result = result.setValue(BlockStateProperties.AGE_3, 0);
+            }
+            if (result.hasProperty(MNDBlockStateProperties.PRESSURE)) {
+                result = result.setValue(MNDBlockStateProperties.PRESSURE, 0);
+            }
+        }
+        return result;
+    }
+
     public static class Type extends ArmInteractionPointType {
         @Override
         public boolean canCreatePoint(Level level, BlockPos pos, BlockState state) {
-            return state.getBlock() instanceof PowderyCaneBlock || state.getBlock() instanceof PowderyCannonBlock;
+            return isPowderyCrop(state);
         }
 
         @Nullable
