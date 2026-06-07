@@ -1,9 +1,10 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '1.0.21'
-    id "me.modmuss50.mod-publish-plugin" version "0.8.4"
+    id 'net.neoforged.moddev' version '2.0.141'
+    id "me.modmuss50.mod-publish-plugin" version "2.0.0-beta.2"
     id "com.diffplug.spotless" version "7.0.2"
+    id 'idea'
 }
 
 tasks.named('wrapper', Wrapper).configure {
@@ -22,64 +23,100 @@ java {
     withSourcesJar()
 }
 
-var integrationMods = [
-        ["farmersdelight"],
-        ["netherdepthsupgrade"],
-        ["mynethersdelight","farmersdelight"],
-        ["corndelight","farmersdelight"],
-        ["createenchantablemachinery"],
-        ["crabberdelight","farmersdelight"],
-        ["untitledduck"],
-        ["delightoflight","farmersdelight"],
+def allIntegrationSourceSets = [
+        "farmersdelight",
+        "netherdepthsupgrade",
+        "mynethersdelight",
+        "corndelight",
+        "createenchantablemachinery",
+        "crabberdelight",
+        "untitledduck",
+        "delightoflight",
 ]
 
-integrationMods.each {integrationMod ->
-    sourceSets {
-        "${integrationMod.getFirst()}" {
-            java {
-                srcDir "src/integration/${integrationMod.getFirst()}/java"
-            }
-            resources {
-                srcDir "src/integration/${integrationMod.getFirst()}/resources"
-            }
-            compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
-            if (integrationMod.size() > 1) {
-                integrationMod.each { dependencyMod ->
-                    if (dependencyMod == integrationMod.getFirst()) return
-                    compileClasspath += sourceSets."${dependencyMod}".output + sourceSets."${dependencyMod}".compileClasspath
-                }
-            }
-        }
-        main {
-            runtimeClasspath += sourceSets."${integrationMod.getFirst()}".output
-        }
-    }
+def integrationSourceSetDependencies = [
+        mynethersdelight: ["farmersdelight"],
+        corndelight    : ["farmersdelight"],
+        crabberdelight : ["farmersdelight"],
+        delightoflight : ["farmersdelight"],
+]
 
-    classes {
-        finalizedBy(tasks."${integrationMod.getFirst()}Classes")
-    }
+def isIntegrationEnabled = { name ->
+    providers.gradleProperty("enable_${name}_integration")
+            .map { it.toBoolean() }
+            .orElse(true)
+            .get()
+}
 
-    jar {
-        from sourceSets."${integrationMod.getFirst()}".output
-    }
+def enabledIntegrationSourceSets = allIntegrationSourceSets.findAll { name ->
+    isIntegrationEnabled(name)
+}
 
-    tasks.sourcesJar {
-        from sourceSets."${integrationMod.getFirst()}".allJava
-    }
+def hasIntegration = { name ->
+    enabledIntegrationSourceSets.contains(name)
+}
 
-    neoForge {
-        mods {
-            "${mod_id}" {
-                sourceSet(sourceSets."${integrationMod.getFirst()}")
-            }
-        }
-        runs {
-            data {
-                programArguments.addAll '--existing', file("src/integration/${integrationMod.getFirst()}/resources/").getAbsolutePath()
-            }
+integrationSourceSetDependencies.each { name, dependencies ->
+    if (hasIntegration(name)) {
+        def missingDependencies = dependencies.findAll { dependencyName -> !hasIntegration(dependencyName) }
+        if (!missingDependencies.empty) {
+            throw new GradleException("The ${name} integration requires the following integration source sets: ${missingDependencies.join(', ')}")
         }
     }
 }
+
+sourceSets {
+    enabledIntegrationSourceSets.each { name ->
+        create(name) {
+            java {
+                srcDir "src/integration/${name}/java"
+            }
+            resources {
+                srcDir "src/integration/${name}/resources"
+            }
+            compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+            integrationSourceSetDependencies.get(name, []).each { dependencyName ->
+                compileClasspath += sourceSets[dependencyName].output + sourceSets[dependencyName].compileClasspath
+            }
+        }
+    }
+    main {
+        enabledIntegrationSourceSets.each { name ->
+            runtimeClasspath += sourceSets[name].output
+        }
+    }
+}
+
+tasks.named("classes") {
+    enabledIntegrationSourceSets.each { name ->
+        finalizedBy(tasks.named("${name}Classes"))
+    }
+}
+
+tasks.named("jar", Jar) {
+    enabledIntegrationSourceSets.each { name ->
+        from sourceSets[name].output
+    }
+}
+
+tasks.named("sourcesJar", Jar) {
+    enabledIntegrationSourceSets.each { name ->
+        from sourceSets[name].allJava
+    }
+}
+
+def integrationMixinConfigs = [
+        createenchantablemachinery: "${mod_id}.createenchantablemachinery.mixins.json",
+        netherdepthsupgrade       : "${mod_id}.netherdepthsupgrade.mixins.json",
+        delightoflight            : "${mod_id}.delightoflight.mixins.json",
+]
+
+def integrationMixinBlocks = integrationMixinConfigs
+        .findAll { name, config -> hasIntegration(name) }
+        .collect { name, config ->
+            "[[mixins]]\n    config=\"${config}\""
+        }
+        .join("\n\n")
 
 neoForge {
     version = project.neo_version
@@ -110,7 +147,8 @@ neoForge {
 
         data {
             data()
-            programArguments.addAll '--mod', project.mod_id,
+            def dataArgs = [
+                    '--mod', project.mod_id,
                     '--all',
                     '--output', file('src/generated/resources/').getAbsolutePath(),
                     '--existing', file('src/main/resources/').getAbsolutePath(),
@@ -119,6 +157,11 @@ neoForge {
                     "--existing-mod", "create_dragons_plus",
                     "--existing-mod", "farmersdelight",
                     "--existing-mod", "netherdepthsupgrade"
+            ]
+            enabledIntegrationSourceSets.each { name ->
+                dataArgs.addAll('--existing', file("src/integration/${name}/resources/").getAbsolutePath())
+            }
+            programArguments.addAll dataArgs
         }
 
         configureEach {
@@ -131,6 +174,9 @@ neoForge {
     mods {
         "${mod_id}" {
             sourceSet(sourceSets.main)
+            enabledIntegrationSourceSets.each { name ->
+                sourceSet(sourceSets[name])
+            }
         }
     }
 }
@@ -140,6 +186,25 @@ configurations {
     compileClasspath.extendsFrom localImplementation
     runtimeClasspath.extendsFrom localImplementation
     runtimeClasspath.extendsFrom localRuntime
+}
+
+enabledIntegrationSourceSets.each { name ->
+    def localConfig = configurations.create("${name}LocalImplementation") {
+        canBeConsumed = false
+        canBeResolved = false
+    }
+
+    configurations.named("${name}CompileClasspath") {
+        extendsFrom localConfig
+    }
+
+    configurations.named("${name}RuntimeClasspath") {
+        extendsFrom localConfig
+    }
+
+    configurations.named("runtimeClasspath") {
+        extendsFrom localConfig
+    }
 }
 
 repositories {
@@ -166,16 +231,40 @@ dependencies {
     compileOnly("top.theillusivec4.curios:curios-neoforge:${curios_version}+${curios_minecraft_version}:api")
     localRuntime("top.theillusivec4.curios:curios-neoforge:${curios_version}+${curios_minecraft_version}")
 
-    localImplementation("maven.modrinth:farmers-delight:${farmers_delight_version}")
-    localImplementation("maven.modrinth:my-nethers-delight:${my_nethers_delight_version}")
-    localImplementation("maven.modrinth:crabbers-delight:${crabbers_delight_version}")
-    localImplementation("maven.modrinth:mmlib:${mmlib_version}")
-    localRuntime("maven.modrinth:corn-delight:${corn_delight_version}")
-    compileOnly("maven.modrinth:create-enchantable-machinery:${create_enchantable_machinery_version}")
-    localImplementation("maven.modrinth:geckolib:${geckolib_version}")
-    localImplementation("maven.modrinth:nether-depths-upgrade:${nether_depths_upgrade_version}")
-    localImplementation("maven.modrinth:untitled-duck-mod:${untitled_duck_version}")
-    localImplementation("curse.maven:delighto-flight-1347014:7170834") // 1.2.2
+    if (hasIntegration("farmersdelight")) {
+        farmersdelightLocalImplementation("maven.modrinth:farmers-delight:${farmers_delight_version}")
+    }
+
+    if (hasIntegration("mynethersdelight")) {
+        mynethersdelightLocalImplementation("maven.modrinth:my-nethers-delight:${my_nethers_delight_version}")
+    }
+
+    if (hasIntegration("crabberdelight")) {
+        crabberdelightLocalImplementation("maven.modrinth:crabbers-delight:${crabbers_delight_version}")
+    }
+
+    if (hasIntegration("corndelight")) {
+        corndelightLocalImplementation("maven.modrinth:mmlib:${mmlib_version}")
+        localRuntime("maven.modrinth:corn-delight:${corn_delight_version}")
+    }
+
+    if (hasIntegration("createenchantablemachinery")) {
+        compileOnly("maven.modrinth:create-enchantable-machinery:${create_enchantable_machinery_version}")
+    }
+
+    if (hasIntegration("untitledduck")) {
+        untitledduckLocalImplementation("maven.modrinth:geckolib:${geckolib_version}")
+        untitledduckLocalImplementation("maven.modrinth:untitled-duck-mod:${untitled_duck_version}")
+    }
+
+    if (hasIntegration("netherdepthsupgrade")) {
+        netherdepthsupgradeLocalImplementation("maven.modrinth:geckolib:${geckolib_version}")
+        netherdepthsupgradeLocalImplementation("maven.modrinth:nether-depths-upgrade:${nether_depths_upgrade_version}")
+    }
+
+    if (hasIntegration("delightoflight")) {
+        delightoflightLocalImplementation("curse.maven:delighto-flight-1347014:7170834") // 1.2.2
+    }
 
     localImplementation("dev.ryanhcode.sable:sable-neoforge-${minecraft_version}:${sable_version}")
     localImplementation("dev.simulated_team.simulated:simulated-neoforge-${minecraft_version}:${create_aeronautics_version}")  { transitive false }
@@ -200,7 +289,8 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             mod_logo                            : mod_logo,
             create_version_range                : create_version_range,
             create_dragons_plus_version_range   : create_dragons_plus_version_range,
-            farmers_delight_version_range       : farmers_delight_version_range
+            farmers_delight_version_range       : farmers_delight_version_range,
+            integration_mixin_blocks            : integrationMixinBlocks
     ]
     inputs.properties replaceProperties
     expand replaceProperties
@@ -257,7 +347,7 @@ publishMods {
     additionalFiles.from sourcesJar.archiveFile
     changelog = project.file("CHANGELOG.md").text
     version = mod_version
-    type = BETA
+    type = STABLE
     displayName = "Create: Integrated Farming ${mod_version} for Create ${minecraft_version}-${create_version_production}"
     modLoaders.add("neoforge")
 
@@ -265,22 +355,18 @@ publishMods {
         projectId = "1249131"
         accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
         minecraftVersions.add(minecraft_version)
-
-        requires {
-            slug = "create"
-            slug = "create-dragons-plus"
-        }
+        requires("create")
+        requires("create-dragons-plus")
+        client = true
+        server = true
     }
 
     modrinth {
         projectId = "9k1pAsfR"
         accessToken = providers.environmentVariable("MODRINTH_TOKEN")
         minecraftVersions.add(minecraft_version)
-
-        requires {
-            slug = "create"
-            slug = "create-dragons-plus"
-        }
+        requires("create")
+        requires("create-dragons-plus")
     }
 }
 

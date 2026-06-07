@@ -1,10 +1,4 @@
-## Create: Integrated Farming 1.2.2
-
-Update for Farmer's Delight.
-
-Requires Create: Dragons Plus 1.9.1.
+## Create: Integrated Farming 1.3.0
 
 ### Fix
-* Fix incompatibility with Farmer's Delight 1.2.11+ (Thanks @Artsiom Zemliakou)
-
-Additional compat with Create: Simulated Series will come later.
+* Fixed crash with FD 1.3.2+

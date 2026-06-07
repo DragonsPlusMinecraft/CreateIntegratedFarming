@@ -15,12 +15,7 @@ issueTrackerURL="${mod_github}/issues"
 
 [[mixins]]
     config="${mod_id}.mixins.json"
-[[mixins]]
-    config="${mod_id}.createenchantablemachinery.mixins.json"
-[[mixins]]
-    config="${mod_id}.netherdepthsupgrade.mixins.json"
-[[mixins]]
-    config="${mod_id}.delightoflight.mixins.json"
+${integration_mixin_blocks}
 
 [[accessTransformers]]
     file="META-INF/accesstransformer.cfg"

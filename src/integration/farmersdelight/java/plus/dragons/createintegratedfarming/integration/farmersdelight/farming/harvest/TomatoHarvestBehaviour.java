@@ -32,20 +32,21 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 import plus.dragons.createintegratedfarming.api.harvester.CustomHarvestBehaviour;
 import vectorwing.farmersdelight.common.Configuration;
+import vectorwing.farmersdelight.common.block.TomatoBlock;
 import vectorwing.farmersdelight.common.block.TomatoVineBlock;
 import vectorwing.farmersdelight.common.registry.ModBlocks;
 import vectorwing.farmersdelight.common.registry.ModItems;
 import vectorwing.farmersdelight.common.registry.ModSounds;
 
 public class TomatoHarvestBehaviour implements CustomHarvestBehaviour {
-    private final TomatoVineBlock tomato;
+    private final TomatoBlock tomato;
 
-    public TomatoHarvestBehaviour(TomatoVineBlock tomato) {
+    public TomatoHarvestBehaviour(TomatoBlock tomato) {
         this.tomato = tomato;
     }
 
     public static @Nullable TomatoHarvestBehaviour create(Block block) {
-        if (!(block instanceof TomatoVineBlock tomato))
+        if (!(block instanceof TomatoBlock tomato))
             return null;
         return new TomatoHarvestBehaviour(tomato);
     }
@@ -63,7 +64,7 @@ public class TomatoHarvestBehaviour implements CustomHarvestBehaviour {
         }
         if (mature) {
             dropTomatoes(level, behaviour, context);
-            level.playSound(null, pos, ModSounds.ITEM_TOMATO_PICK_FROM_BUSH.get(), SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
+            level.playSound(null, pos, ModSounds.BLOCK_TOMATOES_PICK_TOMATOES.get(), SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
             level.setBlock(pos, state.setValue(tomato.getAgeProperty(), 0), 2);
         } else if (partial) {
             level.setBlock(pos, state.setValue(tomato.getAgeProperty(), 0), 2);
@@ -75,7 +76,7 @@ public class TomatoHarvestBehaviour implements CustomHarvestBehaviour {
         BlockState stateAbove = level.getBlockState(above);
         if (stateAbove.is(tomato))
             breakTomatoes(level, behaviour, context, above, stateAbove);
-        boolean ropelogged = state.getValue(TomatoVineBlock.ROPELOGGED);
+        boolean ropelogged = state.getValue(TomatoBlock.ROPELOGGED);
         BlockHelper.destroyBlockAs(
                 level,
                 pos,

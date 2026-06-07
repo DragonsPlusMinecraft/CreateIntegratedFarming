@@ -19,7 +19,7 @@
 package plus.dragons.createintegratedfarming.integration.farmersdelight.ponder;
 
 import static com.simibubi.create.infrastructure.ponder.AllCreatePonderTags.ARM_TARGETS;
-import static vectorwing.farmersdelight.common.registry.ModBlocks.BASKET;
+import static vectorwing.farmersdelight.common.registry.ModBlocks.*;
 
 import com.simibubi.create.AllBlocks;
 import net.createmod.catnip.registry.RegisteredObjectsHelper;
@@ -48,6 +48,7 @@ public class FDPonderPlugin {
                 RegisteredObjectsHelper::getKeyOrThrow);
 
         itemHelper.addToTag(ARM_TARGETS)
-                .add(BASKET.get());
+                .add(WOODEN_BASKET.get())
+                .add(BAMBOO_BASKET.get());
     }
 }

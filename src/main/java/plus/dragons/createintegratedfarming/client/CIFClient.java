@@ -30,7 +30,7 @@ import plus.dragons.createintegratedfarming.common.CIFCommon;
 @Mod(value = CIFCommon.ID, dist = Dist.CLIENT)
 public class CIFClient {
     public CIFClient(IEventBus modBus) {
-        modBus.addListener(EventPriority.LOWEST, CIFClient::init); // Try fix https://github.com/DragonsPlusMinecraft/CreateIntegratedFarming/issues/30 so priority is lowest
+        modBus.addListener(EventPriority.LOWEST, CIFClient::init);
     }
 
     public static void init(final FMLClientSetupEvent event) {
