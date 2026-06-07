@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "farmersdelight:wooden_basket",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:bamboo_basket",
+      "required": false
+    }
+  ]
+}
