@@ -22,8 +22,6 @@ import com.simibubi.create.content.contraptions.actors.harvester.HarvesterMoveme
 import com.simibubi.create.content.contraptions.behaviour.MovementContext;
 import com.simibubi.create.foundation.utility.BlockHelper;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -31,9 +29,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 import plus.dragons.createintegratedfarming.api.harvester.CustomHarvestBehaviour;
-import vectorwing.farmersdelight.common.Configuration;
+import vectorwing.farmersdelight.common.block.HangingTomatoBlock;
 import vectorwing.farmersdelight.common.block.TomatoBlock;
-import vectorwing.farmersdelight.common.block.TomatoVineBlock;
 import vectorwing.farmersdelight.common.registry.ModBlocks;
 import vectorwing.farmersdelight.common.registry.ModItems;
 import vectorwing.farmersdelight.common.registry.ModSounds;
@@ -74,9 +71,9 @@ public class TomatoHarvestBehaviour implements CustomHarvestBehaviour {
     protected void breakTomatoes(Level level, HarvesterMovementBehaviour behaviour, MovementContext context, BlockPos pos, BlockState state) {
         BlockPos above = pos.above();
         BlockState stateAbove = level.getBlockState(above);
-        if (stateAbove.is(tomato))
+        if (isTomatoCrop(stateAbove))
             breakTomatoes(level, behaviour, context, above, stateAbove);
-        boolean ropelogged = state.getValue(TomatoBlock.ROPELOGGED);
+        boolean restoreRope = shouldRestoreRope(state);
         BlockHelper.destroyBlockAs(
                 level,
                 pos,
@@ -84,8 +81,8 @@ public class TomatoHarvestBehaviour implements CustomHarvestBehaviour {
                 CustomHarvestBehaviour.getHarvestTool(context),
                 1,
                 stack -> behaviour.collectOrDropItem(context, stack));
-        if (ropelogged)
-            level.setBlockAndUpdate(pos, getRope());
+        if (restoreRope)
+            restoreRope(level, pos, state);
     }
 
     protected void dropTomatoes(Level level, HarvesterMovementBehaviour behaviour, MovementContext context) {
@@ -94,11 +91,20 @@ public class TomatoHarvestBehaviour implements CustomHarvestBehaviour {
             behaviour.collectOrDropItem(context, new ItemStack(ModItems.ROTTEN_TOMATO.get()));
     }
 
-    protected BlockState getRope() {
-        ResourceLocation ropeId = ResourceLocation.parse(Configuration.DEFAULT_TOMATO_VINE_ROPE.get());
-        BlockState rope = BuiltInRegistries.BLOCK.get(ropeId).defaultBlockState();
-        if (rope.isAir())
-            return ModBlocks.ROPE.get().defaultBlockState();
-        return rope;
+    protected boolean isTomatoCrop(BlockState state) {
+        return state.getBlock() instanceof TomatoBlock;
+    }
+
+    protected boolean shouldRestoreRope(BlockState state) {
+        if (state.getBlock() instanceof HangingTomatoBlock)
+            return true;
+        return state.hasProperty(TomatoBlock.ROPELOGGED) && state.getValue(TomatoBlock.ROPELOGGED);
+    }
+
+    protected void restoreRope(Level level, BlockPos pos, BlockState state) {
+        HangingTomatoBlock ropePlacer = state.getBlock() instanceof HangingTomatoBlock hangingTomato
+                ? hangingTomato
+                : ModBlocks.TOMATO_CROP_ON_ROPE.get();
+        ropePlacer.placeRope(level, pos);
     }
 }
