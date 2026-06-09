@@ -38,10 +38,16 @@ public class MNDPonderPlugin {
     private static void registerScenes(PonderSceneRegistrationHelper<ResourceLocation> helper) {
         helper.forComponents(AllBlocks.SPOUT.getId(), BuiltInRegistries.BLOCK.getKey(MNDBlocks.LETIOS_COMPOST.get()))
                 .addStoryBoard("mynethersdelight/letios_compost_catalyze", MNDPonderScenes::chargingSoil, CIFPonderTags.FARMING_APPLIANCES);
+        helper.forComponents(BuiltInRegistries.ITEM.getKey(MNDBlocks.POWDERY_CANNON.get().asItem()))
+                .addStoryBoard("mynethersdelight/powdery_cannon_arm", MNDPonderScenes::harvestPowderyCrops, CIFPonderTags.FARMING_APPLIANCES, ARM_TARGETS);
     }
 
     private static void registerTags(PonderTagRegistrationHelper<ResourceLocation> helper) {
         helper.addToTag(ARM_TARGETS)
-                .add(BuiltInRegistries.BLOCK.getKey(MNDBlocks.POWDERY_CANNON.get()));
+                .add(BuiltInRegistries.BLOCK.getKey(MNDBlocks.POWDERY_CANNON.get()))
+                .add(BuiltInRegistries.BLOCK.getKey(MNDBlocks.POWDERY_CANE.get()));
+
+        helper.addToTag(CIFPonderTags.FARMING_APPLIANCES)
+                .add(BuiltInRegistries.ITEM.getKey(MNDBlocks.POWDERY_CANNON.get().asItem()));
     }
 }
