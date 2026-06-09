@@ -263,7 +263,7 @@ dependencies {
     }
 
     if (hasIntegration("delightoflight")) {
-        delightoflightLocalImplementation("curse.maven:delighto-flight-1347014:7170834") // 1.2.2
+        delightoflightLocalImplementation("curse.maven:delighto-flight-1347014:${delighto_flight_version}")
     }
 
     localImplementation("dev.ryanhcode.sable:sable-neoforge-${minecraft_version}:${sable_version}")

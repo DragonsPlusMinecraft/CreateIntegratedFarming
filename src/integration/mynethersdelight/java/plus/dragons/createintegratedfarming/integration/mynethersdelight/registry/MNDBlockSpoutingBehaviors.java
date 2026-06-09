@@ -38,7 +38,7 @@ public class MNDBlockSpoutingBehaviors {
     }
 
     private static int fillLetiosCompost(Level level, BlockPos pos, SpoutBlockEntity spout, FluidStack fluid, boolean simulate) {
-        if (!(fluid.is(MNDTags.LETEOS_BOOSTER) || fluid.is(Fluids.LAVA)) || !level.dimensionType().ultraWarm()) // TODO Remove fluid.is(Fluids.LAVA) when https://github.com/SoyTutta/MyNethersDelight/pull/112 is merged
+        if (!(fluid.is(MNDTags.LETEOS_BOOSTER) || !level.dimensionType().ultraWarm()))
             return 0;
         if (!simulate && level instanceof ServerLevel) {
             BlockState state = level.getBlockState(pos);
