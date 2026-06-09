@@ -101,14 +101,14 @@ public class GooseRoostBlock extends RoostBlock implements IBE<GooseRoostBlockEn
 
     private GooseEntity gooseVariant(Level level) {
         GooseEntity goose = new GooseEntity(ModEntityTypes.GOOSE.get(), level);
-        if (variant < 2) {
+        if (variant < 3) {
             goose.setVariant(variant);
         } else {
             switch (variant) {
-                case 2:
+                case 3:
                     goose.setCustomName(Component.literal("ping"));
                     break;
-                case 3:
+                case 4:
                     goose.setCustomName(Component.literal("sus"));
                     break;
                 default:
@@ -129,7 +129,8 @@ public class GooseRoostBlock extends RoostBlock implements IBE<GooseRoostBlockEn
             }
         }
         return switch (goose.getVariant()) {
-            case 0b100 -> UntitledDuckBlocks.GOOSE_ROOST_CANADIAN.get();
+            case 0b1 -> UntitledDuckBlocks.GOOSE_ROOST_CANADIAN.get();
+            case 0b10 -> UntitledDuckBlocks.GOOSE_ROOST_GREYLAG.get();
             default -> UntitledDuckBlocks.GOOSE_ROOST_NORMAL.get();
         };
     }

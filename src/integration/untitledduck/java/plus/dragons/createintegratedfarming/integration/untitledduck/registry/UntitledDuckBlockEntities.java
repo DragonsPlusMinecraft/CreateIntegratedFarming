@@ -41,6 +41,7 @@ public class UntitledDuckBlockEntities {
             .blockEntity("goose_roost", GooseRoostBlockEntity::new)
             .validBlock(UntitledDuckBlocks.GOOSE_ROOST_NORMAL)
             .validBlock(UntitledDuckBlocks.GOOSE_ROOST_CANADIAN)
+            .validBlock(UntitledDuckBlocks.GOOSE_ROOST_GREYLAG)
             .validBlock(UntitledDuckBlocks.GOOSE_ROOST_PING)
             .validBlock(UntitledDuckBlocks.GOOSE_ROOST_SUS)
             .validBlock(UntitledDuckBlocks.GOOSE_ROOST_UNTITLED)

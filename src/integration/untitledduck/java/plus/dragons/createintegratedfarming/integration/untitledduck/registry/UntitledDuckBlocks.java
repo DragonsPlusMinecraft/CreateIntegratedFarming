@@ -38,9 +38,10 @@ public class UntitledDuckBlocks {
     public static final BlockEntry<DuckRoostBlock> DUCK_ROOST_PEKIN = registerDuckRoost("duck_roost_pekin", (byte) 3);
     public static final BlockEntry<GooseRoostBlock> GOOSE_ROOST_NORMAL = registerGooseRoost("goose_roost_normal", (byte) 0);
     public static final BlockEntry<GooseRoostBlock> GOOSE_ROOST_CANADIAN = registerGooseRoost("goose_roost_canadian", (byte) 1);
-    public static final BlockEntry<GooseRoostBlock> GOOSE_ROOST_PING = registerGooseRoost("goose_roost_ping", (byte) 2);
-    public static final BlockEntry<GooseRoostBlock> GOOSE_ROOST_SUS = registerGooseRoost("goose_roost_sus", (byte) 3);
-    public static final BlockEntry<GooseRoostBlock> GOOSE_ROOST_UNTITLED = registerGooseRoost("goose_roost_untitled", (byte) 4);
+    public static final BlockEntry<GooseRoostBlock> GOOSE_ROOST_GREYLAG = registerGooseRoost("goose_roost_greylag", (byte) 2);
+    public static final BlockEntry<GooseRoostBlock> GOOSE_ROOST_PING = registerGooseRoost("goose_roost_ping", (byte) 3);
+    public static final BlockEntry<GooseRoostBlock> GOOSE_ROOST_SUS = registerGooseRoost("goose_roost_sus", (byte) 4);
+    public static final BlockEntry<GooseRoostBlock> GOOSE_ROOST_UNTITLED = registerGooseRoost("goose_roost_untitled", (byte) 5);
 
     private static BlockEntry<DuckRoostBlock> registerDuckRoost(String path, byte variant) {
         return REGISTRATE.block(path, prop -> new DuckRoostBlock(prop, ROOST, variant))
@@ -71,6 +72,7 @@ public class UntitledDuckBlocks {
             event.accept(DUCK_ROOST_PEKIN);
             event.accept(GOOSE_ROOST_NORMAL);
             event.accept(GOOSE_ROOST_CANADIAN);
+            event.accept(GOOSE_ROOST_GREYLAG);
             event.accept(GOOSE_ROOST_PING);
             event.accept(GOOSE_ROOST_SUS);
             event.accept(GOOSE_ROOST_UNTITLED);

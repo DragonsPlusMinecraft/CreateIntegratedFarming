@@ -29,7 +29,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -101,23 +100,15 @@ public class DuckRoostBlock extends RoostBlock implements IBE<DuckRoostBlockEnti
 
     private DuckEntity duckVariant(Level level) {
         DuckEntity duck = new DuckEntity(ModEntityTypes.DUCK.get(), level);
-        if (variant > 2) {
-            duck.setCustomName(Component.literal("pekin"));
-        } else {
-            duck.setVariant(variant);
-        }
+        duck.setVariant(variant);
         return duck;
     }
 
     private static Block blockVariant(DuckEntity duck) {
-        if (duck.getCustomName() != null) {
-            if (duck.getCustomName().getString().equals("pekin")) {
-                return UntitledDuckBlocks.DUCK_ROOST_PEKIN.get();
-            }
-        }
         return switch (duck.getVariant()) {
             case 0b1 -> UntitledDuckBlocks.DUCK_ROOST_FEMALE.get();
             case 0b10 -> UntitledDuckBlocks.DUCK_ROOST_CAMPBELL.get();
+            case 0b11 -> UntitledDuckBlocks.DUCK_ROOST_PEKIN.get();
             default -> UntitledDuckBlocks.DUCK_ROOST_NORMAL.get();
         };
     }

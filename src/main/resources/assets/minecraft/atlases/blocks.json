@@ -26,6 +26,10 @@
     },
     {
       "type": "single",
+      "resource": "untitledduckmod:entity/greylag_goose"
+    },
+    {
+      "type": "single",
       "resource": "untitledduckmod:entity/sus_goose"
     },
     {

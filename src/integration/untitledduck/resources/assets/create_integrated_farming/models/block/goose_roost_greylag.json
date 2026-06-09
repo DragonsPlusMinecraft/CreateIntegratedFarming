@@ -1,0 +1,6 @@
+{
+  "parent": "create_integrated_farming:block/goose_roost_normal",
+  "textures": {
+    "goose": "untitledduckmod:entity/greylag_goose"
+  }
+}

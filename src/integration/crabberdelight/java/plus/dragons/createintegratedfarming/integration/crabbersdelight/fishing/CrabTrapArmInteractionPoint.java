@@ -55,7 +55,11 @@ public class CrabTrapArmInteractionPoint extends ArmInteractionPoint {
 
     @Override
     public int getSlotCount(ArmBlockEntity armBlockEntity) {
-        return 28;
+        if (level.getBlockEntity(pos) instanceof CrabTrapBlockEntity interaction) {
+            var cap = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, level.getBlockState(pos), interaction, Direction.DOWN);
+            if (cap != null) return cap.getSlots();
+        }
+        return 0;
     }
 
     public static class Type extends ArmInteractionPointType {
