@@ -33,6 +33,7 @@ def allIntegrationSourceSets = [
         "untitledduck",
         "delightoflight",
         "sable",
+        "twilightdelight",
 ]
 
 def integrationSourceSetDependencies = [
@@ -40,6 +41,7 @@ def integrationSourceSetDependencies = [
         corndelight    : ["farmersdelight"],
         crabberdelight : ["farmersdelight"],
         delightoflight : ["farmersdelight"],
+        twilightdelight: ["farmersdelight"],
 ]
 
 def isIntegrationEnabled = { name ->
@@ -273,6 +275,11 @@ dependencies {
         sableLocalImplementation("dev.simulated_team.simulated:simulated-neoforge-${minecraft_version}:${create_aeronautics_version}")  { transitive false }
         sableLocalImplementation("dev.eriksonn.aeronautics:aeronautics-neoforge-${minecraft_version}:${create_aeronautics_version}")  { transitive false }
         sableLocalImplementation("dev.ryanhcode.offroad:offroad-neoforge-${minecraft_version}:${create_aeronautics_version}")  { transitive false }
+    }
+
+    if (hasIntegration("twilightdelight")) {
+        twilightdelightLocalImplementation("curse.maven:the-twilight-forest-227639:${twilight_forest_version}")
+        twilightdelightLocalImplementation("maven.modrinth:twilight-delight:${twilight_delight_version}")
     }
 }
 

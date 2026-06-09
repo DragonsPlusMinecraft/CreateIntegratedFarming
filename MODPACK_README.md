@@ -83,3 +83,23 @@ The built-in tables produce one egg for the matching animal:
 * Goose Roost: `untitledduckmod:goose_egg`
 
 Duck and Goose roost loot tables are loaded only when Untitled Duck Mod is loaded.
+
+## Optional Compat
+
+### Twilight's Flavor & Delight
+
+When Twilight's Flavor & Delight is loaded:
+
+* Create Harvesters can collect Lily Pads produced by Rich Soil Lily Pad farming.
+* With Create's `harvesterReplants` enabled, Huge Lily Pads and Huge Water Lilies are preserved as farm cores.
+* With `harvesterReplants` disabled, Huge Lily Pads and Huge Water Lilies are harvested as drops.
+
+## Integration Source Sets
+
+Optional integration source sets can be disabled with Gradle properties:
+
+* `-Penable_twilightdelight_integration=false`
+
+Integration source set dependencies:
+
+* `twilightdelight` requires `farmersdelight`.

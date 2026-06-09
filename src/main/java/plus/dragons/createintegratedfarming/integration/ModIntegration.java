@@ -33,7 +33,9 @@ public enum ModIntegration {
     CRABBERS_DELIGHT(Mods.CRABBERS_DELIGHT),
     UNTITLED_DUCK(Mods.UNTITLED_DUCK),
     DELIGHT_O_FLIGHT(Mods.DELIGHT_O_FLIGHT),
-    SABLE(Mods.SABLE);
+    SABLE(Mods.SABLE),
+    TWILIGHT_FOREST(Mods.TWILIGHT_FOREST),
+    TWILIGHT_DELIGHT(Mods.TWILIGHT_DELIGHT);
 
     private final String id;
 
@@ -72,5 +74,7 @@ public enum ModIntegration {
         public static final String UNTITLED_DUCK = "untitledduckmod";
         public static final String DELIGHT_O_FLIGHT = "delighto_flight";
         public static final String SABLE = "sable";
+        public static final String TWILIGHT_FOREST = "twilightforest";
+        public static final String TWILIGHT_DELIGHT = "twilightdelight";
     }
 }
