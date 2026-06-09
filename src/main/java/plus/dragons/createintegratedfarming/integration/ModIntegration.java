@@ -32,7 +32,8 @@ public enum ModIntegration {
     NETHER_DEPTHS_UPGRADE(Mods.NETHER_DEPTHS_UPGRADE),
     CRABBERS_DELIGHT(Mods.CRABBERS_DELIGHT),
     UNTITLED_DUCK(Mods.UNTITLED_DUCK),
-    DELIGHT_O_FLIGHT(Mods.DELIGHT_O_FLIGHT);
+    DELIGHT_O_FLIGHT(Mods.DELIGHT_O_FLIGHT),
+    SABLE(Mods.SABLE);
 
     private final String id;
 
@@ -70,5 +71,6 @@ public enum ModIntegration {
         public static final String CRABBERS_DELIGHT = "crabbersdelight";
         public static final String UNTITLED_DUCK = "untitledduckmod";
         public static final String DELIGHT_O_FLIGHT = "delighto_flight";
+        public static final String SABLE = "sable";
     }
 }
