@@ -280,6 +280,7 @@ dependencies {
     if (hasIntegration("twilightdelight")) {
         twilightdelightLocalImplementation("curse.maven:the-twilight-forest-227639:${twilight_forest_version}")
         twilightdelightLocalImplementation("maven.modrinth:twilight-delight:${twilight_delight_version}")
+        localRuntime("maven.modrinth:cuisine-delight:gdWm3nOx") // java.lang.NoClassDefFoundError: dev/xkmc/cuisinedelight/content/logic/IngredientConfig TODO wait for fix
     }
 }
 
