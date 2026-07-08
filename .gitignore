@@ -25,3 +25,6 @@ run-data
 
 repo
 /src/generated/resources/.cache/
+
+.codex-tmp/
+.vscode/

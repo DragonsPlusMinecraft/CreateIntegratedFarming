@@ -110,6 +110,7 @@ tasks.named("sourcesJar", Jar) {
 
 def integrationMixinConfigs = [
         createenchantablemachinery: "${mod_id}.createenchantablemachinery.mixins.json",
+        farmersdelight           : "${mod_id}.farmersdelight.mixins.json",
         netherdepthsupgrade       : "${mod_id}.netherdepthsupgrade.mixins.json",
         delightoflight            : "${mod_id}.delightoflight.mixins.json",
         sable                     : "${mod_id}.sable.mixins.json",

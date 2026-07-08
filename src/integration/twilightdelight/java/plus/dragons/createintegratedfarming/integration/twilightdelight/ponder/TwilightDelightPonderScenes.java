@@ -36,7 +36,7 @@ public class TwilightDelightPonderScenes {
         CreateSceneBuilder scene = new CreateSceneBuilder(builder);
         scene.title("mechanical_arm.harvest_lily_pads", "Harvesting Lily Pads");
         scene.configureBasePlate(0, 0, 7);
-        var y01 = scene.world().showIndependentSection(util.select().layers(0, 2).substract(util.select().fromTo(1,0,1,5,0,1)), Direction.DOWN);
+        var y01 = scene.world().showIndependentSection(util.select().layers(0, 2).substract(util.select().fromTo(1, 0, 1, 5, 0, 1)), Direction.DOWN);
         Vec3 down = new Vec3(0, -1, 0);
         scene.world().moveSection(y01, down, 0);
 
