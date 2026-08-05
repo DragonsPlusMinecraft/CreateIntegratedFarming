@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_21",
   "plugin": "plus.dragons.createintegratedfarming.mixin.UniversalConditionalMixinPlugin",
   "mixins": [
+    "BlockEntityBehaviourMixin",
     "MovementBehaviourMixin",
     "MushroomColonyHarvestBehaviourMixin"
   ],
