@@ -1,4 +1,10 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "untitledduckmod"
+    }
+  ],
   "type": "minecraft:block",
   "pools": [
     {
@@ -11,11 +17,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "create_integrated_farming:goose_roost_greylag"
+          "name": "create_integrated_farming:goose_roost_canadian"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "create_integrated_farming:blocks/goose_roost_greylag"
+  "random_sequence": "create_integrated_farming:blocks/goose_roost_canadian"
 }

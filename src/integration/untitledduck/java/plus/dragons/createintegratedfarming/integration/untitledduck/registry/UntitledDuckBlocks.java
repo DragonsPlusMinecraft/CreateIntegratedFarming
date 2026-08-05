@@ -26,6 +26,7 @@ import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.world.level.block.SoundType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.data.loading.DatagenModLoader;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import plus.dragons.createintegratedfarming.common.registry.CIFCreativeModeTabs;
 import plus.dragons.createintegratedfarming.integration.untitledduck.ranching.roost.duck.DuckRoostBlock;
@@ -46,7 +47,11 @@ public class UntitledDuckBlocks {
     private static BlockEntry<DuckRoostBlock> registerDuckRoost(String path, byte variant) {
         return REGISTRATE.block(path, prop -> new DuckRoostBlock(prop, ROOST, variant))
                 .lang("Duck Roost")
-                .properties(prop -> prop.strength(1.5F).sound(SoundType.BAMBOO_WOOD))
+                .properties(prop -> {
+                    var result = prop.strength(1.5F).sound(SoundType.BAMBOO_WOOD);
+                    // Registrate's loot provider cannot add a mod-loaded condition, so these tables are maintained manually.
+                    return DatagenModLoader.isRunningDataGen() ? result.noLootTable() : result;
+                })
                 .blockstate((ctx, prov) -> prov.horizontalBlock(ctx.get(), AssetLookup.standardModel(ctx, prov)))
                 .item()
                 .build()
@@ -56,7 +61,11 @@ public class UntitledDuckBlocks {
     private static BlockEntry<GooseRoostBlock> registerGooseRoost(String path, byte variant) {
         return REGISTRATE.block(path, prop -> new GooseRoostBlock(prop, ROOST, variant))
                 .lang("Goose Roost")
-                .properties(prop -> prop.strength(1.5F).sound(SoundType.BAMBOO_WOOD))
+                .properties(prop -> {
+                    var result = prop.strength(1.5F).sound(SoundType.BAMBOO_WOOD);
+                    // Registrate's loot provider cannot add a mod-loaded condition, so these tables are maintained manually.
+                    return DatagenModLoader.isRunningDataGen() ? result.noLootTable() : result;
+                })
                 .blockstate((ctx, prov) -> prov.horizontalBlock(ctx.get(), AssetLookup.standardModel(ctx, prov)))
                 .item()
                 .build()
