@@ -1,6 +1,8 @@
-## Create: Integrated Farming 1.2.6
+## Create: Integrated Farming 1.2.7
+
+### Fix
+* Fixed Farmer's Delight baskets not accepting items from Create belts or packages when Sable-based integrations such as Create: Aeronautics are installed.
+* Fixed Untitled Duck Mod roost block loot tables loading when Untitled Duck Mod is not installed.
 
 ### Update
-* Added Create Harvester support for Twilight's Flavor & Delight Lily Pad farming.
-* Added Mechanical Arm support for harvesting Lily Pads, Huge Lily Pads, and Huge Water Lilies around Twilight Forest Huge Water Lilies.
-* Added Ponder scene for My Nether's Delight Powdery Crop harvesting and Twilight's Flavor & Delight Huge Lily harvesting.
+* Updated the compatibility baseline to NeoForge 21.1.248, Create: Dragons Plus 1.11.4, Sable 2.0.3, and Create: Aeronautics, Create: Simulated, and Create: Offroad 1.3.0.
