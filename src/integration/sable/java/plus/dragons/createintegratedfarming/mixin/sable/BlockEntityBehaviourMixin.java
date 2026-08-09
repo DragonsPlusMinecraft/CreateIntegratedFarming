@@ -38,7 +38,7 @@ public class BlockEntityBehaviourMixin {
     @Inject(method = "get(Lnet/minecraft/world/level/block/entity/BlockEntity;Lcom/simibubi/create/foundation/blockEntity/behaviour/BehaviourType;)Lcom/simibubi/create/foundation/blockEntity/behaviour/BlockEntityBehaviour;", at = @At("HEAD"), cancellable = true, remap = false)
     private static <T extends BlockEntityBehaviour> void createintegratedfarming$queryBehaviourProviderForSable(
             BlockEntity blockEntity, BehaviourType<T> type, CallbackInfoReturnable<T> cir) {
-        if (blockEntity instanceof SmartBlockEntity || !(blockEntity.getLevel() instanceof Level level))
+        if (blockEntity == null || blockEntity instanceof SmartBlockEntity || !(blockEntity.getLevel() instanceof Level level))
             return;
 
         var provider = level.getCapability(
