@@ -33,6 +33,7 @@ def allIntegrationSourceSets = [
         "untitledduck",
         "environmental",
         "autumnity",
+        "culturaldelights",
         "delightoflight",
         "sable",
         "twilightdelight",
@@ -42,6 +43,7 @@ def integrationSourceSetDependencies = [
         mynethersdelight: ["farmersdelight"],
         corndelight    : ["farmersdelight"],
         crabberdelight : ["farmersdelight"],
+        culturaldelights: ["farmersdelight"],
         delightoflight : ["farmersdelight"],
         twilightdelight: ["farmersdelight"],
 ]
@@ -273,6 +275,10 @@ dependencies {
         autumnityLocalImplementation("maven.modrinth:autumnity:${autumnity_version}")
         // Autumnity's GatherDataEvent references Gallery's model provider even though Gallery is not a runtime dependency.
         localRuntime("maven.modrinth:gallery:${gallery_version}")
+    }
+
+    if (hasIntegration("culturaldelights")) {
+        culturaldelightsLocalImplementation("maven.modrinth:YttyNOFA:${cultural_delights_version}")
     }
 
     if (hasIntegration("netherdepthsupgrade")) {
