@@ -37,6 +37,7 @@ def allIntegrationSourceSets = [
         "hearthandharvest",
         "windswept",
         "festivedelight",
+        "nethersexoticism",
         "delightoflight",
         "sable",
         "twilightdelight",
@@ -297,6 +298,10 @@ dependencies {
 
     if (hasIntegration("festivedelight")) {
         festivedelightLocalImplementation("maven.modrinth:festive-delight:${festive_delight_version}")
+    }
+
+    if (hasIntegration("nethersexoticism")) {
+        nethersexoticismLocalImplementation("maven.modrinth:3e4LaIlU:${nethers_exoticism_version}")
     }
 
     if (hasIntegration("netherdepthsupgrade")) {
