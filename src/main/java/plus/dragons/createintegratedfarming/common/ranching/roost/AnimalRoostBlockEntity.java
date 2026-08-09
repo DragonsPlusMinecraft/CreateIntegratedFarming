@@ -24,6 +24,7 @@ import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.item.ItemHandlerWrapper;
 import com.simibubi.create.foundation.item.ItemHelper;
+import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -33,6 +34,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.Containers;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -114,6 +116,7 @@ public abstract class AnimalRoostBlockEntity extends SmartBlockEntity {
         }
         if (eggTime <= 0) {
             boolean inserted = false;
+            var remainders = new ArrayList<ItemStack>();
             var lootTable = serverLevel.getServer().reloadableRegistries().getLootTable(productionLootTable());
             var lootParams = new LootParams.Builder(serverLevel)
                     .withParameter(LootContextParams.BLOCK_STATE, getBlockState())
@@ -125,8 +128,16 @@ public abstract class AnimalRoostBlockEntity extends SmartBlockEntity {
             for (var stack : lootStacks) {
                 ItemStack remainder = ItemHandlerHelper.insertItem(inventory, stack, false);
                 inserted |= stack.getCount() != remainder.getCount();
+                if (!remainder.isEmpty()) remainders.add(remainder);
             }
             if (inserted) {
+                for (var remainder : remainders)
+                    Containers.dropItemStack(
+                            serverLevel,
+                            worldPosition.getX() + 0.5,
+                            worldPosition.getY() + 0.5,
+                            worldPosition.getZ() + 0.5,
+                            remainder);
                 eggTime = 6000 + level.random.nextInt(6000);
                 level.playSound(
                         null, worldPosition, SoundEvents.CHICKEN_EGG, SoundSource.BLOCKS,

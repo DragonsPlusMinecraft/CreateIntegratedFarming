@@ -181,7 +181,7 @@ public class RoostScene {
 
         scene.overlay().showControls(util.vector().centerOf(2, 3, 2), Pointing.DOWN, 40).rightClick().withItem(Items.WHEAT_SEEDS.getDefaultInstance());
         scene.overlay().showText(60)
-                .text("For Poultry to produce, it must be fed")
+                .text("Poultry produces naturally over time; feeding speeds up the next output")
                 .pointAt(util.vector().centerOf(2, 2, 2))
                 .placeNearTarget();
         scene.idle(70);
@@ -230,7 +230,7 @@ public class RoostScene {
         scene.idle(10);
         scene.world().setKineticSpeed(util.select().fromTo(0, 1, 2, 5, 1, 2), 32);
         scene.overlay().showText(60)
-                .text("Keep feeding to produce livestock products")
+                .text("Feed again after each cooldown to keep production moving faster")
                 .pointAt(util.vector().centerOf(1, 1, 2))
                 .attachKeyFrame()
                 .placeNearTarget();

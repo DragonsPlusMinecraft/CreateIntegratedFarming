@@ -36,6 +36,6 @@ public record ChickenFoodItem(IntProvider progress, IntProvider cooldown, Option
     }
 
     public int getCooldown(RandomSource random) {
-        return progress.sample(random);
+        return cooldown.sample(random);
     }
 }

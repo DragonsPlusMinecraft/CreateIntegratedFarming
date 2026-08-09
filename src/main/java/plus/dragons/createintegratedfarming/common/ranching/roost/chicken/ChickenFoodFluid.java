@@ -35,6 +35,6 @@ public record ChickenFoodFluid(IntProvider progress, IntProvider cooldown, int a
     }
 
     public int getCooldown(RandomSource random) {
-        return progress.sample(random);
+        return cooldown.sample(random);
     }
 }

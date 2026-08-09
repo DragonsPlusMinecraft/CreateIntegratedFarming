@@ -72,6 +72,7 @@ public abstract class UntitledAnimalRoostBlockEntity extends AnimalRoostBlockEnt
             var remainer = stack.getCraftingRemainingItem();
             if (!remainer.isEmpty())
                 Containers.dropItemStack(level, feedPos.x, feedPos.y, feedPos.z, remainer.copy());
+            return true;
         }
         return false;
     }
