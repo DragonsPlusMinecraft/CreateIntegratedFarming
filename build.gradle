@@ -31,6 +31,8 @@ def allIntegrationSourceSets = [
         "createenchantablemachinery",
         "crabberdelight",
         "untitledduck",
+        "environmental",
+        "autumnity",
         "delightoflight",
         "sable",
         "twilightdelight",
@@ -259,6 +261,18 @@ dependencies {
     if (hasIntegration("untitledduck")) {
         untitledduckLocalImplementation("maven.modrinth:geckolib:${geckolib_version}")
         untitledduckLocalImplementation("maven.modrinth:untitled-duck-mod:${untitled_duck_version}")
+    }
+
+    if (hasIntegration("environmental")) {
+        environmentalLocalImplementation("maven.modrinth:blueprint:${blueprint_version}")
+        environmentalLocalImplementation("maven.modrinth:environmental:${environmental_version}")
+    }
+
+    if (hasIntegration("autumnity")) {
+        autumnityLocalImplementation("maven.modrinth:blueprint:${blueprint_version}")
+        autumnityLocalImplementation("maven.modrinth:autumnity:${autumnity_version}")
+        // Autumnity's GatherDataEvent references Gallery's model provider even though Gallery is not a runtime dependency.
+        localRuntime("maven.modrinth:gallery:${gallery_version}")
     }
 
     if (hasIntegration("netherdepthsupgrade")) {

@@ -35,5 +35,7 @@
   "create_integrated_farming.ponder.tag.fishing_appliances": "釣り用機器",
   "create_integrated_farming.ponder.tag.fishing_appliances.description": "釣りに関するコンポーネント",
   "create_integrated_farming.ponder.tag.ranching_appliances": "牧場用機器",
-  "create_integrated_farming.ponder.tag.ranching_appliances.description": "牧場経営に関するコンポーネント"
+  "create_integrated_farming.ponder.tag.ranching_appliances.description": "牧場経営に関するコンポーネント",
+  "block.create_integrated_farming.environmental_duck_roost": "アヒル小屋",
+  "block.create_integrated_farming.autumnity_turkey_roost": "七面鳥小屋"
 }

@@ -12,5 +12,7 @@
   "create_integrated_farming.ponder.spout.catalyze_letios_compost.text_1": "O processo de compostagem de Leteos pode ser acelerado via Spout em uma dimensão ultra quente",
   "create_integrated_farming.ponder.spout.catalyze_organic_compost.header": "Catalisando Compostagem Orgânica",
   "create_integrated_farming.ponder.spout.catalyze_organic_compost.text_1": "O processo de degradação da Compostagem Orgânica pode ser acelerado via Spout",
-  "itemGroup.create_integrated_farming.base": "Create: Integrated Farming"
+  "itemGroup.create_integrated_farming.base": "Create: Integrated Farming",
+  "block.create_integrated_farming.environmental_duck_roost": "Poleiro de Pato",
+  "block.create_integrated_farming.autumnity_turkey_roost": "Poleiro de Peru"
 }

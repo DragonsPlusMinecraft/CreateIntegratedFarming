@@ -39,6 +39,14 @@
     {
       "type": "single",
       "resource": "untitledduckmod:entity/untitled_goose"
+    },
+    {
+      "type": "single",
+      "resource": "environmental:entity/duck/duck"
+    },
+    {
+      "type": "single",
+      "resource": "autumnity:entity/turkey"
     }
   ]
 }

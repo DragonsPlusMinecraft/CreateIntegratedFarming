@@ -46,6 +46,10 @@ public class CIFCommon {
             .setTooltipModifier(item -> new ItemDescription.Modifier(item, FontHelper.Palette.STANDARD_CREATE));
 
     public CIFCommon(IEventBus modBus, ModContainer modContainer) {
+        REGISTRATE.addRawLang("create_integrated_farming.goggles.roost.next_output", "Next output: %s");
+        REGISTRATE.addRawLang("create_integrated_farming.goggles.roost.ready", "Ready");
+        REGISTRATE.addRawLang(
+                "create_integrated_farming.goggles.roost.output_inventory_full", "Output inventory full");
         REGISTRATE.registerEventListeners(modBus);
         CIFCreativeModeTabs.register(modBus);
         CIFBlocks.register(modBus);

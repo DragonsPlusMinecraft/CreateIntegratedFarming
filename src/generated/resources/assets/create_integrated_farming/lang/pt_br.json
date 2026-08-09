@@ -1,10 +1,12 @@
 {
   "_comment.unlocalized": "Remove this line after finishing localization.",
+  "block.create_integrated_farming.autumnity_turkey_roost": "Poleiro de Peru",
   "block.create_integrated_farming.chicken_roost": "Poleiro de Galinha",
   "block.create_integrated_farming.duck_roost_campbell": "Duck Roost",
   "block.create_integrated_farming.duck_roost_female": "Duck Roost",
   "block.create_integrated_farming.duck_roost_normal": "Duck Roost",
   "block.create_integrated_farming.duck_roost_pekin": "Duck Roost",
+  "block.create_integrated_farming.environmental_duck_roost": "Poleiro de Pato",
   "block.create_integrated_farming.fishing_net": "Rede de Pesca",
   "block.create_integrated_farming.goose_roost_canadian": "Goose Roost",
   "block.create_integrated_farming.goose_roost_greylag": "Goose Roost",

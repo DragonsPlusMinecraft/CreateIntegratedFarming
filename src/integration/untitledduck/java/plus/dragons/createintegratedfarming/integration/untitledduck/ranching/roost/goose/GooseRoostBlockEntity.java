@@ -37,13 +37,18 @@ public class GooseRoostBlockEntity extends UntitledAnimalRoostBlockEntity {
     }
 
     @Override
-    public Predicate<ItemStack> getFoodPredicate() {
+    protected Predicate<ItemStack> getFoodPredicate() {
         return stack -> stack.is(ModTags.ItemTags.GOOSE_BREEDING_FOOD);
     }
 
     @Override
-    public SoundEvent getAmbientSound() {
+    protected SoundEvent getAmbientSound() {
         return ModSoundEvents.GOOSE_HONK.get();
+    }
+
+    @Override
+    protected SoundEvent productionSound() {
+        return ModSoundEvents.GOOSE_LAY_EGG.get();
     }
 
     @Override

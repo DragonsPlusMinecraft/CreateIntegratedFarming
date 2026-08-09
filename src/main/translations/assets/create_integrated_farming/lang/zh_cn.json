@@ -58,5 +58,7 @@
   "create_integrated_farming.ponder.tag.fishing_appliances.description": "用于捕鱼的元件",
   "create_integrated_farming.ponder.tag.ranching_appliances": "畜牧用具",
   "create_integrated_farming.ponder.tag.ranching_appliances.description": "用于畜牧业的元件",
-  "itemGroup.create_integrated_farming.base": "机械动力：集成农业"
+  "itemGroup.create_integrated_farming.base": "机械动力：集成农业",
+  "block.create_integrated_farming.environmental_duck_roost": "鸭舍",
+  "block.create_integrated_farming.autumnity_turkey_roost": "火鸡舍"
 }

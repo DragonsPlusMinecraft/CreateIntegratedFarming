@@ -38,5 +38,7 @@
   "create_integrated_farming.ponder.tag.fishing_appliances.description": "Компоненты для рыбалки",
   "create_integrated_farming.ponder.tag.ranching_appliances": "Животноводческие устройства",
   "create_integrated_farming.ponder.tag.ranching_appliances.description": "Компоненты для животноводства",
-  "itemGroup.create_integrated_farming.base": "Create: Комплексное Фермерство"
+  "itemGroup.create_integrated_farming.base": "Create: Комплексное Фермерство",
+  "block.create_integrated_farming.environmental_duck_roost": "Утиный насест",
+  "block.create_integrated_farming.autumnity_turkey_roost": "Индюшачий насест"
 }

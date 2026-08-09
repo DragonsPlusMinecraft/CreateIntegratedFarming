@@ -1,9 +1,11 @@
 {
+  "block.create_integrated_farming.autumnity_turkey_roost": "火鸡舍",
   "block.create_integrated_farming.chicken_roost": "鸡舍",
   "block.create_integrated_farming.duck_roost_campbell": "鸭舍",
   "block.create_integrated_farming.duck_roost_female": "鸭舍",
   "block.create_integrated_farming.duck_roost_normal": "鸭舍",
   "block.create_integrated_farming.duck_roost_pekin": "鸭舍",
+  "block.create_integrated_farming.environmental_duck_roost": "鸭舍",
   "block.create_integrated_farming.fishing_net": "渔网",
   "block.create_integrated_farming.goose_roost_canadian": "鹅舍",
   "block.create_integrated_farming.goose_roost_greylag": "鹅舍",
