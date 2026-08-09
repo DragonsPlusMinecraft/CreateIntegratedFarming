@@ -36,6 +36,7 @@ def allIntegrationSourceSets = [
         "culturaldelights",
         "hearthandharvest",
         "windswept",
+        "festivedelight",
         "delightoflight",
         "sable",
         "twilightdelight",
@@ -47,6 +48,7 @@ def integrationSourceSetDependencies = [
         crabberdelight : ["farmersdelight"],
         culturaldelights: ["farmersdelight"],
         hearthandharvest: ["farmersdelight"],
+        festivedelight  : ["farmersdelight"],
         delightoflight : ["farmersdelight"],
         twilightdelight: ["farmersdelight"],
 ]
@@ -291,6 +293,10 @@ dependencies {
     if (hasIntegration("windswept")) {
         windsweptLocalImplementation("maven.modrinth:blueprint:${blueprint_version}")
         windsweptLocalImplementation("curse.maven:windsweptmod-636321:${windswept_version}")
+    }
+
+    if (hasIntegration("festivedelight")) {
+        festivedelightLocalImplementation("maven.modrinth:festive-delight:${festive_delight_version}")
     }
 
     if (hasIntegration("netherdepthsupgrade")) {

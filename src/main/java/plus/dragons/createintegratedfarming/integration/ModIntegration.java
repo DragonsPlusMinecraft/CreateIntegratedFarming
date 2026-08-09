@@ -37,6 +37,7 @@ public enum ModIntegration {
     CULTURAL_DELIGHTS(Mods.CULTURAL_DELIGHTS),
     HEARTH_AND_HARVEST(Mods.HEARTH_AND_HARVEST),
     WINDSWEPT(Mods.WINDSWEPT),
+    FESTIVE_DELIGHT(Mods.FESTIVE_DELIGHT),
     DELIGHT_O_FLIGHT(Mods.DELIGHT_O_FLIGHT),
     SABLE(Mods.SABLE),
     TWILIGHT_FOREST(Mods.TWILIGHT_FOREST),
@@ -82,6 +83,7 @@ public enum ModIntegration {
         public static final String CULTURAL_DELIGHTS = "culturaldelights";
         public static final String HEARTH_AND_HARVEST = "hearthandharvest";
         public static final String WINDSWEPT = "windswept";
+        public static final String FESTIVE_DELIGHT = "festive_delight";
         public static final String DELIGHT_O_FLIGHT = "delighto_flight";
         public static final String SABLE = "sable";
         public static final String TWILIGHT_FOREST = "twilightforest";
