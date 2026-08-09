@@ -1,26 +1,58 @@
-## Tags
+# Modpack and Datapack Integration
 
-### Block
+This document covers data-driven customization for Create: Integrated Farming. Java integration authors should use [DEV_README.md](DEV_README.md) instead.
 
-* `create:vertical_plants` includes `#create:vertical_plants/fragile`.
-* `create:vertical_plants/fragile` is for vertical plants that should be skipped by Create's Saw-style tree cutting logic because breaking their root already breaks the whole plant.
+## Crop Harvesting
 
-## Data Maps
+### Preventing Mechanical Harvesting
 
-### Chicken Food
+Add a block to `#create:non_harvestable` when Create's Mechanical Harvester and the Vacuum Harvester should both skip it.
+
+`data/create/tags/block/non_harvestable.json`:
+
+```json
+{
+  "replace": false,
+  "values": [
+    "examplemod:delicate_crop"
+  ]
+}
+```
+
+The Vacuum Harvester automatically supports mature `CropBlock` crops, Cocoa, Sweet Berry Bushes, Nether Wart, and simple non-solid bushes with an integer `age` property. Structured or multi-block crops that need custom drops or post-harvest states require the Java API described in [DEV_README.md](DEV_README.md).
+
+### Vacuum Harvester Range and Pressure Cycle
+
+The server config key `farming.vacuumHarvesterRange` controls the horizontal radius of stationary and Contraption-mounted Vacuum Harvesters. It defaults to `10` and accepts values from `1` through `16`. The vertical range is always one block above and below the harvester.
+
+`farming.vacuumHarvesterChargeTime` controls the base pressure-charging time and defaults to `600` ticks. A stationary Vacuum Harvester takes `max(20, ceil(configuredTicks * 64 / abs(RPM)))` ticks to charge. A Contraption-mounted Vacuum Harvester uses the configured time directly, continues charging while its Contraption is stationary, and pauses only while disabled by Contraption Controls.
+
+At the end of each charge, the Vacuum Harvester scans and harvests every mature crop in its current configured area. Its stress impact is configured separately at `stressValues.v1.impact.vacuum_harvester` and defaults to `8 SU/RPM`.
+
+## Vertical Plant Tags
+
+`#create:vertical_plants` includes `#create:vertical_plants/fragile`.
+
+Use `#create:vertical_plants/fragile` for vertical plants that should be skipped by Create's Saw-style tree-cutting logic because breaking their root already breaks the whole plant.
+
+## Roost Feeding
+
+### Chicken Food Data Maps
 
 Chicken Roost feeding is controlled by synced data maps:
 
-* `create_integrated_farming:chicken_food` on items
-* `create_integrated_farming:chicken_food` on fluids
+- `create_integrated_farming:chicken_food` on items
+- `create_integrated_farming:chicken_food` on fluids
+
+Place overrides in `data/create_integrated_farming/data_maps/item/chicken_food.json` or `data/create_integrated_farming/data_maps/fluid/chicken_food.json`, respectively.
 
 Item entries use:
 
-* `progress`: ticks removed from the roost's production timer. This accepts Minecraft int provider formats.
-* `cooldown`: ticks before the roost can be fed again. This accepts Minecraft int provider formats.
-* `using_converts_to`: optional single item stack dropped after the food item is consumed.
+- `progress`: ticks removed from the Roost's production timer. This accepts Minecraft integer-provider formats.
+- `cooldown`: ticks before the Roost can be fed again. This accepts Minecraft integer-provider formats.
+- `using_converts_to`: optional single item stack dropped at the Roost after the food item is consumed.
 
-Example:
+Example item data map:
 
 ```json
 {
@@ -42,11 +74,11 @@ Example:
 
 Fluid entries use:
 
-* `progress`: ticks removed from the roost's production timer.
-* `cooldown`: ticks before the roost can be fed again.
-* `amount`: mB consumed by one Spout feeding operation.
+- `progress`: ticks removed from the Roost's production timer.
+- `cooldown`: ticks before the Roost can be fed again.
+- `amount`: millibuckets consumed by one Spout feeding operation.
 
-Example:
+Example fluid data map:
 
 ```json
 {
@@ -64,22 +96,31 @@ Example:
 }
 ```
 
-The generated item data map includes `#minecraft:chicken_food` with `2400` progress and `400-800` cooldown. When Create Crafts & Additions is loaded, the generated fluid data map also includes `createadditions:seed_oil` with `100` mB consumption, `2400` progress, and `400-800` cooldown.
+The generated item data map includes `#minecraft:chicken_food` with `2400` progress and a `400`–`800` tick cooldown. When Create Crafts & Additions is loaded, the generated fluid data map also includes `createadditions:seed_oil` with `100` mB consumption, `2400` progress, and a `400`–`800` tick cooldown.
 
-## Loot Tables
+### Other Poultry Food Tags
 
-### Roost Production
+Optional poultry Roosts use the food tag provided by their source mod. Adding an item to one of these tags makes it valid Roost food as well:
 
-Roost product generation uses loot tables. Datapacks can replace these tables to tune products or add extra drops.
+| Roost | Food tag |
+| --- | --- |
+| Untitled Duck duck | `#untitledduckmod:duck_breeding_food` |
+| Untitled Duck goose | `#untitledduckmod:goose_breeding_food` |
+| Environmental duck | `#environmental:duck_food` |
+| Autumnity turkey | `#autumnity:turkey_food` |
 
-* `create_integrated_farming:gameplay/roost/chicken`
-* `create_integrated_farming:gameplay/roost/duck`
-* `create_integrated_farming:gameplay/roost/goose`
+Each accepted item removes `2400` ticks from the production timer and applies a random `400`–`800` tick feeding cooldown.
 
-The built-in tables produce one egg for the matching animal:
+## Roost Production Loot Tables
 
-* Chicken Roost: `minecraft:egg`
-* Duck Roost: `untitledduckmod:duck_egg`
-* Goose Roost: `untitledduckmod:goose_egg`
+Roost production uses block-context loot tables. Datapacks can replace these tables to tune products or add extra drops.
 
-Duck and Goose roost loot tables are loaded only when Untitled Duck Mod is loaded.
+| Roost | Loot table | Default product | Required mod |
+| --- | --- | --- | --- |
+| Chicken | `create_integrated_farming:gameplay/roost/chicken` | `minecraft:egg` | None |
+| Untitled Duck duck | `create_integrated_farming:gameplay/roost/duck` | `untitledduckmod:duck_egg` | Untitled Duck |
+| Untitled Duck goose | `create_integrated_farming:gameplay/roost/goose` | `untitledduckmod:goose_egg` | Untitled Duck |
+| Environmental duck | `create_integrated_farming:gameplay/roost/environmental_duck` | `environmental:duck_egg` | Environmental |
+| Autumnity turkey | `create_integrated_farming:gameplay/roost/autumnity_turkey` | `autumnity:turkey_egg` | Autumnity |
+
+Built-in optional loot tables use a root-level `neoforge:mod_loaded` condition. Datapack replacements that reference optional-mod items should retain the corresponding condition so they can still load when that mod is absent.
