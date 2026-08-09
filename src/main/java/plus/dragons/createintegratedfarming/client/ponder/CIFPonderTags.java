@@ -19,6 +19,7 @@
 package plus.dragons.createintegratedfarming.client.ponder;
 
 import static com.simibubi.create.infrastructure.ponder.AllCreatePonderTags.ARM_TARGETS;
+import static com.simibubi.create.infrastructure.ponder.AllCreatePonderTags.CONTRAPTION_ACTOR;
 
 import com.simibubi.create.AllBlocks;
 import com.tterrag.registrate.util.entry.RegistryEntry;
@@ -65,7 +66,11 @@ public class CIFPonderTags {
 
         entryHelper.addToTag(FARMING_APPLIANCES)
                 .add(AllBlocks.MECHANICAL_HARVESTER)
+                .add(CIFBlocks.VACUUM_HARVESTER)
                 .add(AllBlocks.SPOUT);
+
+        entryHelper.addToTag(CONTRAPTION_ACTOR)
+                .add(CIFBlocks.VACUUM_HARVESTER);
 
         entryHelper.addToTag(RANCHING_APPLIANCES)
                 .add(CIFBlocks.ROOST)

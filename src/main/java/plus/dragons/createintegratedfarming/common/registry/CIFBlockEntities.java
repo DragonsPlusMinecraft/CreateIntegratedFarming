@@ -25,12 +25,21 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.capabilities.Capabilities.ItemHandler;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import plus.dragons.createintegratedfarming.client.renderer.VacuumHarvesterRenderer;
+import plus.dragons.createintegratedfarming.client.renderer.VacuumHarvesterVisual;
+import plus.dragons.createintegratedfarming.common.farming.vacuum.VacuumHarvesterBlockEntity;
 import plus.dragons.createintegratedfarming.common.ranching.roost.chicken.ChickenRoostBlockEntity;
 
 public class CIFBlockEntities {
     public static final BlockEntityEntry<ChickenRoostBlockEntity> CHICKEN_ROOST = REGISTRATE
             .blockEntity("chicken_roost", ChickenRoostBlockEntity::new)
             .validBlock(CIFBlocks.CHICKEN_ROOST)
+            .register();
+    public static final BlockEntityEntry<VacuumHarvesterBlockEntity> VACUUM_HARVESTER = REGISTRATE
+            .blockEntity("vacuum_harvester", VacuumHarvesterBlockEntity::new)
+            .visual(() -> VacuumHarvesterVisual::new, false)
+            .validBlock(CIFBlocks.VACUUM_HARVESTER)
+            .renderer(() -> VacuumHarvesterRenderer::new)
             .register();
 
     public static void register(IEventBus modBus) {
@@ -43,5 +52,9 @@ public class CIFBlockEntities {
                 ItemHandler.BLOCK,
                 CHICKEN_ROOST.get(),
                 ChickenRoostBlockEntity::getItemHandler);
+        event.registerBlockEntity(
+                ItemHandler.BLOCK,
+                VACUUM_HARVESTER.get(),
+                VacuumHarvesterBlockEntity::getItemHandler);
     }
 }

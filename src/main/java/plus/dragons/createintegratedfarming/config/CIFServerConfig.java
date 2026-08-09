@@ -20,12 +20,20 @@ package plus.dragons.createintegratedfarming.config;
 
 import net.createmod.catnip.config.ConfigBase;
 import net.createmod.catnip.config.ui.ConfigAnnotations;
+import plus.dragons.createdragonsplus.config.StressConfig;
+import plus.dragons.createintegratedfarming.common.CIFCommon;
 
 public class CIFServerConfig extends ConfigBase {
     public final ConfigGroup farming = group(1, "farming", Comments.farming);
     public final ConfigBool mushroomColoniesDropSelf = b(false,
             "mushroomColoniesDropSelf",
             Comments.mushroomColoniesDropSelf);
+    public final ConfigInt vacuumHarvesterRange = i(10, 1, 16,
+            "vacuumHarvesterRange",
+            Comments.vacuumHarvesterRange);
+    public final ConfigInt vacuumHarvesterChargeTime = i(600, 20, 72000,
+            "vacuumHarvesterChargeTime",
+            Comments.vacuumHarvesterChargeTime);
 
     public final ConfigGroup fishing = group(1, "fishing", Comments.fishing);
     public final ConfigBool fishingNetChecksOpenWater = b(true,
@@ -59,14 +67,26 @@ public class CIFServerConfig extends ConfigBase {
             Comments.roostingInventorySlotSize,
             ConfigAnnotations.RequiresRestart.SERVER.asComment());
 
+    public final StressConfig stressValues = nested(1, () -> new StressConfig(CIFCommon.ID), Comments.stress);
+
     @Override
     public String getName() {
         return "server";
     }
 
     static class Comments {
+        static final String stress = "Configure the stress impact of Create: Integrated Farming machines";
         static final String farming = "Settings for Farming utilities";
         static final String mushroomColoniesDropSelf = "When harvested by Harvester, if mushroom colonies drops itself instead of corresponding mushroom.";
+        static final String[] vacuumHarvesterRange = {
+                "The horizontal radius harvested by a stationary or contraption-mounted Vacuum Harvester.",
+                "Its vertical range is always one block above and below the machine."
+        };
+        static final String[] vacuumHarvesterChargeTime = {
+                "The number of ticks a Vacuum Harvester takes to charge at 64 RPM.",
+                "Stationary harvesters scale this time with RPM, while contraption-mounted harvesters use it directly.",
+                "20 ticks equal one second."
+        };
 
         static final String fishing = "Settings for Fishing utilities";
         static final String[] fishingNetChecksOpenWater = {

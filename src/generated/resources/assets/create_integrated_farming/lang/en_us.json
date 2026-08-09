@@ -16,6 +16,7 @@
   "block.create_integrated_farming.lava_fishing_net": "Lava Fishing Net",
   "block.create_integrated_farming.lava_fishing_net.tooltip.summary": "Like the Lava Fishing Rod, the Lava Fishing Net _can only_ _fish_ in _lava_.",
   "block.create_integrated_farming.roost": "Roost",
+  "block.create_integrated_farming.vacuum_harvester": "Vacuum Harvester",
   "create_integrated_farming.goggles.roost.next_output": "Next output: %s",
   "create_integrated_farming.goggles.roost.output_inventory_full": "Output inventory full",
   "create_integrated_farming.goggles.roost.ready": "Ready",
@@ -63,5 +64,15 @@
   "create_integrated_farming.ponder.tag.fishing_appliances.description": "Components about fishing",
   "create_integrated_farming.ponder.tag.ranching_appliances": "Ranching Appliances",
   "create_integrated_farming.ponder.tag.ranching_appliances.description": "Components about ranching",
+  "create_integrated_farming.ponder.vacuum_harvester.contraption.header": "Using a Vacuum Harvester on Contraptions",
+  "create_integrated_farming.ponder.vacuum_harvester.contraption.text_1": "When assembled, the chamber charges on its own fixed timer",
+  "create_integrated_farming.ponder.vacuum_harvester.contraption.text_2": "The timer continues even while the assembled Contraption is standing still",
+  "create_integrated_farming.ponder.vacuum_harvester.contraption.text_3": "Each pulse harvests the complete area around its current position, not only newly entered blocks",
+  "create_integrated_farming.ponder.vacuum_harvester.contraption.text_4": "Contraption Controls pause charging until the actor is enabled again",
+  "create_integrated_farming.ponder.vacuum_harvester.operate.header": "Charging and Harvesting Crops",
+  "create_integrated_farming.ponder.vacuum_harvester.operate.text_1": "Rotational power charges the chamber; by default, 64 RPM takes 30 seconds",
+  "create_integrated_farming.ponder.vacuum_harvester.operate.text_2": "Higher RPM fills the chamber faster while using proportionally more stress",
+  "create_integrated_farming.ponder.vacuum_harvester.operate.text_3": "At full pressure it rises, drawing in every mature crop in the current area at once",
+  "create_integrated_farming.ponder.vacuum_harvester.operate.text_4": "Harvests are stored internally and can be extracted from any side except the shaft side",
   "itemGroup.create_integrated_farming.base": "Create: Integrated Farming"
 }

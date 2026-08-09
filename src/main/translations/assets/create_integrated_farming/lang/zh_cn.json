@@ -60,5 +60,19 @@
   "create_integrated_farming.ponder.tag.ranching_appliances.description": "用于畜牧业的元件",
   "itemGroup.create_integrated_farming.base": "机械动力：集成农业",
   "block.create_integrated_farming.environmental_duck_roost": "鸭舍",
-  "block.create_integrated_farming.autumnity_turkey_roost": "火鸡舍"
+  "block.create_integrated_farming.autumnity_turkey_roost": "火鸡舍",
+  "block.create_integrated_farming.vacuum_harvester": "真空收割器",
+  "create_integrated_farming.goggles.roost.next_output": "下次产出：%s",
+  "create_integrated_farming.goggles.roost.ready": "可产出",
+  "create_integrated_farming.goggles.roost.output_inventory_full": "产出库存已满",
+  "create_integrated_farming.ponder.vacuum_harvester.contraption.header": "在动态结构上使用真空收割器",
+  "create_integrated_farming.ponder.vacuum_harvester.contraption.text_1": "组装后，压力室会按自身的固定计时充能",
+  "create_integrated_farming.ponder.vacuum_harvester.contraption.text_2": "即使组装后的动态结构停在原地，计时仍会继续",
+  "create_integrated_farming.ponder.vacuum_harvester.contraption.text_3": "每次脉冲都会收割当前位置周围的完整范围，而非仅收割新进入范围的方块",
+  "create_integrated_farming.ponder.vacuum_harvester.contraption.text_4": "动态结构控制器会暂停充能，直至再次启用该执行器",
+  "create_integrated_farming.ponder.vacuum_harvester.operate.header": "充能并收割作物",
+  "create_integrated_farming.ponder.vacuum_harvester.operate.text_1": "旋转动力为压力室充能；默认情况下，64 RPM 需要 30 秒",
+  "create_integrated_farming.ponder.vacuum_harvester.operate.text_2": "转速越高，充能越快，同时应力消耗也会按比例提高",
+  "create_integrated_farming.ponder.vacuum_harvester.operate.text_3": "压力充满后，上部组件会升起，并一次吸入当前范围内的所有成熟作物",
+  "create_integrated_farming.ponder.vacuum_harvester.operate.text_4": "收获物存储在内部，可从除传动轴一侧外的任意侧面提取"
 }

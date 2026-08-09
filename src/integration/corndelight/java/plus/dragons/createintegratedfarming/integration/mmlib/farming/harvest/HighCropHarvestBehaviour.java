@@ -28,6 +28,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.jetbrains.annotations.Nullable;
+import plus.dragons.createintegratedfarming.api.harvester.AreaHarvestContext;
 import plus.dragons.createintegratedfarming.api.harvester.CustomHarvestBehaviour;
 
 public class HighCropHarvestBehaviour implements CustomHarvestBehaviour {
@@ -71,6 +72,48 @@ public class HighCropHarvestBehaviour implements CustomHarvestBehaviour {
         } else {
             destroy(level, behaviour, context, pos, state);
         }
+    }
+
+    @Override
+    public boolean harvestInArea(AreaHarvestContext context, BlockPos pos, BlockState state) {
+        int age = crop.getAge(state);
+        if (age < crop.getMaxAge() && !context.harvestPartiallyGrown())
+            return false;
+        if (context.replant()) {
+            int growUpperAge = crop.getGrowUpperAge();
+            if (age < growUpperAge)
+                return false;
+            MutableBoolean seedSubtracted = new MutableBoolean(false);
+            CustomHarvestBehaviour.harvestBlock(
+                    context.level(), pos,
+                    crop.getStateForAge(growUpperAge).setValue(
+                            HighCropBlock.UPPER, state.getValue(HighCropBlock.UPPER)),
+                    null, context.tool(), 1.0F,
+                    stack -> {
+                        if (!seedSubtracted.getValue() && stack.is(crop.asItem())) {
+                            stack.shrink(1);
+                            seedSubtracted.setTrue();
+                        }
+                        context.collect(stack);
+                    });
+            if (!seedSubtracted.getValue())
+                context.extractSeed(stack -> stack.is(crop.asItem()), 1);
+        } else {
+            destroy(context, pos, state);
+        }
+        return true;
+    }
+
+    protected void destroy(AreaHarvestContext context, BlockPos pos, BlockState state) {
+        if (state.getValue(HighCropBlock.UPPER)) {
+            BlockPos above = pos.above();
+            BlockState aboveState = context.level().getBlockState(above);
+            if (aboveState.is(crop))
+                destroy(context, above, aboveState);
+        }
+        CustomHarvestBehaviour.harvestBlock(
+                context.level(), pos, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), null,
+                context.tool(), 1.0F, context::collect);
     }
 
     protected void destroy(Level level, HarvesterMovementBehaviour behaviour, MovementContext context, BlockPos pos, BlockState state) {

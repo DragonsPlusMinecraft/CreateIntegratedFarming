@@ -22,6 +22,8 @@ import com.simibubi.create.content.contraptions.actors.harvester.HarvesterMoveme
 import com.simibubi.create.content.contraptions.behaviour.MovementContext;
 import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.utility.BlockHelper;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.sounds.SoundEvents;
@@ -33,6 +35,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
+import plus.dragons.createintegratedfarming.api.harvester.AreaHarvestContext;
 import plus.dragons.createintegratedfarming.api.harvester.CustomHarvestBehaviour;
 import plus.dragons.createintegratedfarming.config.CIFConfig;
 import vectorwing.farmersdelight.common.block.MushroomColonyBlock;
@@ -63,6 +66,44 @@ public class MushroomColonyHarvestBehaviour implements CustomHarvestBehaviour {
         } else {
             harvestMushroom(behaviour, context, pos, state);
         }
+    }
+
+    @Override
+    public boolean harvestInArea(AreaHarvestContext context, BlockPos pos, BlockState state) {
+        int age = state.getValue(colony.getAgeProperty());
+        if (age == 0 || age < colony.getMaxAge() && !context.harvestPartiallyGrown())
+            return false;
+        if (!CIFConfig.server().mushroomColoniesDropSelf.get()) {
+            context.level().playSound(
+                    null, pos, SoundEvents.MOOSHROOM_SHEAR, SoundSource.BLOCKS, 1.0F, 1.0F);
+            context.level().setBlockAndUpdate(pos, state.setValue(colony.getAgeProperty(), 0));
+            context.collect(new ItemStack(mushroom, age));
+            return true;
+        }
+
+        List<ItemStack> drops = new ArrayList<>();
+        CustomHarvestBehaviour.harvestBlock(
+                context.level(), pos, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), null,
+                context.tool(new ItemStack(Items.SHEARS)), 1.0F, drops::add);
+        if (context.replant()) {
+            BlockState replanted = mushroom.defaultBlockState();
+            if (replanted.canSurvive(context.level(), pos)) {
+                boolean hasSeed = false;
+                for (ItemStack drop : drops) {
+                    if (!drop.is(mushroom.asItem()))
+                        continue;
+                    drop.shrink(1);
+                    hasSeed = true;
+                    break;
+                }
+                if (!hasSeed)
+                    hasSeed = !context.extractSeed(stack -> stack.is(mushroom.asItem()), 1).isEmpty();
+                if (hasSeed)
+                    context.level().setBlockAndUpdate(pos, replanted);
+            }
+        }
+        drops.forEach(context::collect);
+        return true;
     }
 
     protected void harvestMushroom(HarvesterMovementBehaviour behaviour, MovementContext context, BlockPos pos, BlockState state) {

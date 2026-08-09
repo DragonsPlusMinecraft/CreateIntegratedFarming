@@ -28,6 +28,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
+import plus.dragons.createintegratedfarming.api.harvester.AreaHarvestContext;
 import plus.dragons.createintegratedfarming.api.harvester.CustomHarvestBehaviour;
 import vectorwing.farmersdelight.common.block.HangingTomatoBlock;
 import vectorwing.farmersdelight.common.block.TomatoBlock;
@@ -66,6 +67,42 @@ public class TomatoHarvestBehaviour implements CustomHarvestBehaviour {
         } else if (partial) {
             level.setBlock(pos, state.setValue(tomato.getAgeProperty(), 0), 2);
         }
+    }
+
+    @Override
+    public boolean harvestInArea(AreaHarvestContext context, BlockPos pos, BlockState state) {
+        boolean mature = tomato.getAge(state) == tomato.getMaxAge();
+        if (!mature && !context.harvestPartiallyGrown())
+            return false;
+        Level level = context.level();
+        if (!context.replant()) {
+            breakTomatoes(context, pos, state);
+            return true;
+        }
+        if (mature) {
+            context.collect(new ItemStack(ModItems.TOMATO.get(), 1 + level.random.nextInt(2)));
+            if (level.random.nextFloat() < 0.05F)
+                context.collect(new ItemStack(ModItems.ROTTEN_TOMATO.get()));
+            level.playSound(
+                    null, pos, ModSounds.BLOCK_TOMATOES_PICK_TOMATOES.get(), SoundSource.BLOCKS,
+                    1.0F, 0.8F + level.random.nextFloat() * 0.4F);
+        }
+        level.setBlock(pos, state.setValue(tomato.getAgeProperty(), 0), 2);
+        return true;
+    }
+
+    protected void breakTomatoes(AreaHarvestContext context, BlockPos pos, BlockState state) {
+        Level level = context.level();
+        BlockPos above = pos.above();
+        BlockState stateAbove = level.getBlockState(above);
+        if (isTomatoCrop(stateAbove))
+            breakTomatoes(context, above, stateAbove);
+        boolean restoreRope = shouldRestoreRope(state);
+        CustomHarvestBehaviour.harvestBlock(
+                level, pos, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), null,
+                context.tool(), 1.0F, context::collect);
+        if (restoreRope)
+            restoreRope(level, pos, state);
     }
 
     protected void breakTomatoes(Level level, HarvesterMovementBehaviour behaviour, MovementContext context, BlockPos pos, BlockState state) {

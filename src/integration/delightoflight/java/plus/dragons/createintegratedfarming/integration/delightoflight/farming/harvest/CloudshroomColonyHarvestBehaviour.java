@@ -32,6 +32,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
+import plus.dragons.createintegratedfarming.api.harvester.AreaHarvestContext;
 import plus.dragons.createintegratedfarming.api.harvester.CustomHarvestBehaviour;
 
 public class CloudshroomColonyHarvestBehaviour implements CustomHarvestBehaviour {
@@ -60,5 +61,21 @@ public class CloudshroomColonyHarvestBehaviour implements CustomHarvestBehaviour
         int weather = state.getValue(WEATHER_AGE);
         var mushroom = weather == 2 ? DFItems.THUNDER_CLOUDSHROOM.get() : weather == 1 ? DFItems.RAINY_CLOUDSHROOM.get() : DFItems.CLEAR_CLOUDSHROOM.get();
         behaviour.collectOrDropItem(context, new ItemStack(mushroom, age));
+    }
+
+    @Override
+    public boolean harvestInArea(AreaHarvestContext context, BlockPos pos, BlockState state) {
+        int age = state.getValue(colony.getAgeProperty());
+        if (age == 0 || age < colony.getMaxAge() && !context.harvestPartiallyGrown())
+            return false;
+        Level level = context.level();
+        level.playSound(null, pos, SoundEvents.MOOSHROOM_SHEAR, SoundSource.BLOCKS, 1.0F, 1.0F);
+        level.setBlockAndUpdate(pos, state.setValue(colony.getAgeProperty(), 0));
+        int weather = state.getValue(WEATHER_AGE);
+        var mushroom = weather == 2
+                ? DFItems.THUNDER_CLOUDSHROOM.get()
+                : weather == 1 ? DFItems.RAINY_CLOUDSHROOM.get() : DFItems.CLEAR_CLOUDSHROOM.get();
+        context.collect(new ItemStack(mushroom, age));
+        return true;
     }
 }

@@ -18,6 +18,7 @@
 
 package plus.dragons.createintegratedfarming.data;
 
+import static com.simibubi.create.AllBlocks.*;
 import static com.simibubi.create.AllItems.*;
 import static net.minecraft.world.item.Items.*;
 import static plus.dragons.createdragonsplus.data.recipe.VanillaRecipeBuilders.*;
@@ -40,6 +41,13 @@ public class CIFRecipeProvider extends RegistrateRecipeProvider {
     // Fallback recipe if Farmer's Delight is not loaded
     @Override
     protected void buildRecipes(RecipeOutput output) {
+        shapeless().output(VACUUM_HARVESTER)
+                .require(MECHANICAL_HARVESTER)
+                .require(ENCASED_FAN)
+                .require(BRASS_CASING)
+                .require(CHUTE)
+                .unlockedBy("has_brass_casing", has(BRASS_CASING))
+                .accept(output);
         shaped().output(ROOST)
                 .withId(CIFCommon.asResource("fallback_roost"))
                 .define('#', HAY_BLOCK)

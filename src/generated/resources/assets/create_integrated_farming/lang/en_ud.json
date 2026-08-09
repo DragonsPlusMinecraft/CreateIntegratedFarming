@@ -16,6 +16,7 @@
   "block.create_integrated_farming.lava_fishing_net": "ʇǝN buıɥsıℲ ɐʌɐꞀ",
   "block.create_integrated_farming.lava_fishing_net.tooltip.summary": "˙‾ɐʌɐן‾ uı ‾ɥsıɟ‾ ‾ʎןuo uɐɔ‾ ʇǝN buıɥsıℲ ɐʌɐꞀ ǝɥʇ 'poᴚ buıɥsıℲ ɐʌɐꞀ ǝɥʇ ǝʞıꞀ",
   "block.create_integrated_farming.roost": "ʇsooᴚ",
+  "block.create_integrated_farming.vacuum_harvester": "ɹǝʇsǝʌɹɐH ɯnnɔɐΛ",
   "create_integrated_farming.goggles.roost.next_output": "%s :ʇndʇno ʇxǝN",
   "create_integrated_farming.goggles.roost.output_inventory_full": "ןןnɟ ʎɹoʇuǝʌuı ʇndʇnO",
   "create_integrated_farming.goggles.roost.ready": "ʎpɐǝᴚ",
@@ -63,5 +64,15 @@
   "create_integrated_farming.ponder.tag.fishing_appliances.description": "buıɥsıɟ ʇnoqɐ sʇuǝuodɯoƆ",
   "create_integrated_farming.ponder.tag.ranching_appliances": "sǝɔuɐıןddⱯ buıɥɔuɐᴚ",
   "create_integrated_farming.ponder.tag.ranching_appliances.description": "buıɥɔuɐɹ ʇnoqɐ sʇuǝuodɯoƆ",
+  "create_integrated_farming.ponder.vacuum_harvester.contraption.header": "suoıʇdɐɹʇuoƆ uo ɹǝʇsǝʌɹɐH ɯnnɔɐΛ ɐ buıs∩",
+  "create_integrated_farming.ponder.vacuum_harvester.contraption.text_1": "ɹǝɯıʇ pǝxıɟ uʍo sʇı uo sǝbɹɐɥɔ ɹǝqɯɐɥɔ ǝɥʇ 'pǝןqɯǝssɐ uǝɥM",
+  "create_integrated_farming.ponder.vacuum_harvester.contraption.text_2": "ןןıʇs buıpuɐʇs sı uoıʇdɐɹʇuoƆ pǝןqɯǝssɐ ǝɥʇ ǝןıɥʍ uǝʌǝ sǝnuıʇuoɔ ɹǝɯıʇ ǝɥ⟘",
+  "create_integrated_farming.ponder.vacuum_harvester.contraption.text_3": "sʞɔoןq pǝɹǝʇuǝ ʎןʍǝu ʎןuo ʇou 'uoıʇısod ʇuǝɹɹnɔ sʇı punoɹɐ ɐǝɹɐ ǝʇǝןdɯoɔ ǝɥʇ sʇsǝʌɹɐɥ ǝsןnd ɥɔɐƎ",
+  "create_integrated_farming.ponder.vacuum_harvester.contraption.text_4": "uıɐbɐ pǝןqɐuǝ sı ɹoʇɔɐ ǝɥʇ ןıʇun buıbɹɐɥɔ ǝsnɐd sןoɹʇuoƆ uoıʇdɐɹʇuoƆ",
+  "create_integrated_farming.ponder.vacuum_harvester.operate.header": "sdoɹƆ buıʇsǝʌɹɐH puɐ buıbɹɐɥƆ",
+  "create_integrated_farming.ponder.vacuum_harvester.operate.text_1": "spuoɔǝs 0Ɛ sǝʞɐʇ WԀᴚ ㄣ9 'ʇןnɐɟǝp ʎq ؛ɹǝqɯɐɥɔ ǝɥʇ sǝbɹɐɥɔ ɹǝʍod ןɐuoıʇɐʇoᴚ",
+  "create_integrated_farming.ponder.vacuum_harvester.operate.text_2": "ssǝɹʇs ǝɹoɯ ʎןןɐuoıʇɹodoɹd buısn ǝןıɥʍ ɹǝʇsɐɟ ɹǝqɯɐɥɔ ǝɥʇ sןןıɟ WԀᴚ ɹǝɥbıH",
+  "create_integrated_farming.ponder.vacuum_harvester.operate.text_3": "ǝɔuo ʇɐ ɐǝɹɐ ʇuǝɹɹnɔ ǝɥʇ uı doɹɔ ǝɹnʇɐɯ ʎɹǝʌǝ uı buıʍɐɹp 'sǝsıɹ ʇı ǝɹnssǝɹd ןןnɟ ʇⱯ",
+  "create_integrated_farming.ponder.vacuum_harvester.operate.text_4": "ǝpıs ʇɟɐɥs ǝɥʇ ʇdǝɔxǝ ǝpıs ʎuɐ ɯoɹɟ pǝʇɔɐɹʇxǝ ǝq uɐɔ puɐ ʎןןɐuɹǝʇuı pǝɹoʇs ǝɹɐ sʇsǝʌɹɐH",
   "itemGroup.create_integrated_farming.base": "buıɯɹɐℲ pǝʇɐɹbǝʇuI :ǝʇɐǝɹƆ"
 }

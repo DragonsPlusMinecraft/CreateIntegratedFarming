@@ -19,6 +19,8 @@
 package plus.dragons.createintegratedfarming.common;
 
 import com.simibubi.create.foundation.item.ItemDescription;
+import com.simibubi.create.foundation.item.KineticStats;
+import com.simibubi.create.foundation.item.TooltipModifier;
 import net.createmod.catnip.lang.FontHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
@@ -43,7 +45,8 @@ public class CIFCommon {
     public static final String ID = "create_integrated_farming";
     public static final Logger LOGGER = LoggerFactory.getLogger("Create: Integrated Farming");
     public static final CDPRegistrate REGISTRATE = new CDPRegistrate(ID)
-            .setTooltipModifier(item -> new ItemDescription.Modifier(item, FontHelper.Palette.STANDARD_CREATE));
+            .setTooltipModifier(item -> new ItemDescription.Modifier(item, FontHelper.Palette.STANDARD_CREATE)
+                    .andThen(TooltipModifier.mapNull(KineticStats.create(item))));
 
     public CIFCommon(IEventBus modBus, ModContainer modContainer) {
         REGISTRATE.addRawLang("create_integrated_farming.goggles.roost.next_output", "Next output: %s");

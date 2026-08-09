@@ -18,23 +18,11 @@
 
 package plus.dragons.createintegratedfarming.client;
 
-import net.createmod.ponder.foundation.PonderIndex;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.EventPriority;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import plus.dragons.createintegratedfarming.client.ponder.CIFPonderPlugin;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import plus.dragons.createintegratedfarming.common.CIFCommon;
 
-@Mod(value = CIFCommon.ID, dist = Dist.CLIENT)
-public class CIFClient {
-    public CIFClient(IEventBus modBus) {
-        modBus.addListener(EventPriority.LOWEST, CIFClient::init);
-    }
+public class CIFPartialModels {
+    public static final PartialModel VACUUM_HARVESTER_MOVING = PartialModel.of(CIFCommon.asResource("block/vacuum_harvester/moving"));
 
-    public static void init(final FMLClientSetupEvent event) {
-        CIFPartialModels.init();
-        PonderIndex.addPlugin(new CIFPonderPlugin());
-    }
+    public static void init() {}
 }

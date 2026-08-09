@@ -14,5 +14,19 @@
   "create_integrated_farming.ponder.spout.catalyze_organic_compost.text_1": "O processo de degradação da Compostagem Orgânica pode ser acelerado via Spout",
   "itemGroup.create_integrated_farming.base": "Create: Integrated Farming",
   "block.create_integrated_farming.environmental_duck_roost": "Poleiro de Pato",
-  "block.create_integrated_farming.autumnity_turkey_roost": "Poleiro de Peru"
+  "block.create_integrated_farming.autumnity_turkey_roost": "Poleiro de Peru",
+  "block.create_integrated_farming.vacuum_harvester": "Colheitadeira a Vácuo",
+  "create_integrated_farming.goggles.roost.next_output": "Próxima produção: %s",
+  "create_integrated_farming.goggles.roost.ready": "Pronto",
+  "create_integrated_farming.goggles.roost.output_inventory_full": "Inventário de saída cheio",
+  "create_integrated_farming.ponder.vacuum_harvester.contraption.header": "Usando uma Colheitadeira a Vácuo em Dispositivos",
+  "create_integrated_farming.ponder.vacuum_harvester.contraption.text_1": "Depois de montada, a câmara carrega em seu próprio intervalo fixo",
+  "create_integrated_farming.ponder.vacuum_harvester.contraption.text_2": "O temporizador continua mesmo quando o Dispositivo montado está parado",
+  "create_integrated_farming.ponder.vacuum_harvester.contraption.text_3": "Cada pulso colhe toda a área ao redor da posição atual, não apenas os blocos recém-alcançados",
+  "create_integrated_farming.ponder.vacuum_harvester.contraption.text_4": "Os Controles de Dispositivo pausam a carga até que o atuador seja reativado",
+  "create_integrated_farming.ponder.vacuum_harvester.operate.header": "Carregando e Colhendo Plantações",
+  "create_integrated_farming.ponder.vacuum_harvester.operate.text_1": "A força rotacional carrega a câmara; por padrão, 64 RPM levam 30 segundos",
+  "create_integrated_farming.ponder.vacuum_harvester.operate.text_2": "RPM mais alto carrega a câmara mais rápido e usa proporcionalmente mais tensão",
+  "create_integrated_farming.ponder.vacuum_harvester.operate.text_3": "Com pressão total, ela sobe e aspira de uma só vez todas as plantações maduras na área atual",
+  "create_integrated_farming.ponder.vacuum_harvester.operate.text_4": "As colheitas ficam armazenadas internamente e podem ser extraídas de qualquer lado, exceto o do eixo"
 }

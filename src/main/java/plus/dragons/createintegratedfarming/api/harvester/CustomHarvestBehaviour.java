@@ -88,6 +88,16 @@ public interface CustomHarvestBehaviour {
     void harvest(HarvesterMovementBehaviour behaviour, MovementContext context, BlockPos pos, BlockState state);
 
     /**
+     * Harvest a block through an area harvester. Implementations must opt in explicitly because a generic fallback can
+     * corrupt multi-block or otherwise structured crops.
+     *
+     * @return {@code true} when this invocation harvested a block
+     */
+    default boolean harvestInArea(AreaHarvestContext context, BlockPos pos, BlockState state) {
+        return false;
+    }
+
+    /**
      * Shortcut for {@code harvesterReplants} config.
      */
     static boolean replant() {

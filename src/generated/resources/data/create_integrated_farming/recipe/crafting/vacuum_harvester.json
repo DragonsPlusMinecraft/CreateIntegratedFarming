@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "create:mechanical_harvester"
+    },
+    {
+      "item": "create:encased_fan"
+    },
+    {
+      "item": "create:brass_casing"
+    },
+    {
+      "item": "create:chute"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "create_integrated_farming:vacuum_harvester"
+  }
+}

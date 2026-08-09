@@ -40,5 +40,19 @@
   "create_integrated_farming.ponder.tag.ranching_appliances.description": "Компоненты для животноводства",
   "itemGroup.create_integrated_farming.base": "Create: Комплексное Фермерство",
   "block.create_integrated_farming.environmental_duck_roost": "Утиный насест",
-  "block.create_integrated_farming.autumnity_turkey_roost": "Индюшачий насест"
+  "block.create_integrated_farming.autumnity_turkey_roost": "Индюшачий насест",
+  "block.create_integrated_farming.vacuum_harvester": "Вакуумный сборщик",
+  "create_integrated_farming.goggles.roost.next_output": "Следующая продукция: %s",
+  "create_integrated_farming.goggles.roost.ready": "Готово",
+  "create_integrated_farming.goggles.roost.output_inventory_full": "Выходной инвентарь заполнен",
+  "create_integrated_farming.ponder.vacuum_harvester.contraption.header": "Использование вакуумного сборщика на конструкциях",
+  "create_integrated_farming.ponder.vacuum_harvester.contraption.text_1": "После сборки камера заряжается по собственному фиксированному таймеру",
+  "create_integrated_farming.ponder.vacuum_harvester.contraption.text_2": "Таймер продолжает идти, даже когда собранная конструкция неподвижна",
+  "create_integrated_farming.ponder.vacuum_harvester.contraption.text_3": "Каждый импульс собирает урожай во всей области вокруг текущей позиции, а не только в новых блоках",
+  "create_integrated_farming.ponder.vacuum_harvester.contraption.text_4": "Контроллер конструкции приостанавливает зарядку, пока исполнитель снова не будет включён",
+  "create_integrated_farming.ponder.vacuum_harvester.operate.header": "Зарядка и сбор урожая",
+  "create_integrated_farming.ponder.vacuum_harvester.operate.text_1": "Вращение заряжает камеру; по умолчанию при 64 об/мин требуется 30 секунд",
+  "create_integrated_farming.ponder.vacuum_harvester.operate.text_2": "Чем выше скорость, тем быстрее зарядка и тем пропорционально выше нагрузка",
+  "create_integrated_farming.ponder.vacuum_harvester.operate.text_3": "При полном давлении верхняя часть поднимается и разом втягивает все зрелые культуры в текущей области",
+  "create_integrated_farming.ponder.vacuum_harvester.operate.text_4": "Урожай хранится внутри и извлекается с любой стороны, кроме стороны вала"
 }

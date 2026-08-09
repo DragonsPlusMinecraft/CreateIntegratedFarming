@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "create_integrated_farming:block/vacuum_harvester/block"
+    }
+  }
+}

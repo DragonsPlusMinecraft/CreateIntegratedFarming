@@ -18,10 +18,13 @@
 
 package plus.dragons.createintegratedfarming.common.registry;
 
+import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 import static com.simibubi.create.foundation.data.TagGen.axeOnly;
+import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 import static plus.dragons.createintegratedfarming.common.CIFCommon.REGISTRATE;
 
 import com.simibubi.create.AllTags.AllBlockTags;
+import com.simibubi.create.AllTags.AllItemTags;
 import com.simibubi.create.api.behaviour.movement.MovementBehaviour;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.BlockStateGen;
@@ -33,11 +36,14 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
+import plus.dragons.createintegratedfarming.common.farming.vacuum.VacuumHarvesterBlock;
+import plus.dragons.createintegratedfarming.common.farming.vacuum.VacuumHarvesterMovementBehaviour;
 import plus.dragons.createintegratedfarming.common.fishing.net.FishingNetBlock;
 import plus.dragons.createintegratedfarming.common.fishing.net.FishingNetMovementBehaviour;
 import plus.dragons.createintegratedfarming.common.ranching.roost.RoostBlock;
 import plus.dragons.createintegratedfarming.common.ranching.roost.RoostBlockItem;
 import plus.dragons.createintegratedfarming.common.ranching.roost.chicken.ChickenRoostBlock;
+import plus.dragons.createintegratedfarming.config.CIFConfig;
 
 public class CIFBlocks {
     public static final BlockEntry<FishingNetBlock> FISHING_NET = REGISTRATE
@@ -69,6 +75,19 @@ public class CIFBlocks {
             .blockstate((ctx, prov) -> prov.horizontalBlock(ctx.get(), AssetLookup.standardModel(ctx, prov)))
             .item()
             .build()
+            .register();
+    public static final BlockEntry<VacuumHarvesterBlock> VACUUM_HARVESTER = REGISTRATE
+            .block("vacuum_harvester", VacuumHarvesterBlock::new)
+            .lang("Vacuum Harvester")
+            .initialProperties(SharedProperties::stone)
+            .properties(properties -> properties.noOcclusion().mapColor(DyeColor.YELLOW))
+            .transform(pickaxeOnly())
+            .transform(CIFConfig.server().stressValues.setImpact(8.0))
+            .blockstate((context, provider) -> provider.simpleBlock(context.get(), AssetLookup.partialBaseModel(context, provider)))
+            .onRegister(MovementBehaviour.movementBehaviour(new VacuumHarvesterMovementBehaviour()))
+            .item()
+            .tag(AllItemTags.CONTRAPTION_CONTROLLED.tag)
+            .transform(customItemModel())
             .register();
 
     public static void register(IEventBus modBus) {}

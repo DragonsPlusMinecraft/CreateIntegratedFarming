@@ -25,6 +25,7 @@ import net.createmod.ponder.api.registration.PonderSceneRegistrationHelper;
 import net.minecraft.resources.ResourceLocation;
 import plus.dragons.createintegratedfarming.client.ponder.scene.MiscScene;
 import plus.dragons.createintegratedfarming.client.ponder.scene.RoostScene;
+import plus.dragons.createintegratedfarming.client.ponder.scene.VacuumHarvesterScene;
 import plus.dragons.createintegratedfarming.common.registry.CIFBlocks;
 
 public class CIFPonderScenes {
@@ -40,5 +41,13 @@ public class CIFPonderScenes {
         HELPER.forComponents(CIFBlocks.CHICKEN_ROOST)
                 .addStoryBoard("roost/operate", RoostScene::operate, CIFPonderTags.RANCHING_APPLIANCES, AllCreatePonderTags.ARM_TARGETS)
                 .addStoryBoard("roost/spout", RoostScene::fluid);
+
+        HELPER.forComponents(CIFBlocks.VACUUM_HARVESTER)
+                .addStoryBoard(
+                        "vacuum_harvester/operate", VacuumHarvesterScene::operate,
+                        CIFPonderTags.FARMING_APPLIANCES)
+                .addStoryBoard(
+                        "vacuum_harvester/contraption", VacuumHarvesterScene::contraption,
+                        AllCreatePonderTags.CONTRAPTION_ACTOR);
     }
 }

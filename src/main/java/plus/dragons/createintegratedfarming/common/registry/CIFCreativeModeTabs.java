@@ -54,5 +54,6 @@ public class CIFCreativeModeTabs {
         LAVA_FISHING_NET.asOptional().ifPresent(output::accept);
         output.accept(ROOST);
         output.accept(CHICKEN_ROOST);
+        output.accept(VACUUM_HARVESTER);
     }
 }
