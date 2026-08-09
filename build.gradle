@@ -34,6 +34,7 @@ def allIntegrationSourceSets = [
         "environmental",
         "autumnity",
         "culturaldelights",
+        "hearthandharvest",
         "delightoflight",
         "sable",
         "twilightdelight",
@@ -44,6 +45,7 @@ def integrationSourceSetDependencies = [
         corndelight    : ["farmersdelight"],
         crabberdelight : ["farmersdelight"],
         culturaldelights: ["farmersdelight"],
+        hearthandharvest: ["farmersdelight"],
         delightoflight : ["farmersdelight"],
         twilightdelight: ["farmersdelight"],
 ]
@@ -279,6 +281,10 @@ dependencies {
 
     if (hasIntegration("culturaldelights")) {
         culturaldelightsLocalImplementation("maven.modrinth:YttyNOFA:${cultural_delights_version}")
+    }
+
+    if (hasIntegration("hearthandharvest")) {
+        hearthandharvestLocalImplementation("maven.modrinth:hearth-and-harvest:${hearth_and_harvest_version}")
     }
 
     if (hasIntegration("netherdepthsupgrade")) {
