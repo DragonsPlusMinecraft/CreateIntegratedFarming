@@ -76,35 +76,23 @@ public class VacuumHarvesterScene {
         scene.world().setBlock(crops.get(2), mature(Blocks.POTATOES), false);
         scene.world().setBlock(crops.get(3), mature(Blocks.WHEAT), false);
         scene.world().setBlock(machine, CIFBlocks.VACUUM_HARVESTER.getDefaultState(), false);
-        scene.world().setBlock(
-                shaft,
-                AllBlocks.SHAFT.getDefaultState().setValue(BlockStateProperties.AXIS, Direction.Axis.Y),
-                false);
-        scene.world().setBlock(
-                cog,
-                AllBlocks.COGWHEEL.getDefaultState().setValue(BlockStateProperties.AXIS, Direction.Axis.Y),
-                false);
+        scene.world().setBlock(shaft, AllBlocks.SHAFT.getDefaultState().setValue(BlockStateProperties.AXIS, Direction.Axis.Y), false);
+        scene.world().setBlock(cog, AllBlocks.COGWHEEL.getDefaultState().setValue(BlockStateProperties.AXIS, Direction.Axis.Y), false);
         scene.world().showSection(farmland.add(cropSelection), Direction.UP);
         Selection kinetics = positions(util, List.of(machine, shaft, cog));
         scene.world().showSection(kinetics, Direction.DOWN);
         scene.world().setKineticSpeed(kinetics, 64);
-        scene.world().modifyBlockEntity(
-                machine, VacuumHarvesterBlockEntity.class, blockEntity -> blockEntity.setCycleProgress(0.75F, 0));
+        scene.world().modifyBlockEntity(machine, VacuumHarvesterBlockEntity.class, blockEntity -> blockEntity.setCycleProgress(0.75F, 0));
         scene.idle(20);
 
         scene.overlay().showText(80)
                 .text("Rotational power charges the chamber; by default, 64 RPM takes 30 seconds")
                 .pointAt(util.vector().topOf(machine))
                 .placeNearTarget();
-        emitExhaust(
-                scene,
-                VacuumHarvesterEffects.intake(
-                        util.vector().centerOf(machine), VacuumHarvesterCycle.getHeadOffset(0.75F, 0)),
-                60);
-        scene.idle(70);
+        emitExhaust(scene, VacuumHarvesterEffects.intake(util.vector().centerOf(machine), VacuumHarvesterCycle.getHeadOffset(0.75F, 0)), 60);
+        scene.idle(90);
 
-        scene.world().modifyBlockEntity(
-                machine, VacuumHarvesterBlockEntity.class, blockEntity -> blockEntity.setCycleProgress(0.98F, 0));
+        scene.world().modifyBlockEntity(machine, VacuumHarvesterBlockEntity.class, blockEntity -> blockEntity.setCycleProgress(0.98F, 0));
         scene.overlay().showText(50)
                 .attachKeyFrame()
                 .text("Higher RPM fills the chamber faster while using proportionally more stress")
@@ -112,9 +100,7 @@ public class VacuumHarvesterScene {
                 .placeNearTarget();
         scene.idle(55);
 
-        scene.world().modifyBlockEntity(
-                machine,
-                VacuumHarvesterBlockEntity.class,
+        scene.world().modifyBlockEntity(machine, VacuumHarvesterBlockEntity.class,
                 blockEntity -> blockEntity.setCycleProgress(1, VacuumHarvesterCycle.RELEASE_DURATION));
         Vec3 intake = VacuumHarvesterEffects.intake(
                 util.vector().centerOf(machine), VacuumHarvesterCycle.MAX_HEAD_OFFSET);
@@ -133,22 +119,15 @@ public class VacuumHarvesterScene {
 
         BlockPos funnel = util.grid().at(1, 1, 2);
         BlockPos depot = util.grid().at(1, 0, 2);
-        scene.world().setBlock(
-                funnel,
-                AllBlocks.BRASS_FUNNEL.getDefaultState()
-                        .setValue(FunnelBlock.FACING, Direction.WEST)
-                        .setValue(FunnelBlock.EXTRACTING, true),
-                false);
+        scene.world().hideSection(util.select().position(depot),Direction.DOWN);
+        scene.idle(5);
+        scene.world().setBlock(funnel, AllBlocks.BRASS_FUNNEL.getDefaultState().setValue(FunnelBlock.FACING, Direction.WEST).setValue(FunnelBlock.EXTRACTING, true), false);
         scene.world().setBlock(depot, AllBlocks.DEPOT.getDefaultState(), false);
-        scene.world().showSection(positions(util, List.of(funnel, depot)), Direction.EAST);
-        scene.world().modifyBlockEntity(
-                machine,
-                VacuumHarvesterBlockEntity.class,
-                blockEntity -> blockEntity.getInventory().insertItem(0, new ItemStack(Items.WHEAT, 4), false));
+        scene.world().showSection(util.select().fromTo(funnel,depot), Direction.EAST);
+        scene.world().modifyBlockEntity(machine, VacuumHarvesterBlockEntity.class, blockEntity -> blockEntity.getInventory().insertItem(0, new ItemStack(Items.WHEAT, 4), false));
         scene.idle(15);
         scene.world().flapFunnel(funnel, false);
-        scene.world().modifyBlockEntity(
-                depot, DepotBlockEntity.class, blockEntity -> blockEntity.setHeldItem(new ItemStack(Items.WHEAT)));
+        scene.world().modifyBlockEntity(depot, DepotBlockEntity.class, blockEntity -> blockEntity.setHeldItem(new ItemStack(Items.WHEAT)));
         scene.overlay().showText(70)
                 .text("Harvests are stored internally and can be extracted from any side except the shaft side")
                 .pointAt(util.vector().centerOf(funnel))
@@ -176,30 +155,19 @@ public class VacuumHarvesterScene {
         scene.world().showSection(farmland.add(cropSelection), Direction.UP);
 
         BlockPos bearing = util.grid().at(4, 1, 4);
-        BlockPos machine = util.grid().at(1, 1, 4);
-        BlockPos chest = util.grid().at(2, 1, 4);
-        BlockPos controls = util.grid().at(3, 1, 4);
-        Selection chassis = util.select().fromTo(1, 2, 4, 4, 2, 4);
+        BlockPos machine = util.grid().at(1, 2, 4);
+        BlockPos chest = util.grid().at(2, 2, 4);
+        BlockPos controls = util.grid().at(3, 2, 4);
+        Selection chassis = util.select().fromTo(1, 1, 4, 3, 1, 4).add(util.select().position(4, 2, 4));
         Selection bearingSelection = util.select().position(bearing);
         Selection assemblySelection = chassis.add(util.select().fromTo(machine, controls));
 
-        scene.world().setBlock(
-                bearing,
-                AllBlocks.MECHANICAL_BEARING.getDefaultState()
-                        .setValue(BlockStateProperties.FACING, Direction.UP),
-                false);
+        scene.world().setBlock(bearing, AllBlocks.MECHANICAL_BEARING.getDefaultState().setValue(BlockStateProperties.FACING, Direction.UP), false);
+        scene.world().setBlocks(chassis, AllBlocks.LINEAR_CHASSIS.getDefaultState().setValue(BlockStateProperties.AXIS, Direction.Axis.X), false);
         scene.world().setBlock(machine, CIFBlocks.VACUUM_HARVESTER.getDefaultState(), false);
-        scene.world().setBlocks(
-                chassis,
-                AllBlocks.LINEAR_CHASSIS.getDefaultState()
-                        .setValue(BlockStateProperties.AXIS, Direction.Axis.X),
-                false);
         scene.world().setBlock(chest, Blocks.BARREL.defaultBlockState(), false);
         scene.world().setBlock(controls, AllBlocks.CONTRAPTION_CONTROLS.getDefaultState(), false);
-        scene.world().setFilterData(
-                util.select().position(controls),
-                ContraptionControlsBlockEntity.class,
-                CIFBlocks.VACUUM_HARVESTER.asStack());
+        scene.world().setFilterData(util.select().position(controls), ContraptionControlsBlockEntity.class, CIFBlocks.VACUUM_HARVESTER.asStack());
         scene.world().showSection(bearingSelection, Direction.DOWN);
         scene.idle(8);
         ElementLink<WorldSectionElement> assembly = scene.world().showIndependentSection(assemblySelection, Direction.DOWN);
@@ -207,13 +175,12 @@ public class VacuumHarvesterScene {
         scene.effects().superGlue(machine.above(), Direction.DOWN, true);
         scene.effects().superGlue(chest.above(), Direction.DOWN, true);
         scene.effects().superGlue(controls.above(), Direction.DOWN, true);
-        scene.world().modifyBlockEntity(
-                machine, VacuumHarvesterBlockEntity.class, blockEntity -> blockEntity.setCycleProgress(0.55F, 0));
+        scene.world().modifyBlockEntity(machine, VacuumHarvesterBlockEntity.class, blockEntity -> blockEntity.setCycleProgress(0.55F, 0));
         scene.idle(20);
 
         scene.overlay().showText(70)
                 .text("When assembled, the chamber charges on its own fixed timer")
-                .pointAt(util.vector().centerOf(machine))
+                .independent()
                 .placeNearTarget();
         scene.world().setKineticSpeed(bearingSelection, -32);
         scene.world().rotateBearing(bearing, -90, 50);
@@ -234,9 +201,7 @@ public class VacuumHarvesterScene {
         emitExhaust(scene, movedMachine, 55);
         scene.idle(65);
 
-        scene.world().modifyBlockEntity(
-                machine,
-                VacuumHarvesterBlockEntity.class,
+        scene.world().modifyBlockEntity(machine, VacuumHarvesterBlockEntity.class,
                 blockEntity -> blockEntity.setCycleProgress(1, VacuumHarvesterCycle.RELEASE_DURATION));
         movedMachine = VacuumHarvesterEffects.intake(
                 movedMachineCenter, VacuumHarvesterCycle.MAX_HEAD_OFFSET);
