@@ -129,6 +129,8 @@ public interface CustomHarvestBehaviour {
         if (ModIntegration.CREATE_ENCHANTABLE_MACHINERY.enabled()) {
             if (original.isEmpty())
                 original = new ItemStack(Items.NETHERITE_PICKAXE);
+            if (context.blockEntityData == null)
+                return original;
             var tag = context.blockEntityData.get("Enchantments");
             if (tag == null)
                 return original;
