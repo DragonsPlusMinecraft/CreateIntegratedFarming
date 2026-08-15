@@ -96,7 +96,7 @@ Example fluid data map:
 }
 ```
 
-The generated item data map includes `#minecraft:chicken_food` with `2400` progress and a `400`–`800` tick cooldown. When Create Crafts & Additions is loaded, the generated fluid data map also includes `createadditions:seed_oil` with `100` mB consumption, `2400` progress, and a `400`–`800` tick cooldown.
+The generated item data map includes `#minecraft:chicken_food` with `2400` progress and a `400`–`800` tick cooldown. The generated fluid data map applies the same progress and cooldown to every fluid in `#c:plantoil`, consuming `100` mB per feeding operation. This includes Create Crafts & Additions Seed Oil, Create: Diesel Generators Plant Oil, and compatible fluids added by other mods.
 
 ### Other Poultry Food Tags
 

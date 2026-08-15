@@ -24,7 +24,9 @@ import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateDataMapProvider;
 import java.util.Optional;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.Item;
@@ -36,9 +38,11 @@ import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
 import plus.dragons.createintegratedfarming.common.CIFCommon;
 import plus.dragons.createintegratedfarming.common.ranching.roost.chicken.ChickenFoodFluid;
 import plus.dragons.createintegratedfarming.common.ranching.roost.chicken.ChickenFoodItem;
-import plus.dragons.createintegratedfarming.integration.ModIntegration;
 
 public class CIFDataMaps {
+    private static final TagKey<Fluid> PLANT_OIL = TagKey.create(
+            Registries.FLUID, ResourceLocation.fromNamespaceAndPath("c", "plantoil"));
+
     public static final DataMapType<Item, ChickenFoodItem> CHICKEN_FOOD_ITEMS = DataMapType
             .builder(CIFCommon.asResource("chicken_food"), Registries.ITEM, ChickenFoodItem.CODEC)
             .synced(ChickenFoodItem.CODEC, true)
@@ -66,9 +70,9 @@ public class CIFDataMaps {
                         UniformInt.of(400, 800),
                         Optional.empty()), false);
         provider.builder(CHICKEN_FOOD_FLUIDS)
-                .add(ModIntegration.CREATE_CRAFT_AND_ADDITIONS.asResource("seed_oil"), new ChickenFoodFluid(
+                .add(PLANT_OIL, new ChickenFoodFluid(
                         ConstantInt.of(2400),
                         UniformInt.of(400, 800),
-                        100), false, ModIntegration.CREATE_CRAFT_AND_ADDITIONS.condition());
+                        100), false);
     }
 }

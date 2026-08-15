@@ -1,12 +1,6 @@
 {
   "values": {
-    "createadditions:seed_oil": {
-      "neoforge:conditions": [
-        {
-          "type": "neoforge:mod_loaded",
-          "modid": "createadditions"
-        }
-      ],
+    "#c:plantoil": {
       "amount": 100,
       "cooldown": {
         "type": "minecraft:uniform",
