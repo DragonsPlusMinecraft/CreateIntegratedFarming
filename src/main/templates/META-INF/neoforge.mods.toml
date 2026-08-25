@@ -56,3 +56,10 @@ ${integration_mixin_blocks}
     versionRange="${farmers_delight_version_range}"
     ordering="AFTER"
     side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="netherdepthsupgrade"
+    type="optional"
+    versionRange="${nether_depths_upgrade_version_range}"
+    ordering="AFTER"
+    side="BOTH"
