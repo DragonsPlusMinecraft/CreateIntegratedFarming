@@ -86,6 +86,7 @@ public enum ModIntegration {
         public static final String NETHERS_EXOTICISM = "nethers_exoticism";
         public static final String DELIGHT_O_FLIGHT = "delighto_flight";
         public static final String SABLE = "sable";
+        public static final String SIMULATED = "simulated";
         public static final String TWILIGHT_FOREST = "twilightforest";
         public static final String TWILIGHT_DELIGHT = "twilightdelight";
     }

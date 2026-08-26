@@ -41,7 +41,7 @@ public class FishingNetContext extends AbstractFishingNetContext<FishingHook> {
     }
 
     @Override
-    protected boolean isPosValidForFishing(ServerLevel level, BlockPos pos) {
+    public boolean isPosValidForFishing(ServerLevel level, BlockPos pos) {
         return fishingHook.getOpenWaterTypeForBlock(pos) == OpenWaterType.INSIDE_WATER;
     }
 

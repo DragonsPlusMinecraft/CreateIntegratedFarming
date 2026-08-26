@@ -43,7 +43,7 @@ public class LavaFishingNetContext extends AbstractFishingNetContext<LavaFishing
     }
 
     @Override
-    protected boolean isPosValidForFishing(ServerLevel level, BlockPos pos) {
+    public boolean isPosValidForFishing(ServerLevel level, BlockPos pos) {
         return level.getFluidState(pos).is(FluidTags.LAVA) &&
                 level.getBlockState(pos).getCollisionShape(level, pos).isEmpty();
     }

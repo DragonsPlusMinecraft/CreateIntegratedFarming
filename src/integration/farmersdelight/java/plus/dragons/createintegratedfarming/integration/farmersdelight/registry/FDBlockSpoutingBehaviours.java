@@ -18,7 +18,6 @@
 
 package plus.dragons.createintegratedfarming.integration.farmersdelight.registry;
 
-import com.simibubi.create.api.behaviour.spouting.BlockSpoutingBehaviour;
 import com.simibubi.create.content.fluids.spout.SpoutBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -26,13 +25,13 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidStack;
+import plus.dragons.createintegratedfarming.common.registry.CIFBlockSpoutingBehaviours;
 import vectorwing.farmersdelight.common.registry.ModBlocks;
 
 public class FDBlockSpoutingBehaviours {
     public static void register() {
-        BlockSpoutingBehaviour.BY_BLOCK.register(
-                ModBlocks.ORGANIC_COMPOST.get(),
-                FDBlockSpoutingBehaviours::fillOrganicCompost);
+        CIFBlockSpoutingBehaviours.registerManaged(
+                ModBlocks.ORGANIC_COMPOST.get(), FDBlockSpoutingBehaviours::fillOrganicCompost);
     }
 
     private static int fillOrganicCompost(Level level, BlockPos pos, SpoutBlockEntity spout, FluidStack fluid, boolean simulate) {

@@ -119,11 +119,11 @@ public class VacuumHarvesterScene {
 
         BlockPos funnel = util.grid().at(1, 1, 2);
         BlockPos depot = util.grid().at(1, 0, 2);
-        scene.world().hideSection(util.select().position(depot),Direction.DOWN);
+        scene.world().hideSection(util.select().position(depot), Direction.DOWN);
         scene.idle(5);
         scene.world().setBlock(funnel, AllBlocks.BRASS_FUNNEL.getDefaultState().setValue(FunnelBlock.FACING, Direction.WEST).setValue(FunnelBlock.EXTRACTING, true), false);
         scene.world().setBlock(depot, AllBlocks.DEPOT.getDefaultState(), false);
-        scene.world().showSection(util.select().fromTo(funnel,depot), Direction.EAST);
+        scene.world().showSection(util.select().fromTo(funnel, depot), Direction.EAST);
         scene.world().modifyBlockEntity(machine, VacuumHarvesterBlockEntity.class, blockEntity -> blockEntity.getInventory().insertItem(0, new ItemStack(Items.WHEAT, 4), false));
         scene.idle(15);
         scene.world().flapFunnel(funnel, false);

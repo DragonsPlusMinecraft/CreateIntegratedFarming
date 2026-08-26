@@ -25,10 +25,14 @@ import net.minecraft.world.item.Items;
 
 public class FishingNetMovementBehaviour extends AbstractFishingNetMovementBehaviour<FishingNetContext> {
     @Override
+    public FishingNetContext createFishingNetContext(ServerLevel level) {
+        return new FishingNetContext(level, new ItemStack(Items.FISHING_ROD));
+    }
+
+    @Override
     protected FishingNetContext getFishingNetContext(MovementContext context, ServerLevel level) {
-        if (!(context.temporaryData instanceof FishingNetContext)) {
-            context.temporaryData = new FishingNetContext(level, new ItemStack(Items.FISHING_ROD));
-        }
+        if (!(context.temporaryData instanceof FishingNetContext))
+            context.temporaryData = createFishingNetContext(level);
         return (FishingNetContext) context.temporaryData;
     }
 }

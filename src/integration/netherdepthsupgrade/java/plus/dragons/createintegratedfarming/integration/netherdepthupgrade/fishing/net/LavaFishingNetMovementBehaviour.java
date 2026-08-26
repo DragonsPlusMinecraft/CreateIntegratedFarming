@@ -32,7 +32,7 @@ import plus.dragons.createintegratedfarming.config.CIFConfig;
 
 public class LavaFishingNetMovementBehaviour extends AbstractFishingNetMovementBehaviour<LavaFishingNetContext> {
     @Override
-    protected boolean canCaptureEntity(LivingEntity entity) {
+    public boolean canCaptureEntity(LivingEntity entity) {
         if (entity instanceof Enemy)
             return false;
         if (entity instanceof WaterAnimal || entity instanceof LavaAnimal) {
@@ -44,10 +44,14 @@ public class LavaFishingNetMovementBehaviour extends AbstractFishingNetMovementB
     }
 
     @Override
+    public LavaFishingNetContext createFishingNetContext(ServerLevel level) {
+        return new LavaFishingNetContext(level, new ItemStack(NDUItems.LAVA_FISHING_ROD.asItem()));
+    }
+
+    @Override
     protected LavaFishingNetContext getFishingNetContext(MovementContext context, ServerLevel level) {
-        if (!(context.temporaryData instanceof LavaFishingNetContext)) {
-            context.temporaryData = new LavaFishingNetContext(level, new ItemStack(NDUItems.LAVA_FISHING_ROD.asItem()));
-        }
+        if (!(context.temporaryData instanceof LavaFishingNetContext))
+            context.temporaryData = createFishingNetContext(level);
         return (LavaFishingNetContext) context.temporaryData;
     }
 }

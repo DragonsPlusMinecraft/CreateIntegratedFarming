@@ -36,12 +36,17 @@ import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.event.entity.player.ItemFishedEvent;
+import org.jetbrains.annotations.ApiStatus;
 import plus.dragons.createintegratedfarming.config.CIFConfig;
 
 public abstract class AbstractFishingNetMovementBehaviour<T extends AbstractFishingNetContext<?>> implements MovementBehaviour {
+    @ApiStatus.Internal
+    public abstract T createFishingNetContext(ServerLevel level);
+
     protected abstract T getFishingNetContext(MovementContext context, ServerLevel level);
 
-    protected boolean canCaptureEntity(LivingEntity entity) {
+    @ApiStatus.Internal
+    public boolean canCaptureEntity(LivingEntity entity) {
         if (entity instanceof Enemy)
             return false;
         if (entity instanceof WaterAnimal) {

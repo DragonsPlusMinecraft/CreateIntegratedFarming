@@ -20,16 +20,32 @@ package plus.dragons.createintegratedfarming.common.registry;
 
 import com.simibubi.create.api.behaviour.spouting.BlockSpoutingBehaviour;
 import com.simibubi.create.content.fluids.spout.SpoutBlockEntity;
+import java.util.Collections;
+import java.util.IdentityHashMap;
+import java.util.Set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.fluids.FluidStack;
+import org.jetbrains.annotations.ApiStatus;
 import plus.dragons.createintegratedfarming.common.ranching.roost.chicken.ChickenRoostBlockEntity;
 
 public class CIFBlockSpoutingBehaviours {
+    private static final Set<BlockSpoutingBehaviour> MANAGED_BEHAVIOURS = Collections.newSetFromMap(new IdentityHashMap<>());
+
     public static void register() {
-        BlockSpoutingBehaviour.BY_BLOCK.register(
-                CIFBlocks.CHICKEN_ROOST.get(),
-                CIFBlockSpoutingBehaviours::fillChickenCoop);
+        registerManaged(CIFBlocks.CHICKEN_ROOST.get(), CIFBlockSpoutingBehaviours::fillChickenCoop);
+    }
+
+    @ApiStatus.Internal
+    public static void registerManaged(Block block, BlockSpoutingBehaviour behaviour) {
+        MANAGED_BEHAVIOURS.add(behaviour);
+        BlockSpoutingBehaviour.BY_BLOCK.register(block, behaviour);
+    }
+
+    @ApiStatus.Internal
+    public static boolean isManaged(BlockSpoutingBehaviour behaviour) {
+        return MANAGED_BEHAVIOURS.contains(behaviour);
     }
 
     private static int fillChickenCoop(Level level, BlockPos pos, SpoutBlockEntity spout, FluidStack fluid, boolean simulate) {

@@ -18,7 +18,6 @@
 
 package plus.dragons.createintegratedfarming.integration.mynethersdelight.registry;
 
-import com.simibubi.create.api.behaviour.spouting.BlockSpoutingBehaviour;
 import com.simibubi.create.content.fluids.spout.SpoutBlockEntity;
 import com.soytutta.mynethersdelight.common.tag.MNDTags;
 import net.minecraft.core.BlockPos;
@@ -27,11 +26,12 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidStack;
+import plus.dragons.createintegratedfarming.common.registry.CIFBlockSpoutingBehaviours;
 import plus.dragons.createintegratedfarming.integration.ModIntegration;
 
 public class MNDBlockSpoutingBehaviors {
     public static void register() {
-        BlockSpoutingBehaviour.BY_BLOCK.register(
+        CIFBlockSpoutingBehaviours.registerManaged(
                 BuiltInRegistries.BLOCK.get(ModIntegration.MY_NETHERS_DELIGHT.asResource("letios_compost")),
                 MNDBlockSpoutingBehaviors::fillLetiosCompost);
     }

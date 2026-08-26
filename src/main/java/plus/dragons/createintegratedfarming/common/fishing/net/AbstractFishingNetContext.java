@@ -32,6 +32,7 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import org.jetbrains.annotations.ApiStatus;
 import plus.dragons.createintegratedfarming.config.CIFConfig;
 
 public abstract class AbstractFishingNetContext<T extends FishingHook> {
@@ -52,7 +53,8 @@ public abstract class AbstractFishingNetContext<T extends FishingHook> {
 
     protected abstract T createFishingHook(ServerLevel level);
 
-    protected abstract boolean isPosValidForFishing(ServerLevel level, BlockPos pos);
+    @ApiStatus.Internal
+    public abstract boolean isPosValidForFishing(ServerLevel level, BlockPos pos);
 
     public abstract LootTable getLootTable(ServerLevel level, BlockPos pos);
 
@@ -70,8 +72,13 @@ public abstract class AbstractFishingNetContext<T extends FishingHook> {
 
     public void reset(ServerLevel level) {
         this.visitedBlocks.clear();
+        this.timeUntilCatch = getCatchDelay(level);
+    }
+
+    @ApiStatus.Internal
+    public int getCatchDelay(ServerLevel level) {
         int lureSpeed = (int) (EnchantmentHelper.getFishingTimeReduction(level, fishingRod, fishingHook) * 20.0F);
-        this.timeUntilCatch = (Mth.nextInt(fishingHook.getRandom(), 100, 600) - lureSpeed) *
+        return (Mth.nextInt(fishingHook.getRandom(), 100, 600) - lureSpeed) *
                 CIFConfig.server().fishingNetCooldownMultiplier.get();
     }
 
