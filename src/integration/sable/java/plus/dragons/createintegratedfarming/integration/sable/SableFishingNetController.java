@@ -65,7 +65,6 @@ public final class SableFishingNetController {
     private static final double MOVEMENT_EPSILON_SQUARED = 1.0E-12;
     private static final long PARENT_LAYER_SALT = 0x61C8864680B583EBL;
     private static final Direction[] DIRECTIONS = Direction.values();
-    private static final Direction.AxisDirection[] AXIS_DIRECTIONS = Direction.AxisDirection.values();
 
     private final ServerSubLevel sourceSubLevel;
     private final ServerLevel level;
@@ -514,7 +513,7 @@ public final class SableFishingNetController {
             int y = BlockPos.getY(packedPos);
             int z = BlockPos.getZ(packedPos);
             mutablePos.set(x, y, z);
-            collectReceivers(panel, mutablePos, axis);
+            collectReceivers(panel, mutablePos);
             for (Direction direction : DIRECTIONS) {
                 if (direction.getAxis() == axis)
                     continue;
@@ -540,9 +539,8 @@ public final class SableFishingNetController {
                 && state.getValue(BlockStateProperties.FACING).getAxis() == axis;
     }
 
-    private void collectReceivers(Panel panel, BlockPos netPos, Direction.Axis axis) {
-        for (Direction.AxisDirection axisDirection : AXIS_DIRECTIONS) {
-            Direction direction = Direction.get(axisDirection, axis);
+    private void collectReceivers(Panel panel, BlockPos netPos) {
+        for (Direction direction : DIRECTIONS) {
             receiverPos.setWithOffset(netPos, direction);
             var blockEntity = level.getBlockEntity(receiverPos);
             if (blockEntity instanceof SableFishingNetItemReceiver receiver && panel.receiverSet.add(receiver))
