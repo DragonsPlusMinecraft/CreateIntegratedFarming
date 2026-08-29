@@ -1,0 +1,16 @@
+{
+  "parent": "create_integrated_farming:block/roost",
+  "loader": "neoforge:composite",
+  "children": {
+    "roost": {
+      "parent": "create_integrated_farming:block/roost"
+    },
+    "chicken": {
+      "parent": "create_integrated_farming:block/cold_chicken"
+    }
+  },
+  "item_render_order": [
+    "roost",
+    "chicken"
+  ]
+}

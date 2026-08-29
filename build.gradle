@@ -44,6 +44,7 @@ def allIntegrationSourceSets = [
         "tide",
         "starcatcher",
         "confluence",
+        "vanillabackport",
 ]
 
 def integrationSourceSetDependencies = [
@@ -176,7 +177,8 @@ neoForge {
                     "--existing-mod", "netherdepthsupgrade",
                     "--existing-mod", "tide",
                     "--existing-mod", "starcatcher",
-                    "--existing-mod", "confluence"
+                    "--existing-mod", "confluence",
+                    "--existing-mod", "vanillabackport"
             ]
             enabledIntegrationSourceSets.each { name ->
                 dataArgs.addAll('--existing', file("src/integration/${name}/resources/").getAbsolutePath())
@@ -335,6 +337,11 @@ dependencies {
         confluenceLocalImplementation("maven.modrinth:9kp7blvl:${confluence_version}")
     }
 
+    if (hasIntegration("vanillabackport")) {
+        vanillabackportLocalImplementation("curse.maven:platform-997634:${vanilla_backport_platform_version}")
+        vanillabackportLocalImplementation("curse.maven:vanillabackport-417430:${vanilla_backport_version}")
+    }
+
     if (hasIntegration("delightoflight")) {
         delightoflightLocalImplementation("curse.maven:delighto-flight-1347014:${delighto_flight_version}")
     }
@@ -351,6 +358,26 @@ dependencies {
         twilightdelightLocalImplementation("maven.modrinth:twilight-delight:${twilight_delight_version}")
         localRuntime("maven.modrinth:cuisine-delight:gdWm3nOx") // java.lang.NoClassDefFoundError: dev/xkmc/cuisinedelight/content/logic/IngredientConfig TODO wait for fix
     }
+}
+
+if (hasIntegration("confluence")) {
+    configurations.named("confluenceLocalImplementation") {
+        canBeResolved = true
+    }
+    def confluenceNestedCompileJarsDir = layout.buildDirectory.dir("generated/confluenceNestedCompileJars")
+    def extractConfluenceNestedCompileJars = tasks.register("extractConfluenceNestedCompileJars", Copy) {
+        from {
+            configurations.confluenceLocalImplementation.collect { zipTree(it) }
+        }
+        include "META-INF/jarjar/*.jar"
+        eachFile { details -> details.path = details.name }
+        includeEmptyDirs = false
+        into confluenceNestedCompileJarsDir
+    }
+    def confluenceNestedCompileJars = files(fileTree(confluenceNestedCompileJarsDir) {
+        include "*.jar"
+    }).builtBy(extractConfluenceNestedCompileJars)
+    sourceSets.confluence.compileClasspath += confluenceNestedCompileJars
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
@@ -375,6 +402,7 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             tide_version_range                  : tide_version_range,
             starcatcher_version_range           : starcatcher_version_range,
             confluence_version_range            : confluence_version_range,
+            vanilla_backport_version_range      : vanilla_backport_version_range,
             integration_mixin_blocks            : integrationMixinBlocks
     ]
     inputs.properties replaceProperties

@@ -1,0 +1,27 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "vanillabackport"
+    }
+  ],
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "create_integrated_farming:vanillabackport_chicken_roost_cold"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "create_integrated_farming:blocks/vanillabackport_chicken_roost_cold"
+}

@@ -1,9 +1,13 @@
 {
   "block.create_integrated_farming.chicken_roost": "Poleiro de Galinha",
+  "block.create_integrated_farming.confluence_duck_roost_common": "Poleiro de Pato Comum",
+  "block.create_integrated_farming.confluence_duck_roost_mallard": "Poleiro de Pato-real",
   "block.create_integrated_farming.fishing_net": "Rede de Pesca",
   "block.create_integrated_farming.lava_fishing_net": "Rede de Pesca de Lava",
   "block.create_integrated_farming.lava_fishing_net.tooltip.summary": "Enquanto se move, pesca _peixes e outros itens_ na _lava_.",
   "block.create_integrated_farming.roost": "Poleiro",
+  "block.create_integrated_farming.vanillabackport_chicken_roost_cold": "Poleiro de Galinha de Clima Frio",
+  "block.create_integrated_farming.vanillabackport_chicken_roost_warm": "Poleiro de Galinha de Clima Quente",
   "create_integrated_farming.ponder.lava_fishing_net.header": "Usando a Rede de Pesca de Lava em Dispositivos",
   "create_integrated_farming.ponder.lava_fishing_net.text_1": "Sempre que as Redes de Pesca de Lava forem movidas como parte de um Dispositivo animado...",
   "create_integrated_farming.ponder.lava_fishing_net.text_2": "Elas pescam na lava como um jogador usando uma vara de pesca",

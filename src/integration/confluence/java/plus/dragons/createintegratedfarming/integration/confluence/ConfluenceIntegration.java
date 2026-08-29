@@ -22,31 +22,50 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
 import net.neoforged.fml.loading.FMLLoader;
 import plus.dragons.createintegratedfarming.common.CIFCommon;
 import plus.dragons.createintegratedfarming.common.fishing.net.FishingNetCatchProviders;
 import plus.dragons.createintegratedfarming.common.fishing.net.FishingNetMedium;
 import plus.dragons.createintegratedfarming.integration.ModIntegration;
+import plus.dragons.createintegratedfarming.integration.confluence.registry.ConfluenceBlockEntities;
+import plus.dragons.createintegratedfarming.integration.confluence.registry.ConfluenceBlocks;
+import plus.dragons.createintegratedfarming.integration.confluence.registry.ConfluenceHarvestBehaviours;
+import plus.dragons.createintegratedfarming.integration.confluence.registry.ConfluenceRoostCapturables;
 
 @Mod(CIFCommon.ID)
 public class ConfluenceIntegration {
     public ConfluenceIntegration(IEventBus modBus) {
         if (ModIntegration.CONFLUENCE.enabled()) {
-            modBus.register(new Common());
+            modBus.register(new Common(modBus));
             if (FMLLoader.getDist() == Dist.CLIENT)
                 modBus.register(new Client());
         }
     }
 
     public static class Common {
+        private final IEventBus modBus;
+
+        public Common(IEventBus modBus) {
+            this.modBus = modBus;
+        }
+
         @SubscribeEvent
         public void construct(final FMLConstructModEvent event) {
+            ConfluenceBlocks.register(modBus);
+            ConfluenceBlockEntities.register(modBus);
             var provider = new ConfluenceFishingNetCatchProvider();
             FishingNetCatchProviders.register(
                     ModIntegration.CONFLUENCE.asResource("fishing_net"), FishingNetMedium.WATER, provider);
             FishingNetCatchProviders.register(
                     ModIntegration.CONFLUENCE.asResource("fishing_net"), FishingNetMedium.LAVA, provider);
+        }
+
+        @SubscribeEvent
+        public void commonSetup(final FMLCommonSetupEvent event) {
+            ConfluenceHarvestBehaviours.register();
+            event.enqueueWork(ConfluenceRoostCapturables::register);
         }
     }
 

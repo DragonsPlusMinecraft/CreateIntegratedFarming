@@ -43,6 +43,7 @@ public enum ModIntegration {
     TIDE(Mods.TIDE),
     STARCATCHER(Mods.STARCATCHER),
     CONFLUENCE(Mods.CONFLUENCE),
+    VANILLA_BACKPORT(Mods.VANILLA_BACKPORT),
     TWILIGHT_FOREST(Mods.TWILIGHT_FOREST),
     TWILIGHT_DELIGHT(Mods.TWILIGHT_DELIGHT);
 
@@ -92,6 +93,7 @@ public enum ModIntegration {
         public static final String TIDE = "tide";
         public static final String STARCATCHER = "starcatcher";
         public static final String CONFLUENCE = "confluence";
+        public static final String VANILLA_BACKPORT = "vanillabackport";
         public static final String SIMULATED = "simulated";
         public static final String TWILIGHT_FOREST = "twilightforest";
         public static final String TWILIGHT_DELIGHT = "twilightdelight";

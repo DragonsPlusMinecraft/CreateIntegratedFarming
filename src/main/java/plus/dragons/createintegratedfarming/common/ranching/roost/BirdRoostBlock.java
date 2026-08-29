@@ -42,6 +42,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.Nullable;
 
 public abstract class BirdRoostBlock<T extends Animal, B extends AnimalRoostBlockEntity> extends RoostBlock
         implements IBE<B>, RoostCapturable {
@@ -55,6 +56,10 @@ public abstract class BirdRoostBlock<T extends Animal, B extends AnimalRoostBloc
     protected abstract Class<T> getBirdClass();
 
     protected abstract EntityType<T> getBirdType();
+
+    protected @Nullable T createBird(Level level) {
+        return getBirdType().create(level);
+    }
 
     protected abstract SoundEvent getEggSound();
 
@@ -90,7 +95,7 @@ public abstract class BirdRoostBlock<T extends Animal, B extends AnimalRoostBloc
             InteractionHand hand, BlockHitResult hitResult) {
         if (stack.is(Items.LEAD)) {
             if (!level.isClientSide) {
-                T bird = getBirdType().create(level);
+                T bird = createBird(level);
                 if (bird == null)
                     return ItemInteractionResult.FAIL;
                 bird.setAge(0);

@@ -58,6 +58,10 @@ public class ChickenRoostBlock extends RoostBlock implements IBE<ChickenRoostBlo
         this.empty = empty;
     }
 
+    protected Chicken createChicken(Level level) {
+        return new Chicken(EntityType.CHICKEN, level);
+    }
+
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         return onBlockEntityUse(level, pos, coop -> {
@@ -76,7 +80,7 @@ public class ChickenRoostBlock extends RoostBlock implements IBE<ChickenRoostBlo
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (stack.is(Items.LEAD)) {
-            Chicken chicken = new Chicken(EntityType.CHICKEN, level);
+            Chicken chicken = createChicken(level);
             chicken.setPos(pos.getCenter());
             chicken.setLeashedTo(player, true);
             level.addFreshEntity(chicken);

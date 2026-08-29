@@ -1,6 +1,8 @@
 {
   "block.create_integrated_farming.autumnity_turkey_roost": "ʇsooᴚ ʎǝʞɹn⟘",
   "block.create_integrated_farming.chicken_roost": "ʇsooᴚ uǝʞɔıɥƆ",
+  "block.create_integrated_farming.confluence_duck_roost_common": "ʇsooᴚ ʞɔnᗡ uoɯɯoƆ",
+  "block.create_integrated_farming.confluence_duck_roost_mallard": "ʇsooᴚ ʞɔnᗡ pɹɐןןɐW",
   "block.create_integrated_farming.duck_roost_campbell": "ʇsooᴚ ʞɔnᗡ",
   "block.create_integrated_farming.duck_roost_female": "ʇsooᴚ ʞɔnᗡ",
   "block.create_integrated_farming.duck_roost_normal": "ʇsooᴚ ʞɔnᗡ",
@@ -17,6 +19,8 @@
   "block.create_integrated_farming.lava_fishing_net.tooltip.summary": "˙buıʌoɯ ǝןıɥʍ ‾ɐʌɐן‾ ɯoɹɟ ‾sɯǝʇı ɹǝɥʇo puɐ ɥsıɟ‾ sǝɥɔʇɐƆ",
   "block.create_integrated_farming.roost": "ʇsooᴚ",
   "block.create_integrated_farming.vacuum_harvester": "ɹǝʇsǝʌɹɐH ɯnnɔɐΛ",
+  "block.create_integrated_farming.vanillabackport_chicken_roost_cold": "ʇsooᴚ uǝʞɔıɥƆ pןoƆ",
+  "block.create_integrated_farming.vanillabackport_chicken_roost_warm": "ʇsooᴚ uǝʞɔıɥƆ ɯɹɐM",
   "create_integrated_farming.goggles.roost.next_output": "%s :ʇndʇno ʇxǝN",
   "create_integrated_farming.goggles.roost.output_inventory_full": "ןןnɟ ʎɹoʇuǝʌuı ʇndʇnO",
   "create_integrated_farming.goggles.roost.ready": "ʎpɐǝᴚ",

@@ -45,7 +45,7 @@ public class RoostBlockItem extends BlockItem {
 
     @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity target, InteractionHand hand) {
-        var capturable = RoostCapturable.REGISTRY.get(target.getType());
+        var capturable = RoostCapturable.resolve(target);
         return capturable == null ? InteractionResult.PASS : capturable.captureItem(target.level(), stack, hand, player, target);
     }
 
@@ -72,11 +72,12 @@ public class RoostBlockItem extends BlockItem {
             Optional<EntityType<?>> optional = EntityType.by(spawnData.entityToSpawn());
             if (optional.isEmpty())
                 continue;
-            var capturable = RoostCapturable.REGISTRY.get(optional.get());
-            if (capturable == null)
-                continue;
             var entity = optional.get().create(level);
             if (entity == null)
+                continue;
+            entity.load(spawnData.entityToSpawn());
+            var capturable = RoostCapturable.resolve(entity);
+            if (capturable == null)
                 continue;
             return capturable.captureItem(level, context.getItemInHand(), context.getHand(), player, entity);
         }

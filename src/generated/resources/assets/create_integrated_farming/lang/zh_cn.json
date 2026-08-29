@@ -1,6 +1,8 @@
 {
   "block.create_integrated_farming.autumnity_turkey_roost": "火鸡舍",
   "block.create_integrated_farming.chicken_roost": "鸡舍",
+  "block.create_integrated_farming.confluence_duck_roost_common": "普通鸭舍",
+  "block.create_integrated_farming.confluence_duck_roost_mallard": "绿头鸭舍",
   "block.create_integrated_farming.duck_roost_campbell": "鸭舍",
   "block.create_integrated_farming.duck_roost_female": "鸭舍",
   "block.create_integrated_farming.duck_roost_normal": "鸭舍",
@@ -17,6 +19,8 @@
   "block.create_integrated_farming.lava_fishing_net.tooltip.summary": "移动时，会从_熔岩_中捕获_鱼和其他物品_。",
   "block.create_integrated_farming.roost": "空禽舍",
   "block.create_integrated_farming.vacuum_harvester": "真空收割器",
+  "block.create_integrated_farming.vanillabackport_chicken_roost_cold": "寒带鸡舍",
+  "block.create_integrated_farming.vanillabackport_chicken_roost_warm": "暖带鸡舍",
   "create_integrated_farming.goggles.roost.next_output": "下次产出：%s",
   "create_integrated_farming.goggles.roost.output_inventory_full": "产出库存已满",
   "create_integrated_farming.goggles.roost.ready": "可产出",

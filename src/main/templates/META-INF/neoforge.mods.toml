@@ -84,3 +84,10 @@ ${integration_mixin_blocks}
     versionRange="${confluence_version_range}"
     ordering="AFTER"
     side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="vanillabackport"
+    type="optional"
+    versionRange="${vanilla_backport_version_range}"
+    ordering="AFTER"
+    side="BOTH"

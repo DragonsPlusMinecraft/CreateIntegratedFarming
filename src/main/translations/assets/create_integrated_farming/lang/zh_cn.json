@@ -1,5 +1,7 @@
 {
   "block.create_integrated_farming.chicken_roost": "鸡舍",
+  "block.create_integrated_farming.confluence_duck_roost_common": "普通鸭舍",
+  "block.create_integrated_farming.confluence_duck_roost_mallard": "绿头鸭舍",
   "block.create_integrated_farming.duck_roost_campbell": "鸭舍",
   "block.create_integrated_farming.duck_roost_female": "鸭舍",
   "block.create_integrated_farming.duck_roost_normal": "鸭舍",
@@ -14,6 +16,8 @@
   "block.create_integrated_farming.lava_fishing_net": "熔岩渔网",
   "block.create_integrated_farming.lava_fishing_net.tooltip.summary": "移动时，会从_熔岩_中捕获_鱼和其他物品_。",
   "block.create_integrated_farming.roost": "空禽舍",
+  "block.create_integrated_farming.vanillabackport_chicken_roost_cold": "寒带鸡舍",
+  "block.create_integrated_farming.vanillabackport_chicken_roost_warm": "暖带鸡舍",
   "create_integrated_farming.ponder.fishing_net.header": "在动态结构上使用渔网",
   "create_integrated_farming.ponder.fishing_net.text_1": "当渔网作为动态结构的一部分移动时……",
   "create_integrated_farming.ponder.fishing_net.text_2": "其会在开放水域捕鱼，如同玩家在使用鱼竿钓鱼",

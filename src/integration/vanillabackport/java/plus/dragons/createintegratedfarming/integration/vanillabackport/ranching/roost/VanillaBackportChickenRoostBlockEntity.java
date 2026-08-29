@@ -1,0 +1,45 @@
+/*
+ * Copyright (C) 2025  DragonsPlus
+ * SPDX-License-Identifier: LGPL-3.0-or-later
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+package plus.dragons.createintegratedfarming.integration.vanillabackport.ranching.roost;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootTable;
+import plus.dragons.createintegratedfarming.common.ranching.roost.chicken.ChickenRoostBlockEntity;
+import plus.dragons.createintegratedfarming.common.registry.CIFLootTables;
+import plus.dragons.createintegratedfarming.integration.vanillabackport.registry.VanillaBackportBlocks;
+import plus.dragons.createintegratedfarming.integration.vanillabackport.registry.VanillaBackportLootTables;
+
+public class VanillaBackportChickenRoostBlockEntity extends ChickenRoostBlockEntity {
+    public VanillaBackportChickenRoostBlockEntity(
+            BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
+    }
+
+    @Override
+    protected ResourceKey<LootTable> productionLootTable() {
+        if (getBlockState().is(VanillaBackportBlocks.CHICKEN_ROOST_WARM))
+            return VanillaBackportLootTables.WARM_CHICKEN_ROOST;
+        if (getBlockState().is(VanillaBackportBlocks.CHICKEN_ROOST_COLD))
+            return VanillaBackportLootTables.COLD_CHICKEN_ROOST;
+        return CIFLootTables.CHICKEN_ROOST;
+    }
+}

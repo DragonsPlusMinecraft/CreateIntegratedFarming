@@ -1,6 +1,11 @@
 {
   "sources": [
     {
+      "type": "directory",
+      "source": "entity/chicken",
+      "prefix": "entity/chicken/"
+    },
+    {
       "type": "single",
       "resource": "untitledduckmod:entity/duck"
     },

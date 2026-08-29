@@ -1,9 +1,13 @@
 {
   "block.create_integrated_farming.chicken_roost": "Куриный насест",
+  "block.create_integrated_farming.confluence_duck_roost_common": "Утиный насест",
+  "block.create_integrated_farming.confluence_duck_roost_mallard": "Насест кряквы",
   "block.create_integrated_farming.fishing_net": "Рыболовная сеть",
   "block.create_integrated_farming.lava_fishing_net": "Лавовая рыболовная сеть",
   "block.create_integrated_farming.lava_fishing_net.tooltip.summary": "Во время движения вылавливает из _лавы_ _рыбу и другие предметы_.",
   "block.create_integrated_farming.roost": "Насест",
+  "block.create_integrated_farming.vanillabackport_chicken_roost_cold": "Насест холодной курицы",
+  "block.create_integrated_farming.vanillabackport_chicken_roost_warm": "Насест тёплой курицы",
   "create_integrated_farming.ponder.fishing_net.header": "Использованием рыболовной сети на штуковинах",
   "create_integrated_farming.ponder.fishing_net.text_1": "Когда рыболовные сети движутся как часть анимированной штуковины...",
   "create_integrated_farming.ponder.fishing_net.text_2": "...они будут ловить рыбу в открытой воде, как игрок с удочкой",

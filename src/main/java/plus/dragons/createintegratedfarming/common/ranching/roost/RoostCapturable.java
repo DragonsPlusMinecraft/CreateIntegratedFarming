@@ -29,9 +29,20 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 
 public interface RoostCapturable {
     SimpleRegistry<EntityType<?>, RoostCapturable> REGISTRY = SimpleRegistry.create();
+
+    static @Nullable RoostCapturable resolve(Entity entity) {
+        RoostCapturableProvider provider = RoostCapturableProvider.REGISTRY.get(entity.getType());
+        if (provider != null) {
+            RoostCapturable capturable = provider.getCapturable(entity);
+            if (capturable != null)
+                return capturable;
+        }
+        return REGISTRY.get(entity.getType());
+    }
 
     ItemInteractionResult captureBlock(Level level, BlockState state, BlockPos pos, ItemStack stack, Player player, Entity entity);
 
