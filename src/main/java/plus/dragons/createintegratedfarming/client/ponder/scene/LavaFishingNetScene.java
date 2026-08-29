@@ -20,6 +20,7 @@ package plus.dragons.createintegratedfarming.client.ponder.scene;
 
 import com.simibubi.create.foundation.ponder.CreateSceneBuilder;
 import java.util.List;
+import java.util.function.Supplier;
 import net.createmod.catnip.math.Pointing;
 import net.createmod.ponder.api.element.ElementLink;
 import net.createmod.ponder.api.element.WorldSectionElement;
@@ -27,6 +28,9 @@ import net.createmod.ponder.api.scene.SceneBuilder;
 import net.createmod.ponder.api.scene.SceneBuildingUtil;
 import net.createmod.ponder.foundation.PonderScene;
 import net.createmod.ponder.foundation.element.InputWindowElement;
+import net.createmod.ponder.foundation.instruction.ShowInputInstruction;
+import net.createmod.ponder.foundation.ui.PonderUI;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -77,7 +81,7 @@ public class LavaFishingNetScene {
         scene.overlay()
                 .showText(100)
                 .pointAt(util.vector().blockSurface(util.grid().at(2, 2, 5), Direction.EAST))
-                .text("They draw catches from lava fishing pools provided by installed mods")
+                .text("They fish in lava just as a player would with a fishing rod")
                 .placeNearTarget();
         scene.idle(140);
 
@@ -87,9 +91,9 @@ public class LavaFishingNetScene {
                 .placeNearTarget()
                 .attachKeyFrame()
                 .pointAt(util.vector().blockSurface(util.grid().at(2, 1, 5), Direction.NORTH))
-                .text("One compatible lava catch is shown here in its entity or item form");
+                .text("They can catch both fish and other items found while lava fishing");
         scene.world().hideSection(util.select().fromTo(0, 1, 0, 5, 3, 2), Direction.NORTH);
-        Vec3 entityPosition = util.vector().centerOf(2, 1, 1);
+        Vec3 entityPosition = util.vector().of(2.5, 2.15, 1.5);
         var entity = scene.world().createEntity(level -> example.create(level, entityPosition));
         scene.idle(10);
 
@@ -99,21 +103,21 @@ public class LavaFishingNetScene {
         scene.world().modifyEntity(entity, Entity::discard);
         scene.idle(120);
         Vec3 iconPosition = util.vector().centerOf(0, 2, 5);
-        scene.debug().enqueueCallback(ponderScene -> example.showIcon(ponderScene, iconPosition));
+        builder.addInstruction(
+                new ShowInputInstruction(new SuppliedInputWindowElement(iconPosition, Pointing.UP, example::icon), 40));
         scene.idle(40);
-        scene.debug().enqueueCallback(ponderScene -> example.hideIcon());
     }
 
     private static class ExampleState {
         private final List<FishingNetPonderExample> candidates;
         private @Nullable ItemStack icon;
-        private @Nullable InputWindowElement iconElement;
 
         private ExampleState(List<FishingNetPonderExample> candidates) {
             this.candidates = candidates;
         }
 
         private Entity create(Level level, Vec3 position) {
+            icon = null;
             for (FishingNetPonderExample candidate : candidates) {
                 try {
                     ItemStack candidateIcon = candidate.iconSupplier().get();
@@ -123,6 +127,8 @@ public class LavaFishingNetScene {
                     if (entity == null)
                         continue;
                     entity.setPos(position);
+                    entity.setDeltaMovement(Vec3.ZERO);
+                    entity.setNoGravity(true);
                     icon = candidateIcon.copy();
                     return entity;
                 } catch (RuntimeException exception) {
@@ -134,19 +140,31 @@ public class LavaFishingNetScene {
             return placeholder;
         }
 
-        private void showIcon(PonderScene scene, Vec3 position) {
-            if (icon == null || icon.isEmpty())
-                return;
-            iconElement = new InputWindowElement(position, Pointing.UP);
-            iconElement.builder().rightClick().withItem(icon);
-            iconElement.setVisible(true);
-            iconElement.setFade(1.0F);
-            scene.addElement(iconElement);
+        private ItemStack icon() {
+            return icon == null ? ItemStack.EMPTY : icon;
+        }
+    }
+
+    private static class SuppliedInputWindowElement extends InputWindowElement {
+        private final Supplier<ItemStack> iconSupplier;
+        private boolean initialized;
+
+        private SuppliedInputWindowElement(Vec3 position, Pointing direction, Supplier<ItemStack> iconSupplier) {
+            super(position, direction);
+            this.iconSupplier = iconSupplier;
         }
 
-        private void hideIcon() {
-            if (iconElement != null)
-                iconElement.setVisible(false);
+        @Override
+        public void render(
+                PonderScene scene, PonderUI screen, GuiGraphics graphics, float partialTicks, float fade) {
+            if (!initialized) {
+                ItemStack icon = iconSupplier.get();
+                if (icon == null || icon.isEmpty())
+                    return;
+                builder().rightClick().withItem(icon.copy());
+                initialized = true;
+            }
+            super.render(scene, screen, graphics, partialTicks, fade);
         }
     }
 }
