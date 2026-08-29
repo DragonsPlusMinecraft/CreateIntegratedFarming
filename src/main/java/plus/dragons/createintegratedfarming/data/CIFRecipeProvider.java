@@ -25,11 +25,13 @@ import static plus.dragons.createdragonsplus.data.recipe.VanillaRecipeBuilders.*
 import static plus.dragons.createintegratedfarming.common.registry.CIFBlocks.*;
 
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.conditions.OrCondition;
 import plus.dragons.createintegratedfarming.common.CIFCommon;
 import plus.dragons.createintegratedfarming.integration.ModIntegration;
 
@@ -69,6 +71,22 @@ public class CIFRecipeProvider extends RegistrateRecipeProvider {
                 .unlockedBy("has_brown_wool", has(BROWN_WOOL))
                 .unlockedBy("has_andesite_alloy", has(ANDESITE_ALLOY))
                 .withCondition(ModIntegration.FARMERS_DELIGHT.invertedCondition())
+                .accept(output);
+        shaped().output(LAVA_FISHING_NET, 2)
+                .define('#', CHAIN)
+                .define('/', BLAZE_ROD)
+                .define('a', ANDESITE_ALLOY)
+                .pattern("###")
+                .pattern("##/")
+                .pattern("#/a")
+                .unlockedBy("has_chain", has(CHAIN))
+                .unlockedBy("has_blaze_rod", has(BLAZE_ROD))
+                .unlockedBy("has_andesite_alloy", has(ANDESITE_ALLOY))
+                .withCondition(new OrCondition(List.of(
+                        ModIntegration.NETHER_DEPTHS_UPGRADE.condition(),
+                        ModIntegration.TIDE.condition(),
+                        ModIntegration.STARCATCHER.condition(),
+                        ModIntegration.CONFLUENCE.condition())))
                 .accept(output);
     }
 

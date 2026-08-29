@@ -32,9 +32,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.animal.WaterAnimal;
-import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -50,7 +47,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import plus.dragons.createintegratedfarming.config.CIFConfig;
 
 public class FishingNetBlock extends WrenchableDirectionalBlock implements ProperWaterloggedBlock {
     protected static final int PLACEMENT_HELPER_ID = PlacementHelpers.register(new PlacementHelper());
@@ -83,14 +79,8 @@ public class FishingNetBlock extends WrenchableDirectionalBlock implements Prope
 
     @Override
     protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-        if (entity instanceof Enemy)
-            return;
-        if (entity instanceof WaterAnimal) {
-            var dimensions = entity.getDimensions(Pose.SWIMMING);
-            float maxSize = CIFConfig.server().fishingNetCapturedCreatureMaxSize.getF();
-            if (dimensions.height() < maxSize && dimensions.width() < maxSize)
-                entity.makeStuckInBlock(state, new Vec3(0.25, 0.05, 0.25));
-        }
+        if (entity instanceof LivingEntity living && FishingNetEntityCaptures.canCapture(living))
+            entity.makeStuckInBlock(state, new Vec3(0.25, 0.05, 0.25));
     }
 
     @Override

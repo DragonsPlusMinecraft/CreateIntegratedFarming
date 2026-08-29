@@ -41,6 +41,9 @@ def allIntegrationSourceSets = [
         "delightoflight",
         "sable",
         "twilightdelight",
+        "tide",
+        "starcatcher",
+        "confluence",
 ]
 
 def integrationSourceSetDependencies = [
@@ -120,7 +123,7 @@ tasks.named("sourcesJar", Jar) {
 
 def integrationMixinConfigs = [
         createenchantablemachinery: "${mod_id}.createenchantablemachinery.mixins.json",
-        netherdepthsupgrade       : "${mod_id}.netherdepthsupgrade.mixins.json",
+        tide                     : "${mod_id}.tide.mixins.json",
         delightoflight            : "${mod_id}.delightoflight.mixins.json",
         sable                     : "${mod_id}.sable.mixins.json",
 ]
@@ -170,7 +173,10 @@ neoForge {
                     "--existing-mod", "create",
                     "--existing-mod", "create_dragons_plus",
                     "--existing-mod", "farmersdelight",
-                    "--existing-mod", "netherdepthsupgrade"
+                    "--existing-mod", "netherdepthsupgrade",
+                    "--existing-mod", "tide",
+                    "--existing-mod", "starcatcher",
+                    "--existing-mod", "confluence"
             ]
             enabledIntegrationSourceSets.each { name ->
                 dataArgs.addAll('--existing', file("src/integration/${name}/resources/").getAbsolutePath())
@@ -227,6 +233,7 @@ repositories {
     maven { url "https://mvn.devos.one/snapshots" } // Registrate
     maven { url "https://maven.blamejared.com" } // JEI
     maven { url "https://maven.theillusivec4.top/" } // Curios API
+    maven { url "https://maven.shedaniel.me/" } // Cloth Config
     maven {
         url "https://www.cursemaven.com"
         content { includeGroup "curse.maven" }
@@ -315,6 +322,19 @@ dependencies {
         netherdepthsupgradeLocalImplementation("maven.modrinth:nether-depths-upgrade:${nether_depths_upgrade_version}")
     }
 
+    if (hasIntegration("tide")) {
+        tideLocalImplementation("me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}")
+        tideLocalImplementation("maven.modrinth:die1AF7i:${tide_version}")
+    }
+
+    if (hasIntegration("starcatcher")) {
+        starcatcherLocalImplementation("curse.maven:starcatcher-1357603:${starcatcher_version}")
+    }
+
+    if (hasIntegration("confluence")) {
+        confluenceLocalImplementation("maven.modrinth:9kp7blvl:${confluence_version}")
+    }
+
     if (hasIntegration("delightoflight")) {
         delightoflightLocalImplementation("curse.maven:delighto-flight-1347014:${delighto_flight_version}")
     }
@@ -352,6 +372,9 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             create_dragons_plus_version_range   : create_dragons_plus_version_range,
             farmers_delight_version_range       : farmers_delight_version_range,
             nether_depths_upgrade_version_range : nether_depths_upgrade_version_range,
+            tide_version_range                  : tide_version_range,
+            starcatcher_version_range           : starcatcher_version_range,
+            confluence_version_range            : confluence_version_range,
             integration_mixin_blocks            : integrationMixinBlocks
     ]
     inputs.properties replaceProperties

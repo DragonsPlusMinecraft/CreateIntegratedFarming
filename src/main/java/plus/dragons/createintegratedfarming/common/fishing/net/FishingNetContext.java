@@ -18,16 +18,12 @@
 
 package plus.dragons.createintegratedfarming.common.fishing.net;
 
-import com.simibubi.create.content.contraptions.behaviour.MovementContext;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.entity.projectile.FishingHook.OpenWaterType;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.storage.loot.BuiltInLootTables;
-import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.level.storage.loot.LootTable;
 import plus.dragons.createintegratedfarming.config.CIFConfig;
 
 public class FishingNetContext extends AbstractFishingNetContext<FishingHook> {
@@ -46,15 +42,24 @@ public class FishingNetContext extends AbstractFishingNetContext<FishingHook> {
     }
 
     @Override
-    public LootTable getLootTable(ServerLevel level, BlockPos pos) {
-        return level.getServer().reloadableRegistries().getLootTable(BuiltInLootTables.FISHING);
+    protected FishingNetMedium getMedium() {
+        return FishingNetMedium.WATER;
     }
 
-    public LootParams buildFishingLootContext(MovementContext context, ServerLevel level, BlockPos pos) {
-        if (CIFConfig.server().fishingNetChecksOpenWater.get()) {
-            fishingHook.openWater = fishingHook.getOpenWaterTypeForArea(
-                    pos.offset(-2, 0, -2), pos.offset(2, 0, 2)) == OpenWaterType.INSIDE_WATER;
-        } else fishingHook.openWater = false;
-        return super.buildFishingLootContext(context, level, pos);
+    @Override
+    protected boolean isOpenFluid(ServerLevel level, BlockPos pos) {
+        if (!CIFConfig.server().fishingNetChecksOpenWater.get())
+            return false;
+        OpenWaterType previous = OpenWaterType.INVALID;
+        for (int y = -1; y <= 2; y++) {
+            OpenWaterType current = fishingHook.getOpenWaterTypeForArea(
+                    pos.offset(-2, y, -2), pos.offset(2, y, 2));
+            if (current == OpenWaterType.INVALID
+                    || current == OpenWaterType.ABOVE_WATER && previous == OpenWaterType.INVALID
+                    || current == OpenWaterType.INSIDE_WATER && previous == OpenWaterType.ABOVE_WATER)
+                return false;
+            previous = current;
+        }
+        return true;
     }
 }

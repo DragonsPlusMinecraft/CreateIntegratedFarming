@@ -23,6 +23,7 @@ import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import net.createmod.ponder.api.registration.PonderSceneRegistrationHelper;
 import net.minecraft.resources.ResourceLocation;
+import plus.dragons.createintegratedfarming.client.ponder.scene.LavaFishingNetScene;
 import plus.dragons.createintegratedfarming.client.ponder.scene.MiscScene;
 import plus.dragons.createintegratedfarming.client.ponder.scene.RoostScene;
 import plus.dragons.createintegratedfarming.client.ponder.scene.VacuumHarvesterScene;
@@ -33,6 +34,15 @@ public class CIFPonderScenes {
         PonderSceneRegistrationHelper<ItemProviderEntry<?, ?>> HELPER = helper.withKeyFunction(RegistryEntry::getId);
         HELPER.forComponents(CIFBlocks.FISHING_NET)
                 .addStoryBoard("fishing_net/fishing", MiscScene::fishing, CIFPonderTags.FISHING_APPLIANCES, AllCreatePonderTags.CONTRAPTION_ACTOR);
+
+        if (CIFBlocks.isLavaFishingNetEnabled()) {
+            HELPER.forComponents(CIFBlocks.LAVA_FISHING_NET)
+                    .addStoryBoard(
+                            "lava_fishing_net/fishing",
+                            LavaFishingNetScene::fishing,
+                            CIFPonderTags.FISHING_APPLIANCES,
+                            AllCreatePonderTags.CONTRAPTION_ACTOR);
+        }
 
         HELPER.forComponents(CIFBlocks.ROOST)
                 .addStoryBoard("roost/catch", RoostScene::capture, CIFPonderTags.RANCHING_APPLIANCES)

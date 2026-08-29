@@ -21,17 +21,13 @@ package plus.dragons.createintegratedfarming.common.fishing.net;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.api.behaviour.movement.MovementBehaviour;
 import com.simibubi.create.content.contraptions.behaviour.MovementContext;
-import java.util.List;
+import java.util.ArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.animal.WaterAnimal;
-import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.entity.EntityTypeTest;
-import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.EventHooks;
@@ -47,14 +43,7 @@ public abstract class AbstractFishingNetMovementBehaviour<T extends AbstractFish
 
     @ApiStatus.Internal
     public boolean canCaptureEntity(LivingEntity entity) {
-        if (entity instanceof Enemy)
-            return false;
-        if (entity instanceof WaterAnimal) {
-            var dimensions = entity.getDimensions(Pose.SWIMMING);
-            float maxSize = CIFConfig.server().fishingNetCapturedCreatureMaxSize.getF();
-            return dimensions.height() < maxSize && dimensions.width() < maxSize;
-        }
-        return false;
+        return FishingNetEntityCaptures.canCapture(entity);
     }
 
     protected void onCaptureEntity(MovementContext context, ServerLevel level, T fishing, LivingEntity entity) {
@@ -95,9 +84,8 @@ public abstract class AbstractFishingNetMovementBehaviour<T extends AbstractFish
             if (!isValid || fishing.timeUntilCatch > 0)
                 return;
             if (fishing.canCatch()) {
-                var params = fishing.buildFishingLootContext(context, level, pos);
-                LootTable lootTable = fishing.getLootTable(level, pos);
-                List<ItemStack> loots = lootTable.getRandomItems(params);
+                var catchContext = fishing.buildFishingCatchContext(context, level, pos);
+                var loots = new ArrayList<>(FishingNetCatchProviders.getCatch(catchContext));
                 var event = NeoForge.EVENT_BUS.post(new ItemFishedEvent(loots, 0, fishing.getFishingHook()));
                 if (!event.isCanceled()) {
                     loots.forEach(stack -> collectOrDropItem(context, stack));
@@ -109,7 +97,8 @@ public abstract class AbstractFishingNetMovementBehaviour<T extends AbstractFish
 
     @Override
     public void stopMoving(MovementContext context) {
-        if (context.world instanceof ServerLevel level && context.temporaryData instanceof AbstractFishingNetContext<?> fishing) {
+        if (context.world instanceof ServerLevel level
+                && context.temporaryData instanceof AbstractFishingNetContext<?> fishing) {
             fishing.invalidate(level);
             context.temporaryData = null;
         }

@@ -36,6 +36,7 @@ import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.Reference2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet;
+import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -59,6 +60,7 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
 import plus.dragons.createintegratedfarming.common.fishing.net.AbstractFishingNetContext;
 import plus.dragons.createintegratedfarming.common.fishing.net.AbstractFishingNetMovementBehaviour;
+import plus.dragons.createintegratedfarming.common.fishing.net.FishingNetCatchProviders;
 import plus.dragons.createintegratedfarming.config.CIFConfig;
 
 public final class SableFishingNetController {
@@ -381,9 +383,8 @@ public final class SableFishingNetController {
     private void catchFish(NetGroup group, long netPos, BlockPos fishingPos) {
         prepareContext(group, netPos);
         group.movementContext.position = fishingPos.getCenter();
-        var params = group.context.buildFishingLootContext(group.movementContext, level, fishingPos);
-        LootTable lootTable = group.context.getLootTable(level, fishingPos);
-        List<ItemStack> loots = lootTable.getRandomItems(params);
+        var catchContext = group.context.buildFishingCatchContext(group.movementContext, level, fishingPos);
+        List<ItemStack> loots = new ArrayList<>(FishingNetCatchProviders.getCatch(catchContext));
         var event = NeoForge.EVENT_BUS.post(new ItemFishedEvent(loots, 0, group.context.getFishingHook()));
         if (!event.isCanceled())
             loots.forEach(stack -> output(group, netPos, stack));

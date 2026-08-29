@@ -63,3 +63,24 @@ ${integration_mixin_blocks}
     versionRange="${nether_depths_upgrade_version_range}"
     ordering="AFTER"
     side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="tide"
+    type="optional"
+    versionRange="${tide_version_range}"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="starcatcher"
+    type="optional"
+    versionRange="${starcatcher_version_range}"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="confluence"
+    type="optional"
+    versionRange="${confluence_version_range}"
+    ordering="AFTER"
+    side="BOTH"

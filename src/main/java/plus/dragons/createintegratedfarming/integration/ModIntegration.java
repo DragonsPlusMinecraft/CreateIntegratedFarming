@@ -40,6 +40,9 @@ public enum ModIntegration {
     NETHERS_EXOTICISM(Mods.NETHERS_EXOTICISM),
     DELIGHT_O_FLIGHT(Mods.DELIGHT_O_FLIGHT),
     SABLE(Mods.SABLE),
+    TIDE(Mods.TIDE),
+    STARCATCHER(Mods.STARCATCHER),
+    CONFLUENCE(Mods.CONFLUENCE),
     TWILIGHT_FOREST(Mods.TWILIGHT_FOREST),
     TWILIGHT_DELIGHT(Mods.TWILIGHT_DELIGHT);
 
@@ -86,6 +89,9 @@ public enum ModIntegration {
         public static final String NETHERS_EXOTICISM = "nethers_exoticism";
         public static final String DELIGHT_O_FLIGHT = "delighto_flight";
         public static final String SABLE = "sable";
+        public static final String TIDE = "tide";
+        public static final String STARCATCHER = "starcatcher";
+        public static final String CONFLUENCE = "confluence";
         public static final String SIMULATED = "simulated";
         public static final String TWILIGHT_FOREST = "twilightforest";
         public static final String TWILIGHT_DELIGHT = "twilightdelight";

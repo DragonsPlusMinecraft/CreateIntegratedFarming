@@ -18,18 +18,20 @@
 
 package plus.dragons.createintegratedfarming.integration.netherdepthupgrade;
 
+import com.scouter.netherdepthsupgrade.entity.LavaAnimal;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
 import net.neoforged.fml.loading.FMLLoader;
-import net.neoforged.neoforge.data.event.GatherDataEvent;
 import plus.dragons.createintegratedfarming.common.CIFCommon;
+import plus.dragons.createintegratedfarming.common.fishing.net.FishingNetCatchProviders;
+import plus.dragons.createintegratedfarming.common.fishing.net.FishingNetEntityCaptures;
+import plus.dragons.createintegratedfarming.common.fishing.net.FishingNetMedium;
 import plus.dragons.createintegratedfarming.integration.ModIntegration;
-import plus.dragons.createintegratedfarming.integration.netherdepthupgrade.data.NDURecipeProvider;
-import plus.dragons.createintegratedfarming.integration.netherdepthupgrade.ponder.NDUPonderPlugin;
-import plus.dragons.createintegratedfarming.integration.netherdepthupgrade.registry.NDUBlocks;
+import plus.dragons.createintegratedfarming.integration.netherdepthupgrade.fishing.NDUFishingNetCatchProvider;
+import plus.dragons.createintegratedfarming.integration.netherdepthupgrade.ponder.NDUFishingNetPonderExample;
 
 @Mod(CIFCommon.ID)
 public class NDUIntegration {
@@ -44,23 +46,18 @@ public class NDUIntegration {
     public static class Common {
         @SubscribeEvent
         public void construct(final FMLConstructModEvent event) {
-            NDUBlocks.register();
-        }
-
-        @SubscribeEvent
-        public void generate(final GatherDataEvent event) {
-            var generator = event.getGenerator();
-            var lookupProvider = event.getLookupProvider();
-            var output = generator.getPackOutput();
-            var server = event.includeServer();
-            generator.addProvider(server, new NDURecipeProvider(output, lookupProvider));
+            FishingNetCatchProviders.register(
+                    ModIntegration.NETHER_DEPTHS_UPGRADE.asResource("fishing_net"),
+                    FishingNetMedium.LAVA,
+                    new NDUFishingNetCatchProvider());
+            FishingNetEntityCaptures.register(LavaAnimal.class::isInstance);
         }
     }
 
     public static class Client {
         @SubscribeEvent
         public void construct(final FMLConstructModEvent event) {
-            NDUPonderPlugin.register();
+            NDUFishingNetPonderExample.register();
         }
     }
 }

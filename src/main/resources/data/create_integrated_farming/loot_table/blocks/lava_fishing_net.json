@@ -1,0 +1,44 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:or",
+      "values": [
+        {
+          "type": "neoforge:mod_loaded",
+          "modid": "netherdepthsupgrade"
+        },
+        {
+          "type": "neoforge:mod_loaded",
+          "modid": "tide"
+        },
+        {
+          "type": "neoforge:mod_loaded",
+          "modid": "starcatcher"
+        },
+        {
+          "type": "neoforge:mod_loaded",
+          "modid": "confluence"
+        }
+      ]
+    }
+  ],
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "create_integrated_farming:lava_fishing_net"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "create_integrated_farming:blocks/lava_fishing_net"
+}

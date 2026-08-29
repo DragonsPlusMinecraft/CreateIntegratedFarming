@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "priority": 1000,
+  "package": "plus.dragons.createintegratedfarming.mixin.tide",
+  "compatibilityLevel": "JAVA_21",
+  "plugin": "plus.dragons.createintegratedfarming.mixin.UniversalConditionalMixinPlugin",
+  "mixins": [
+    "TideFishingHookAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.8"
+}

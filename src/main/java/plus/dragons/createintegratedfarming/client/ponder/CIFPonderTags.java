@@ -80,6 +80,12 @@ public class CIFPonderTags {
                 .add(CIFBlocks.FISHING_NET)
                 .add(AllBlocks.DEPLOYER);
 
+        if (CIFBlocks.isLavaFishingNetEnabled()) {
+            entryHelper.addToTag(FISHING_APPLIANCES).add(CIFBlocks.LAVA_FISHING_NET);
+            entryHelper.addToTag(CONTRAPTION_ACTOR).add(CIFBlocks.LAVA_FISHING_NET);
+            entryHelper.addToTag(ARM_TARGETS).add(CIFBlocks.LAVA_FISHING_NET);
+        }
+
         entryHelper.addToTag(ARM_TARGETS)
                 .add(CIFBlocks.CHICKEN_ROOST);
     }

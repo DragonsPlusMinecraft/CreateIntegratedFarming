@@ -34,16 +34,21 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.MapColor;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.data.loading.DatagenModLoader;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import plus.dragons.createintegratedfarming.common.farming.vacuum.VacuumHarvesterBlock;
 import plus.dragons.createintegratedfarming.common.farming.vacuum.VacuumHarvesterMovementBehaviour;
 import plus.dragons.createintegratedfarming.common.fishing.net.FishingNetBlock;
 import plus.dragons.createintegratedfarming.common.fishing.net.FishingNetMovementBehaviour;
+import plus.dragons.createintegratedfarming.common.fishing.net.LavaFishingNetBlock;
+import plus.dragons.createintegratedfarming.common.fishing.net.LavaFishingNetMovementBehaviour;
 import plus.dragons.createintegratedfarming.common.ranching.roost.RoostBlock;
 import plus.dragons.createintegratedfarming.common.ranching.roost.RoostBlockItem;
 import plus.dragons.createintegratedfarming.common.ranching.roost.chicken.ChickenRoostBlock;
 import plus.dragons.createintegratedfarming.config.CIFConfig;
+import plus.dragons.createintegratedfarming.integration.ModIntegration;
 
 public class CIFBlocks {
     public static final BlockEntry<FishingNetBlock> FISHING_NET = REGISTRATE
@@ -90,5 +95,39 @@ public class CIFBlocks {
             .transform(customItemModel())
             .register();
 
-    public static void register(IEventBus modBus) {}
+    public static void register(IEventBus modBus) {
+        if (isLavaFishingNetEnabled())
+            LavaFishingNetRegistration.register();
+    }
+
+    public static boolean isLavaFishingNetEnabled() {
+        return ModIntegration.NETHER_DEPTHS_UPGRADE.enabled()
+                || ModIntegration.TIDE.enabled()
+                || ModIntegration.STARCATCHER.enabled()
+                || ModIntegration.CONFLUENCE.enabled();
+    }
+
+    private static class LavaFishingNetRegistration {
+        private static final BlockEntry<LavaFishingNetBlock> LAVA_FISHING_NET = REGISTRATE
+                .block("lava_fishing_net", LavaFishingNetBlock::new)
+                .lang("Lava Fishing Net")
+                .initialProperties(SharedProperties::softMetal)
+                .properties(properties -> {
+                    var result = properties
+                            .mapColor(MapColor.METAL)
+                            .sound(SoundType.CHAIN)
+                            .noOcclusion();
+                    return DatagenModLoader.isRunningDataGen() ? result.noLootTable() : result;
+                })
+                .asOptional()
+                .transform(axeOnly())
+                .tag(AllBlockTags.WINDMILL_SAILS.tag)
+                .blockstate(BlockStateGen.directionalBlockProvider(false))
+                .onRegister(block -> MovementBehaviour.REGISTRY.register(
+                        block, new LavaFishingNetMovementBehaviour()))
+                .simpleItem()
+                .register();
+
+        private static void register() {}
+    }
 }
