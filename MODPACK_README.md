@@ -21,6 +21,12 @@ Add a block to `#create:non_harvestable` when Create's Mechanical Harvester and 
 
 The Vacuum Harvester automatically supports mature `CropBlock` crops, Cocoa, Sweet Berry Bushes, Nether Wart, and simple non-solid bushes with an integer `age` property. Structured or multi-block crops that need custom drops or post-harvest states require the Java API described in [DEV_README.md](DEV_README.md).
 
+### Built-in Confluence Crop Support
+
+When Confluence is installed, the Mechanical Harvester and Vacuum Harvester have explicit support for Stellar Blossom, Cloudweaver, Floating Wheat, Waterleaf, Fireblossom, Moonglow, Blinkroot, Shiverthorn, Daybloom, and Deathweed. Each crop is mapped to its matching Confluence seed so Vacuum Harvester replanting consumes the correct item.
+
+These handlers use the harvested block state's upstream loot table, including its normal tool and event context. With partial-growth harvesting disabled, only maximum-age crops are harvested; when enabled, any crop above age zero can be harvested. Glimmer Rice is intentionally excluded because it does not yet expose a complete seed, loot, and multi-block growth contract.
+
 ### Vacuum Harvester Range and Pressure Cycle
 
 The server config key `farming.vacuumHarvesterRange` controls the horizontal radius of stationary and Contraption-mounted Vacuum Harvesters. It defaults to `10` and accepts values from `1` through `16`. The vertical range is always one block above and below the harvester.
@@ -98,9 +104,11 @@ Example fluid data map:
 
 The generated item data map includes `#minecraft:chicken_food` with `2400` progress and a `400`–`800` tick cooldown. The generated fluid data map applies the same progress and cooldown to every fluid in `#c:plantoil`, consuming `100` mB per feeding operation. This includes Create Crafts & Additions Seed Oil, Create: Diesel Generators Plant Oil, and compatible fluids added by other mods.
 
+Vanilla Backport temperate, warm, and cold Chicken Roosts all use these same chicken-food item and fluid data maps.
+
 ### Other Poultry Food Tags
 
-Optional poultry Roosts use the food tag provided by their source mod. Adding an item to one of these tags makes it valid Roost food as well:
+Optional poultry Roosts use a source-mod breeding-food tag or an established Minecraft food tag. Adding an item to one of these tags makes it valid Roost food as well:
 
 | Roost | Food tag |
 | --- | --- |
@@ -108,6 +116,7 @@ Optional poultry Roosts use the food tag provided by their source mod. Adding an
 | Untitled Duck goose | `#untitledduckmod:goose_breeding_food` |
 | Environmental duck | `#environmental:duck_food` |
 | Autumnity turkey | `#autumnity:turkey_food` |
+| Confluence mallard/common duck | `#minecraft:fishes` |
 
 Each accepted item removes `2400` ticks from the production timer and applies a random `400`–`800` tick feeding cooldown.
 
@@ -118,9 +127,14 @@ Roost production uses block-context loot tables. Datapacks can replace these tab
 | Roost | Loot table | Default product | Required mod |
 | --- | --- | --- | --- |
 | Chicken | `create_integrated_farming:gameplay/roost/chicken` | `minecraft:egg` | None |
+| Vanilla Backport warm chicken | `create_integrated_farming:gameplay/roost/vanillabackport_chicken_warm` | `minecraft:brown_egg` | Vanilla Backport |
+| Vanilla Backport cold chicken | `create_integrated_farming:gameplay/roost/vanillabackport_chicken_cold` | `minecraft:blue_egg` | Vanilla Backport |
+| Confluence mallard/common duck | `create_integrated_farming:gameplay/roost/chicken` | `minecraft:egg` | Confluence |
 | Untitled Duck duck | `create_integrated_farming:gameplay/roost/duck` | `untitledduckmod:duck_egg` | Untitled Duck |
 | Untitled Duck goose | `create_integrated_farming:gameplay/roost/goose` | `untitledduckmod:goose_egg` | Untitled Duck |
 | Environmental duck | `create_integrated_farming:gameplay/roost/environmental_duck` | `environmental:duck_egg` | Environmental |
 | Autumnity turkey | `create_integrated_farming:gameplay/roost/autumnity_turkey` | `autumnity:turkey_egg` | Autumnity |
 
-Built-in optional loot tables use a root-level `neoforge:mod_loaded` condition. Datapack replacements that reference optional-mod items should retain the corresponding condition so they can still load when that mod is absent.
+Vanilla Backport temperate or unknown chicken variants use the normal Chicken Roost and its base loot table. Confluence's two duck variants also deliberately reuse the base chicken table, so replacing that table affects normal chickens and both Confluence ducks.
+
+Optional-mod-specific loot tables use a root-level `neoforge:mod_loaded` condition. Datapack replacements that reference optional-mod items should retain the corresponding condition so they can still load when that mod is absent.
