@@ -7,6 +7,14 @@
     },
     {
       "type": "single",
+      "resource": "terra_entity:entity/animal/duck/duck_1"
+    },
+    {
+      "type": "single",
+      "resource": "terra_entity:entity/animal/duck/duck_2"
+    },
+    {
+      "type": "single",
       "resource": "untitledduckmod:entity/duck"
     },
     {

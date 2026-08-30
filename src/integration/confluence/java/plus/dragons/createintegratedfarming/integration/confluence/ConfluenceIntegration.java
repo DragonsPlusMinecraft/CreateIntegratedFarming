@@ -25,10 +25,12 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
 import net.neoforged.fml.loading.FMLLoader;
+import net.neoforged.neoforge.client.event.ModelEvent;
 import plus.dragons.createintegratedfarming.common.CIFCommon;
 import plus.dragons.createintegratedfarming.common.fishing.net.FishingNetCatchProviders;
 import plus.dragons.createintegratedfarming.common.fishing.net.FishingNetMedium;
 import plus.dragons.createintegratedfarming.integration.ModIntegration;
+import plus.dragons.createintegratedfarming.integration.confluence.client.model.ConfluenceDuckModelLoader;
 import plus.dragons.createintegratedfarming.integration.confluence.registry.ConfluenceBlockEntities;
 import plus.dragons.createintegratedfarming.integration.confluence.registry.ConfluenceBlocks;
 import plus.dragons.createintegratedfarming.integration.confluence.registry.ConfluenceHarvestBehaviours;
@@ -70,6 +72,11 @@ public class ConfluenceIntegration {
     }
 
     public static class Client {
+        @SubscribeEvent
+        public void registerGeometryLoaders(final ModelEvent.RegisterGeometryLoaders event) {
+            event.register(CIFCommon.asResource("confluence_duck"), ConfluenceDuckModelLoader.INSTANCE);
+        }
+
         @SubscribeEvent
         public void construct(final FMLConstructModEvent event) {
             ConfluenceFishingNetPonderExample.register();
