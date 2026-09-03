@@ -31,6 +31,7 @@ import plus.dragons.createintegratedfarming.integration.autumnity.ponder.Autumni
 import plus.dragons.createintegratedfarming.integration.autumnity.registry.AutumnityBlockEntities;
 import plus.dragons.createintegratedfarming.integration.autumnity.registry.AutumnityBlocks;
 import plus.dragons.createintegratedfarming.integration.autumnity.registry.AutumnityCapturables;
+import plus.dragons.createintegratedfarming.integration.autumnity.registry.AutumnityRoostingDisplayProfiles;
 
 @Mod(CIFCommon.ID)
 public class AutumnityIntegration {
@@ -58,6 +59,7 @@ public class AutumnityIntegration {
         @SubscribeEvent
         public void commonSetup(final FMLCommonSetupEvent event) {
             event.enqueueWork(AutumnityCapturables::register);
+            event.enqueueWork(AutumnityRoostingDisplayProfiles::register);
         }
     }
 

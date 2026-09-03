@@ -28,6 +28,7 @@ import plus.dragons.createintegratedfarming.integration.ModIntegration;
 import plus.dragons.createintegratedfarming.integration.vanillabackport.registry.VanillaBackportBlockEntities;
 import plus.dragons.createintegratedfarming.integration.vanillabackport.registry.VanillaBackportBlocks;
 import plus.dragons.createintegratedfarming.integration.vanillabackport.registry.VanillaBackportRoostCapturables;
+import plus.dragons.createintegratedfarming.integration.vanillabackport.registry.VanillaBackportRoostingDisplayProfiles;
 
 @Mod(CIFCommon.ID)
 public class VanillaBackportIntegration {
@@ -52,6 +53,7 @@ public class VanillaBackportIntegration {
         @SubscribeEvent
         public void commonSetup(final FMLCommonSetupEvent event) {
             event.enqueueWork(VanillaBackportRoostCapturables::register);
+            event.enqueueWork(VanillaBackportRoostingDisplayProfiles::register);
         }
     }
 }

@@ -24,7 +24,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -36,8 +35,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
 public abstract class TaggedAnimalRoostBlockEntity extends AnimalRoostBlockEntity {
-    private static final IntProvider FOOD_PROGRESSION = ConstantInt.of(2400);
-    private static final IntProvider FOOD_COOLDOWN = UniformInt.of(400, 800);
+    public static final int FOOD_PROGRESSION = 2400;
+    public static final int MINIMUM_FOOD_COOLDOWN = 400;
+    public static final int MAXIMUM_FOOD_COOLDOWN = 800;
+    private static final IntProvider FOOD_PROGRESSION_PROVIDER = ConstantInt.of(FOOD_PROGRESSION);
+    private static final IntProvider FOOD_COOLDOWN_PROVIDER = UniformInt.of(
+            MINIMUM_FOOD_COOLDOWN, MAXIMUM_FOOD_COOLDOWN);
 
     protected TaggedAnimalRoostBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -46,6 +49,11 @@ public abstract class TaggedAnimalRoostBlockEntity extends AnimalRoostBlockEntit
     protected abstract Predicate<ItemStack> getFoodPredicate();
 
     protected abstract SoundEvent getAmbientSound();
+
+    @Override
+    protected SoundEvent feedingSound() {
+        return getAmbientSound();
+    }
 
     @Override
     public boolean feedItem(ItemStack stack, boolean simulate) {
@@ -61,12 +69,9 @@ public abstract class TaggedAnimalRoostBlockEntity extends AnimalRoostBlockEntit
                 new ItemParticleOption(ParticleTypes.ITEM, stack),
                 feedPos.x, feedPos.y, feedPos.z,
                 0, 0, 0);
-        eggTime = Math.max(0, eggTime - FOOD_PROGRESSION.sample(level.random));
-        feedCooldown = FOOD_COOLDOWN.sample(level.random);
-        level.playSound(
-                null, worldPosition, getAmbientSound(), SoundSource.BLOCKS,
-                1.0F, (level.random.nextFloat() - level.random.nextFloat()) * 0.2F + 1.0F);
-        notifyUpdate();
+        applyFeeding(
+                FOOD_PROGRESSION_PROVIDER.sample(level.random),
+                FOOD_COOLDOWN_PROVIDER.sample(level.random));
         ItemStack remainder = stack.getCraftingRemainingItem();
         if (!remainder.isEmpty())
             Containers.dropItemStack(level, feedPos.x, feedPos.y, feedPos.z, remainder.copy());

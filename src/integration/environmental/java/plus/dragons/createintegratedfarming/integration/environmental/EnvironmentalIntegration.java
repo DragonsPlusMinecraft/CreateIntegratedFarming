@@ -31,6 +31,7 @@ import plus.dragons.createintegratedfarming.integration.environmental.ponder.Env
 import plus.dragons.createintegratedfarming.integration.environmental.registry.EnvironmentalBlockEntities;
 import plus.dragons.createintegratedfarming.integration.environmental.registry.EnvironmentalBlocks;
 import plus.dragons.createintegratedfarming.integration.environmental.registry.EnvironmentalCapturables;
+import plus.dragons.createintegratedfarming.integration.environmental.registry.EnvironmentalRoostingDisplayProfiles;
 
 @Mod(CIFCommon.ID)
 public class EnvironmentalIntegration {
@@ -58,6 +59,7 @@ public class EnvironmentalIntegration {
         @SubscribeEvent
         public void commonSetup(final FMLCommonSetupEvent event) {
             event.enqueueWork(EnvironmentalCapturables::register);
+            event.enqueueWork(EnvironmentalRoostingDisplayProfiles::register);
         }
     }
 

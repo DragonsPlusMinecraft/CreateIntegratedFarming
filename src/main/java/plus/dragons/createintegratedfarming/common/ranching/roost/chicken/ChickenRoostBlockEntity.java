@@ -23,8 +23,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
@@ -32,7 +30,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.fluids.FluidStack;
 import plus.dragons.createintegratedfarming.common.ranching.roost.AnimalRoostBlockEntity;
 import plus.dragons.createintegratedfarming.common.registry.CIFDataMaps;
 import plus.dragons.createintegratedfarming.common.registry.CIFLootTables;
@@ -68,27 +65,5 @@ public class ChickenRoostBlockEntity extends AnimalRoostBlockEntity {
                 feedPos.x, feedPos.y, feedPos.z,
                 0, 0, 0);
         return true;
-    }
-
-    public int feedFluid(FluidStack fluid, boolean simulate) {
-        if (feedCooldown > 0 || eggTime <= 0)
-            return 0;
-        var food = fluid.getFluidHolder().getData(CIFDataMaps.CHICKEN_FOOD_FLUIDS);
-        if (food == null)
-            return 0;
-        if (simulate)
-            return food.amount();
-        feed(food);
-        return food.amount();
-    }
-
-    public void feed(ChickenFood food) {
-        assert level != null;
-        eggTime = Math.max(0, eggTime - food.getProgress(level.random));
-        feedCooldown = food.getCooldown(level.random);
-        level.playSound(
-                null, worldPosition, SoundEvents.CHICKEN_AMBIENT, SoundSource.BLOCKS,
-                1.0F, (level.random.nextFloat() - level.random.nextFloat()) * 0.2F + 1.0F);
-        notifyUpdate();
     }
 }

@@ -32,18 +32,21 @@ import plus.dragons.createintegratedfarming.common.ranching.roost.TaggedAnimalRo
 import plus.dragons.createintegratedfarming.integration.autumnity.registry.AutumnityLootTables;
 
 public class AutumnityTurkeyRoostBlockEntity extends TaggedAnimalRoostBlockEntity {
+    public static final int MINIMUM_PRODUCTION_TICKS = 9600;
+    public static final int MAXIMUM_PRODUCTION_TICKS = 19199;
+
     public AutumnityTurkeyRoostBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
 
     @Override
     protected int minimumProductionTicks() {
-        return 9600;
+        return MINIMUM_PRODUCTION_TICKS;
     }
 
     @Override
     protected int maximumProductionTicks() {
-        return 19199;
+        return MAXIMUM_PRODUCTION_TICKS;
     }
 
     @Override

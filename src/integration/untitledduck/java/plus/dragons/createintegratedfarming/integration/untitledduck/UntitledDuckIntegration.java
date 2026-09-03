@@ -31,6 +31,7 @@ import plus.dragons.createintegratedfarming.integration.untitledduck.ponder.Unti
 import plus.dragons.createintegratedfarming.integration.untitledduck.registry.UntitledDuckBlockEntities;
 import plus.dragons.createintegratedfarming.integration.untitledduck.registry.UntitledDuckBlocks;
 import plus.dragons.createintegratedfarming.integration.untitledduck.registry.UntitledDuckCapturables;
+import plus.dragons.createintegratedfarming.integration.untitledduck.registry.UntitledDuckRoostingDisplayProfiles;
 
 @Mod(CIFCommon.ID)
 public class UntitledDuckIntegration {
@@ -58,6 +59,7 @@ public class UntitledDuckIntegration {
         @SubscribeEvent
         public void commonSetup(final FMLCommonSetupEvent event) {
             event.enqueueWork(UntitledDuckCapturables::register);
+            event.enqueueWork(UntitledDuckRoostingDisplayProfiles::register);
         }
     }
 

@@ -47,13 +47,19 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemHandlerHelper;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
+import plus.dragons.createintegratedfarming.common.ranching.roost.chicken.ChickenFood;
+import plus.dragons.createintegratedfarming.common.registry.CIFDataMaps;
 import plus.dragons.createintegratedfarming.config.CIFConfig;
 
 public abstract class AnimalRoostBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
+    public static final int DEFAULT_MINIMUM_PRODUCTION_TICKS = 6000;
+    public static final int DEFAULT_MAXIMUM_PRODUCTION_TICKS = 11999;
+
     protected final ItemStackHandler inventory;
     public final IItemHandler outputHandler;
     protected int feedCooldown;
@@ -61,11 +67,15 @@ public abstract class AnimalRoostBlockEntity extends SmartBlockEntity implements
     protected boolean outputInventoryBlocked;
 
     protected int minimumProductionTicks() {
-        return 6000;
+        return DEFAULT_MINIMUM_PRODUCTION_TICKS;
     }
 
     protected int maximumProductionTicks() {
-        return 11999;
+        return DEFAULT_MAXIMUM_PRODUCTION_TICKS;
+    }
+
+    protected SoundEvent feedingSound() {
+        return SoundEvents.CHICKEN_AMBIENT;
     }
 
     protected SoundEvent productionSound() {
@@ -73,6 +83,32 @@ public abstract class AnimalRoostBlockEntity extends SmartBlockEntity implements
     }
 
     protected abstract ResourceKey<LootTable> productionLootTable();
+
+    public int feedFluid(FluidStack fluid, boolean simulate) {
+        if (feedCooldown > 0 || eggTime <= 0)
+            return 0;
+        var food = fluid.getFluidHolder().getData(CIFDataMaps.CHICKEN_FOOD_FLUIDS);
+        if (food == null || fluid.getAmount() < food.amount())
+            return 0;
+        if (!simulate)
+            feed(food);
+        return food.amount();
+    }
+
+    public void feed(ChickenFood food) {
+        assert level != null;
+        applyFeeding(food.getProgress(level.random), food.getCooldown(level.random));
+    }
+
+    protected void applyFeeding(int progress, int cooldown) {
+        assert level != null;
+        eggTime = Math.max(0, eggTime - progress);
+        feedCooldown = cooldown;
+        level.playSound(
+                null, worldPosition, feedingSound(), SoundSource.BLOCKS,
+                1.0F, (level.random.nextFloat() - level.random.nextFloat()) * 0.2F + 1.0F);
+        notifyUpdate();
+    }
 
     public AnimalRoostBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);

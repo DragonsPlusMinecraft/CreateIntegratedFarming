@@ -33,20 +33,30 @@ import plus.dragons.createintegratedfarming.integration.untitledduck.ranching.ro
 import plus.dragons.createintegratedfarming.integration.untitledduck.ranching.roost.goose.GooseRoostBlock;
 
 public class UntitledDuckBlocks {
-    public static final BlockEntry<DuckRoostBlock> DUCK_ROOST_NORMAL = registerDuckRoost("duck_roost_normal", (byte) 0);
-    public static final BlockEntry<DuckRoostBlock> DUCK_ROOST_FEMALE = registerDuckRoost("duck_roost_female", (byte) 1);
-    public static final BlockEntry<DuckRoostBlock> DUCK_ROOST_CAMPBELL = registerDuckRoost("duck_roost_campbell", (byte) 2);
-    public static final BlockEntry<DuckRoostBlock> DUCK_ROOST_PEKIN = registerDuckRoost("duck_roost_pekin", (byte) 3);
-    public static final BlockEntry<GooseRoostBlock> GOOSE_ROOST_NORMAL = registerGooseRoost("goose_roost_normal", (byte) 0);
-    public static final BlockEntry<GooseRoostBlock> GOOSE_ROOST_CANADIAN = registerGooseRoost("goose_roost_canadian", (byte) 1);
-    public static final BlockEntry<GooseRoostBlock> GOOSE_ROOST_GREYLAG = registerGooseRoost("goose_roost_greylag", (byte) 2);
-    public static final BlockEntry<GooseRoostBlock> GOOSE_ROOST_PING = registerGooseRoost("goose_roost_ping", (byte) 3);
-    public static final BlockEntry<GooseRoostBlock> GOOSE_ROOST_SUS = registerGooseRoost("goose_roost_sus", (byte) 4);
-    public static final BlockEntry<GooseRoostBlock> GOOSE_ROOST_UNTITLED = registerGooseRoost("goose_roost_untitled", (byte) 5);
+    public static final BlockEntry<DuckRoostBlock> DUCK_ROOST_NORMAL = registerDuckRoost(
+            "duck_roost_normal", "Duck Roost", (byte) 0);
+    public static final BlockEntry<DuckRoostBlock> DUCK_ROOST_FEMALE = registerDuckRoost(
+            "duck_roost_female", "Female Duck Roost", (byte) 1);
+    public static final BlockEntry<DuckRoostBlock> DUCK_ROOST_CAMPBELL = registerDuckRoost(
+            "duck_roost_campbell", "Campbell Duck Roost", (byte) 2);
+    public static final BlockEntry<DuckRoostBlock> DUCK_ROOST_PEKIN = registerDuckRoost(
+            "duck_roost_pekin", "Pekin Duck Roost", (byte) 3);
+    public static final BlockEntry<GooseRoostBlock> GOOSE_ROOST_NORMAL = registerGooseRoost(
+            "goose_roost_normal", "Goose Roost", (byte) 0);
+    public static final BlockEntry<GooseRoostBlock> GOOSE_ROOST_CANADIAN = registerGooseRoost(
+            "goose_roost_canadian", "Canadian Goose Roost", (byte) 1);
+    public static final BlockEntry<GooseRoostBlock> GOOSE_ROOST_GREYLAG = registerGooseRoost(
+            "goose_roost_greylag", "Greylag Goose Roost", (byte) 2);
+    public static final BlockEntry<GooseRoostBlock> GOOSE_ROOST_PING = registerGooseRoost(
+            "goose_roost_ping", "Ping Goose Roost", (byte) 3);
+    public static final BlockEntry<GooseRoostBlock> GOOSE_ROOST_SUS = registerGooseRoost(
+            "goose_roost_sus", "Sus Goose Roost", (byte) 4);
+    public static final BlockEntry<GooseRoostBlock> GOOSE_ROOST_UNTITLED = registerGooseRoost(
+            "goose_roost_untitled", "Untitled Goose Roost", (byte) 5);
 
-    private static BlockEntry<DuckRoostBlock> registerDuckRoost(String path, byte variant) {
+    private static BlockEntry<DuckRoostBlock> registerDuckRoost(String path, String name, byte variant) {
         return REGISTRATE.block(path, prop -> new DuckRoostBlock(prop, ROOST, variant))
-                .lang("Duck Roost")
+                .lang(name)
                 .properties(prop -> {
                     var result = prop.strength(1.5F).sound(SoundType.BAMBOO_WOOD);
                     // Registrate's loot provider cannot add a mod-loaded condition, so these tables are maintained manually.
@@ -58,9 +68,9 @@ public class UntitledDuckBlocks {
                 .register();
     }
 
-    private static BlockEntry<GooseRoostBlock> registerGooseRoost(String path, byte variant) {
+    private static BlockEntry<GooseRoostBlock> registerGooseRoost(String path, String name, byte variant) {
         return REGISTRATE.block(path, prop -> new GooseRoostBlock(prop, ROOST, variant))
-                .lang("Goose Roost")
+                .lang(name)
                 .properties(prop -> {
                     var result = prop.strength(1.5F).sound(SoundType.BAMBOO_WOOD);
                     // Registrate's loot provider cannot add a mod-loaded condition, so these tables are maintained manually.

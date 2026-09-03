@@ -35,6 +35,7 @@ import plus.dragons.createintegratedfarming.integration.confluence.registry.Conf
 import plus.dragons.createintegratedfarming.integration.confluence.registry.ConfluenceBlocks;
 import plus.dragons.createintegratedfarming.integration.confluence.registry.ConfluenceHarvestBehaviours;
 import plus.dragons.createintegratedfarming.integration.confluence.registry.ConfluenceRoostCapturables;
+import plus.dragons.createintegratedfarming.integration.confluence.registry.ConfluenceRoostingDisplayProfiles;
 
 @Mod(CIFCommon.ID)
 public class ConfluenceIntegration {
@@ -68,6 +69,7 @@ public class ConfluenceIntegration {
         public void commonSetup(final FMLCommonSetupEvent event) {
             ConfluenceHarvestBehaviours.register();
             event.enqueueWork(ConfluenceRoostCapturables::register);
+            event.enqueueWork(ConfluenceRoostingDisplayProfiles::register);
         }
     }
 

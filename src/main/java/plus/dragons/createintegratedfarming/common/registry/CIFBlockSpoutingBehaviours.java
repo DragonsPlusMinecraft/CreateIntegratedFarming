@@ -28,13 +28,16 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.fluids.FluidStack;
 import org.jetbrains.annotations.ApiStatus;
-import plus.dragons.createintegratedfarming.common.ranching.roost.chicken.ChickenRoostBlockEntity;
+import plus.dragons.createintegratedfarming.common.ranching.roost.AnimalRoostBlockEntity;
+import plus.dragons.createintegratedfarming.common.ranching.roost.RoostBlock;
 
 public class CIFBlockSpoutingBehaviours {
     private static final Set<BlockSpoutingBehaviour> MANAGED_BEHAVIOURS = Collections.newSetFromMap(new IdentityHashMap<>());
+    private static final BlockSpoutingBehaviour ROOST_FEEDING = CIFBlockSpoutingBehaviours::fillRoost;
 
     public static void register() {
-        registerManaged(CIFBlocks.CHICKEN_ROOST.get(), CIFBlockSpoutingBehaviours::fillChickenCoop);
+        MANAGED_BEHAVIOURS.add(ROOST_FEEDING);
+        BlockSpoutingBehaviour.BY_BLOCK.registerProvider(block -> block instanceof RoostBlock ? ROOST_FEEDING : null);
     }
 
     @ApiStatus.Internal
@@ -48,10 +51,9 @@ public class CIFBlockSpoutingBehaviours {
         return MANAGED_BEHAVIOURS.contains(behaviour);
     }
 
-    private static int fillChickenCoop(Level level, BlockPos pos, SpoutBlockEntity spout, FluidStack fluid, boolean simulate) {
-        if (level.getBlockEntity(pos) instanceof ChickenRoostBlockEntity coop) {
-            return coop.feedFluid(fluid, simulate);
-        }
+    private static int fillRoost(Level level, BlockPos pos, SpoutBlockEntity spout, FluidStack fluid, boolean simulate) {
+        if (level.getBlockEntity(pos) instanceof AnimalRoostBlockEntity roost)
+            return roost.feedFluid(fluid, simulate);
         return 0;
     }
 }
