@@ -1,14 +1,15 @@
-## Create: Integrated Farming 1.4.0
-
-> **Supported optional mod versions:** Tide 2.1.1–2.x, Starcatcher 3.0.6–3.x, Confluence 1.2.4–1.x, Vanilla Backport 1.1.7.10–1.x, and Nether Depths Upgrade 3.2 or later.
+## Create: Integrated Farming 1.4.1
 
 ### Add
-* Added Fishing Net support for fish and other catches from Tide, Starcatcher, and Confluence in both water and lava.
-* Added dedicated Fishing Net Ponder examples for Nether Depths Upgrade, Tide, Starcatcher, and Confluence catches.
-* Added Mechanical Harvester and Vacuum Harvester support for ten Confluence crops, including correct seed replanting.
-* Added Confluence common duck and mallard Roosts. Both ducks can be captured and released, accept fish as food, and produce eggs.
-* Added Vanilla Backport warm and cold Chicken Roosts, which produce brown and blue eggs respectively. Temperate chickens continue to use the normal Chicken Roost.
+* Added a unified Roosting JEI category for Chicken Roosts and supported duck, goose, and turkey Roosts. Each entry shows optional item and fluid feeding, the natural production time, and outputs that can be identified from the active loot table.
+* Added Roosting JEI entries for Vanilla Backport warm and cold chickens, Confluence ducks, Untitled Duck Mod ducks and geese, Environmental ducks, and Autumnity turkeys when those mods are installed.
+* Roosting JEI information is supplied by the server and refreshes after joining or reloading data packs, so server-defined food data maps, food tags, and production loot tables are reflected without reconnecting.
 
 ### Update
-* The Lava Fishing Net can now be crafted and used when Nether Depths Upgrade, Tide, Starcatcher, or Confluence is installed, instead of requiring Nether Depths Upgrade.
-* Updated the modpack integration guide with the new Confluence crop and poultry behavior, Vanilla Backport poultry behavior, food inputs, products, and configurable loot tables.
+* Create Spout feeding now works with every supported occupied animal Roost, including duck, goose, and turkey variants, instead of only Chicken Roosts.
+* The existing `create_integrated_farming:chicken_food` fluid data map remains the configuration point for Spout feeding. Existing data packs require no migration, and no separate JEI display format has been added.
+* Roosting JEI displays conditional or complex loot tables conservatively and does not invent uncertain outputs or probabilities.
+* Updated the Roost Spout Ponder wording to refer to birds instead of only chickens.
+
+### Fix
+* Spouts no longer begin feeding or consume fluid when a Roost is empty, on feeding cooldown, already has an output ready, or does not contain enough fluid for one configured feeding operation.
