@@ -38,32 +38,36 @@ public class TideFishingNetCatchProvider implements FishingNetCatchProvider {
     @Override
     public List<ItemStack> getCatch(FishingNetCatchContext context) {
         TideFishingHook hook = new TideFishingHook(TideEntityTypes.FISHING_BOBBER, context.level());
-        hook.setOwner(context.player());
-        hook.setPos(context.origin());
-        ((TideFishingHookAccessor) hook).createintegratedfarming$setOpenWater(context.openFluid());
-
-        var exactBiome = context.level().getBiome(context.position());
-        var nearestBiome = TideUtils.findClosestNonWaterBiome(context.level(), context.position(), 12, 2)
-                .orElse(exactBiome);
-        FishingMedium medium = context.medium() == FishingNetMedium.LAVA
-                ? FishingMedium.LAVA
-                : FishingMedium.WATER;
-        FishingContext tideContext = new FishingContext(
-                context.level(),
-                hook,
-                context.fishingRod(),
-                context.random(),
-                context.origin(),
-                context.position(),
-                Mth.floor(context.lootParams().getLuck()),
-                medium.id().getPath(),
-                exactBiome,
-                nearestBiome,
-                context.level().dimension(),
-                Mth.clamp(TideUtils.getTemperatureAt(context.position(), context.level()), -1.0F, 1.0F),
-                context.level().getMoonPhase(),
-                SeasonsCompat.getSeason(context.level()));
+        var player = context.player();
+        var previousFishingHook = player.fishing;
+        // Tide requires its own HookAccessor while the temporary hook is alive.
+        player.fishing = null;
         try {
+            hook.setOwner(player);
+            hook.setPos(context.origin());
+            ((TideFishingHookAccessor) hook).createintegratedfarming$setOpenWater(context.openFluid());
+
+            var exactBiome = context.level().getBiome(context.position());
+            var nearestBiome = TideUtils.findClosestNonWaterBiome(context.level(), context.position(), 12, 2)
+                    .orElse(exactBiome);
+            FishingMedium medium = context.medium() == FishingNetMedium.LAVA
+                    ? FishingMedium.LAVA
+                    : FishingMedium.WATER;
+            FishingContext tideContext = new FishingContext(
+                    context.level(),
+                    hook,
+                    context.fishingRod(),
+                    context.random(),
+                    context.origin(),
+                    context.position(),
+                    Mth.floor(context.lootParams().getLuck()),
+                    medium.id().getPath(),
+                    exactBiome,
+                    nearestBiome,
+                    context.level().dimension(),
+                    Mth.clamp(TideUtils.getTemperatureAt(context.position(), context.level()), -1.0F, 1.0F),
+                    context.level().getMoonPhase(),
+                    SeasonsCompat.getSeason(context.level()));
             var result = Tide.FISHING_MANAGER.selectCatch(tideContext);
             if (!result.isEmpty())
                 return result.items();
@@ -73,7 +77,11 @@ public class TideFishingNetCatchProvider implements FishingNetCatchProvider {
                     .getLootTable(BuiltInLootTables.FISHING_JUNK)
                     .getRandomItems(tideContext.createFishingLootParams());
         } finally {
-            hook.discard();
+            try {
+                hook.discard();
+            } finally {
+                player.fishing = previousFishingHook;
+            }
         }
     }
 }
