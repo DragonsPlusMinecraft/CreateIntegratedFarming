@@ -33,12 +33,13 @@ import plus.dragons.createintegratedfarming.common.network.RoostingDisplayClient
 @Mod(value = CIFCommon.ID, dist = Dist.CLIENT)
 public class CIFClient {
     public CIFClient(IEventBus modBus) {
+        // Register partial models before the first asynchronous resource reload starts.
+        CIFPartialModels.init();
         modBus.addListener(EventPriority.LOWEST, CIFClient::init);
         NeoForge.EVENT_BUS.addListener(CIFClient::onLogout);
     }
 
     public static void init(final FMLClientSetupEvent event) {
-        CIFPartialModels.init();
         PonderIndex.addPlugin(new CIFPonderPlugin());
     }
 
