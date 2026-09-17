@@ -33,6 +33,11 @@ public enum ModIntegration {
     UNTITLED_DUCK(Mods.UNTITLED_DUCK),
     ENVIRONMENTAL(Mods.ENVIRONMENTAL),
     AUTUMNITY(Mods.AUTUMNITY),
+    NEAPOLITAN(Mods.NEAPOLITAN),
+    ATMOSPHERIC(Mods.ATMOSPHERIC),
+    SUPPLEMENTARIES(Mods.SUPPLEMENTARIES),
+    HAUNTED_HARVEST(Mods.HAUNTED_HARVEST),
+    NETHER_EXPANSION(Mods.NETHER_EXPANSION),
     CULTURAL_DELIGHTS(Mods.CULTURAL_DELIGHTS),
     HEARTH_AND_HARVEST(Mods.HEARTH_AND_HARVEST),
     WINDSWEPT(Mods.WINDSWEPT),
@@ -83,6 +88,11 @@ public enum ModIntegration {
         public static final String UNTITLED_DUCK = "untitledduckmod";
         public static final String ENVIRONMENTAL = "environmental";
         public static final String AUTUMNITY = "autumnity";
+        public static final String NEAPOLITAN = "neapolitan";
+        public static final String ATMOSPHERIC = "atmospheric";
+        public static final String SUPPLEMENTARIES = "supplementaries";
+        public static final String HAUNTED_HARVEST = "hauntedharvest";
+        public static final String NETHER_EXPANSION = "netherexp";
         public static final String CULTURAL_DELIGHTS = "culturaldelights";
         public static final String HEARTH_AND_HARVEST = "hearthandharvest";
         public static final String WINDSWEPT = "windswept";

@@ -44,38 +44,20 @@ public class MNDPonderScenes {
         var leteosCompost = util.grid().at(1, 1, 1);
 
         scene.overlay().showText(100)
-                .text("Forgetting process of Leteos Compost can be speed up via Spout in ultra warm dimension")
+                .text("In ultra warm dimensions, each 250 mB of Lava advances Leteos Compost by one stage")
                 .pointAt(util.vector().centerOf(1, 3, 1))
                 .placeNearTarget();
 
-        scene.world().modifyBlockEntityNBT(spout, SpoutBlockEntity.class, nbt -> nbt.putInt("ProcessingTicks", 20));
-        scene.idle(20);
-        scene.world().modifyBlock(leteosCompost, bs -> bs.setValue(FORGOTING, 2), false);
-        scene.idle(10);
-
-        scene.world().modifyBlockEntityNBT(spout, SpoutBlockEntity.class, nbt -> nbt.putInt("ProcessingTicks", 20));
-        scene.idle(20);
-        scene.world().modifyBlock(leteosCompost, bs -> bs.setValue(FORGOTING, 4), false);
-        scene.idle(10);
-
-        scene.world().modifyBlockEntityNBT(spout, SpoutBlockEntity.class, nbt -> nbt.putInt("ProcessingTicks", 20));
-        scene.idle(20);
-        scene.world().modifyBlock(leteosCompost, bs -> bs.setValue(FORGOTING, 7), false);
-        scene.idle(10);
-
-        scene.world().modifyBlockEntityNBT(spout, SpoutBlockEntity.class, nbt -> nbt.putInt("ProcessingTicks", 20));
-        scene.idle(20);
-        scene.world().modifyBlock(leteosCompost, bs -> bs.setValue(FORGOTING, 9), false);
-        scene.idle(10);
-
-        scene.world().modifyBlockEntityNBT(spout, SpoutBlockEntity.class, nbt -> nbt.putInt("ProcessingTicks", 20));
-        scene.idle(20);
-        scene.world().modifyBlock(leteosCompost, bs -> bs.setValue(FORGOTING, 9), false);
-        scene.idle(10);
-
-        scene.world().modifyBlockEntityNBT(spout, SpoutBlockEntity.class, nbt -> nbt.putInt("ProcessingTicks", 20));
-        scene.idle(20);
-        scene.world().modifyBlock(leteosCompost, bs -> MNDBlocks.RESURGENT_SOIL.get().defaultBlockState(), false);
+        scene.world().modifyBlock(leteosCompost, bs -> bs.setValue(FORGOTING, 0), false);
+        for (int stage = 1; stage <= 10; stage++) {
+            final int nextStage = stage;
+            scene.world().modifyBlockEntityNBT(spout, SpoutBlockEntity.class, nbt -> nbt.putInt("ProcessingTicks", 20));
+            scene.idle(20);
+            scene.world().modifyBlock(leteosCompost, bs -> nextStage == 10
+                    ? MNDBlocks.RESURGENT_SOIL.get().defaultBlockState()
+                    : bs.setValue(FORGOTING, nextStage), false);
+            scene.idle(10);
+        }
     }
 
     public static void harvestPowderyCrops(SceneBuilder builder, SceneBuildingUtil util) {

@@ -18,6 +18,9 @@
 
 package plus.dragons.createintegratedfarming.integration.mynethersdelight;
 
+import com.soytutta.mynethersdelight.common.tag.MNDTags;
+import com.tterrag.registrate.providers.ProviderType;
+import net.minecraft.tags.FluidTags;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -25,8 +28,11 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
 import net.neoforged.fml.loading.FMLLoader;
+import net.neoforged.neoforge.data.loading.DatagenModLoader;
+import plus.dragons.createintegratedfarming.api.harvester.CustomHarvestBehaviour;
 import plus.dragons.createintegratedfarming.common.CIFCommon;
 import plus.dragons.createintegratedfarming.integration.ModIntegration;
+import plus.dragons.createintegratedfarming.integration.mynethersdelight.farming.harvest.PowderyHarvestBehaviour;
 import plus.dragons.createintegratedfarming.integration.mynethersdelight.ponder.MNDPonderPlugin;
 import plus.dragons.createintegratedfarming.integration.mynethersdelight.registry.MNDArmInteractionPointTypes;
 import plus.dragons.createintegratedfarming.integration.mynethersdelight.registry.MNDBlockSpoutingBehaviors;
@@ -35,6 +41,9 @@ import plus.dragons.createintegratedfarming.integration.mynethersdelight.registr
 public class MNDIntegration {
     public MNDIntegration(IEventBus modBus) {
         if (ModIntegration.MY_NETHERS_DELIGHT.enabled()) {
+            if (DatagenModLoader.isRunningDataGen())
+                CIFCommon.REGISTRATE.addDataGenerator(ProviderType.FLUID_TAGS,
+                        provider -> provider.addTag(MNDTags.LETEOS_BOOSTER).addTag(FluidTags.LAVA));
             modBus.register(new Common());
             if (FMLLoader.getDist() == Dist.CLIENT)
                 modBus.register(new Client());
@@ -50,6 +59,7 @@ public class MNDIntegration {
         @SubscribeEvent
         public void commonSetup(final FMLCommonSetupEvent event) {
             MNDBlockSpoutingBehaviors.register();
+            CustomHarvestBehaviour.REGISTRY.registerProvider(block -> PowderyHarvestBehaviour.supports(block) ? new PowderyHarvestBehaviour() : null);
         }
     }
 

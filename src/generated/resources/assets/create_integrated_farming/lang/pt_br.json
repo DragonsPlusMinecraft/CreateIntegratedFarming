@@ -78,7 +78,7 @@
   "create_integrated_farming.ponder.roost.raise.text_3": "Mechanical Arm can also feed",
   "create_integrated_farming.ponder.roost.raise.text_4": "Feed again after each cooldown to keep production moving faster",
   "create_integrated_farming.ponder.spout.catalyze_letios_compost.header": "Catalisando Compostagem de Leteos",
-  "create_integrated_farming.ponder.spout.catalyze_letios_compost.text_1": "O processo de compostagem de Leteos pode ser acelerado via Spout em uma dimensão ultra quente",
+  "create_integrated_farming.ponder.spout.catalyze_letios_compost.text_1": "Em dimensões ultraquentes, cada 250 mB de lava aplicados pelo bico avançam o composto de Leteos em um estágio",
   "create_integrated_farming.ponder.spout.catalyze_organic_compost.header": "Catalisando Compostagem Orgânica",
   "create_integrated_farming.ponder.spout.catalyze_organic_compost.text_1": "O processo de degradação da Compostagem Orgânica pode ser acelerado via Spout",
   "create_integrated_farming.ponder.tag.farming_appliances": "Farming Appliances",

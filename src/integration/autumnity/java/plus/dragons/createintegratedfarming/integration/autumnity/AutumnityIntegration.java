@@ -18,6 +18,8 @@
 
 package plus.dragons.createintegratedfarming.integration.autumnity;
 
+import com.teamabnormals.autumnity.common.block.FoulBerryBushBlock;
+import com.teamabnormals.autumnity.common.block.TallFoulBerryBushBlock;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -25,8 +27,10 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
 import net.neoforged.fml.loading.FMLLoader;
+import plus.dragons.createintegratedfarming.api.harvester.CustomHarvestBehaviour;
 import plus.dragons.createintegratedfarming.common.CIFCommon;
 import plus.dragons.createintegratedfarming.integration.ModIntegration;
+import plus.dragons.createintegratedfarming.integration.autumnity.farming.harvest.FoulBerryHarvestBehaviour;
 import plus.dragons.createintegratedfarming.integration.autumnity.ponder.AutumnityPonderPlugin;
 import plus.dragons.createintegratedfarming.integration.autumnity.registry.AutumnityBlockEntities;
 import plus.dragons.createintegratedfarming.integration.autumnity.registry.AutumnityBlocks;
@@ -58,6 +62,9 @@ public class AutumnityIntegration {
 
         @SubscribeEvent
         public void commonSetup(final FMLCommonSetupEvent event) {
+            CustomHarvestBehaviour.REGISTRY.registerProvider(block -> block instanceof FoulBerryBushBlock || block instanceof TallFoulBerryBushBlock
+                    ? new FoulBerryHarvestBehaviour()
+                    : null);
             event.enqueueWork(AutumnityCapturables::register);
             event.enqueueWork(AutumnityRoostingDisplayProfiles::register);
         }

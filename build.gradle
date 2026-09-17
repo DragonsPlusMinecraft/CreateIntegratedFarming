@@ -33,6 +33,11 @@ def allIntegrationSourceSets = [
         "untitledduck",
         "environmental",
         "autumnity",
+        "neapolitan",
+        "atmospheric",
+        "supplementaries",
+        "hauntedharvest",
+        "netherexp",
         "culturaldelights",
         "hearthandharvest",
         "windswept",
@@ -123,6 +128,7 @@ tasks.named("sourcesJar", Jar) {
 }
 
 def integrationMixinConfigs = [
+        netherexp                : "${mod_id}.netherexp.mixins.json",
         createenchantablemachinery: "${mod_id}.createenchantablemachinery.mixins.json",
         tide                     : "${mod_id}.tide.mixins.json",
         delightoflight            : "${mod_id}.delightoflight.mixins.json",
@@ -324,6 +330,34 @@ dependencies {
         netherdepthsupgradeLocalImplementation("maven.modrinth:nether-depths-upgrade:${nether_depths_upgrade_version}")
     }
 
+    if (hasIntegration("neapolitan")) {
+        neapolitanLocalImplementation("maven.modrinth:blueprint:${blueprint_version}")
+        neapolitanLocalImplementation("maven.modrinth:neapolitan:${neapolitan_version}")
+    }
+
+    if (hasIntegration("atmospheric")) {
+        atmosphericLocalImplementation("maven.modrinth:blueprint:${blueprint_version}")
+        atmosphericLocalImplementation("maven.modrinth:atmospheric:${atmospheric_version}")
+        // Atmospheric's GatherDataEvent references Woodworks even though it is not a runtime dependency.
+        localRuntime("maven.modrinth:woodworks:${woodworks_version}")
+    }
+
+    if (hasIntegration("supplementaries")) {
+        supplementariesLocalImplementation("maven.modrinth:moonlight:${moonlight_version}")
+        supplementariesLocalImplementation("maven.modrinth:supplementaries:${supplementaries_version}")
+    }
+
+    if (hasIntegration("hauntedharvest")) {
+        hauntedharvestLocalImplementation("maven.modrinth:moonlight:${moonlight_version}")
+        hauntedharvestLocalImplementation("maven.modrinth:haunted-harvest:${haunted_harvest_version}")
+    }
+
+    if (hasIntegration("netherexp")) {
+        netherexpLocalImplementation("maven.modrinth:elysium-api:${elysium_api_version}")
+        netherexpLocalImplementation("maven.modrinth:lodestonelib:${lodestone_version}")
+        netherexpLocalImplementation("maven.modrinth:jadens-nether-expansion:${nether_expansion_version}")
+    }
+
     if (hasIntegration("tide")) {
         tideLocalImplementation("me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}")
         tideLocalImplementation("maven.modrinth:die1AF7i:${tide_version}")
@@ -398,6 +432,11 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             create_version_range                : create_version_range,
             create_dragons_plus_version_range   : create_dragons_plus_version_range,
             farmers_delight_version_range       : farmers_delight_version_range,
+            neapolitan_version_range            : neapolitan_version_range,
+            atmospheric_version_range           : atmospheric_version_range,
+            supplementaries_version_range       : supplementaries_version_range,
+            haunted_harvest_version_range        : haunted_harvest_version_range,
+            nether_expansion_version_range       : nether_expansion_version_range,
             nether_depths_upgrade_version_range : nether_depths_upgrade_version_range,
             tide_version_range                  : tide_version_range,
             starcatcher_version_range           : starcatcher_version_range,

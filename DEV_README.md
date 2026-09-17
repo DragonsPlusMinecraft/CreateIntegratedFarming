@@ -116,7 +116,7 @@ public final class FruitingBushHarvestBehaviour implements CustomHarvestBehaviou
 }
 ```
 
-`CustomHarvestBehaviour.harvestBlock(...)` evaluates the original block's loot table and then applies the supplied result state. Use `Blocks.AIR.defaultBlockState()` as the result when the crop should be removed completely.
+`CustomHarvestBehaviour.harvestBlock(...)` evaluates the original block's loot table and then applies the supplied result state. When removing a crop, use its original `state.getFluidState().createLegacyBlock()` to preserve any fluid at that position.
 
 For a crop with explicit right-click-style drops, call `behaviour.collectOrDropItem(...)` in the moving path and `context.collect(...)` in the area path, then update the world state yourself.
 
@@ -130,6 +130,9 @@ For a crop with explicit right-click-style drops, call `behaviour.collectOrDropI
 - `tool()` or `tool(fallback)`: a defensive copy of the harvesting tool.
 - `collect(stack)`: sends output to the caller's inventory or overflow policy.
 - `extractSeed(predicate, amount)`: removes planting material from the caller when replanting requires it.
+- `claimHarvest(anchor)`: returns `true` only the first time a plant's anchor is claimed during this operation. Validate all required segments and maturity first, then claim immediately before modifying the plant. Every segment of a multi-block plant must use the same anchor.
+
+Create a fresh context for each area scan. A context retains its claimed anchors for its lifetime, preventing a second segment from harvesting the same plant again during that scan.
 
 Never spawn output `ItemEntity` instances directly from `harvestInArea(...)`. Passing every result to `collect(...)` lets the area harvester preserve overflow without loss or duplication.
 
@@ -166,6 +169,7 @@ A custom implementation should:
 - Perform no mutation and return `false` for immature, malformed, or unsupported states.
 - Preserve relevant properties such as facing, axis, waterlogging, trellis connections, and unrelated block-state values.
 - Validate every required segment before modifying multi-block crops.
+- Check that every affected position is loaded and is not in `#create:non_harvestable`, including segments outside the original scan bounds. Snapshot all destructive-harvest loot before changing any segment, then apply the final states before notifying neighbours.
 - Avoid player-only effects such as advancements and mined-block statistics during mechanical harvesting.
 - Use the real loot table when the upstream crop is broken, or reproduce the upstream interaction exactly for right-click harvests.
 - Test both the Mechanical Harvester path and the area-harvester path, including repeated calls and full inventories.

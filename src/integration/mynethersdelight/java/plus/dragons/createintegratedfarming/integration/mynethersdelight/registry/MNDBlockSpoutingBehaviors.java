@@ -19,10 +19,11 @@
 package plus.dragons.createintegratedfarming.integration.mynethersdelight.registry;
 
 import com.simibubi.create.content.fluids.spout.SpoutBlockEntity;
+import com.soytutta.mynethersdelight.common.block.LetiosCompostBlock;
+import com.soytutta.mynethersdelight.common.registry.MNDBlocks;
 import com.soytutta.mynethersdelight.common.tag.MNDTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -37,11 +38,16 @@ public class MNDBlockSpoutingBehaviors {
     }
 
     private static int fillLetiosCompost(Level level, BlockPos pos, SpoutBlockEntity spout, FluidStack fluid, boolean simulate) {
-        if (!(fluid.is(MNDTags.LETEOS_BOOSTER) || !level.dimensionType().ultraWarm()))
+        if (level.isClientSide || fluid.getAmount() < 250 || !fluid.is(MNDTags.LETEOS_BOOSTER)
+                || !level.dimensionType().ultraWarm())
             return 0;
-        if (!simulate && level instanceof ServerLevel) {
-            BlockState state = level.getBlockState(pos);
-            state.randomTick((ServerLevel) level, pos, level.random);
+        BlockState state = level.getBlockState(pos);
+        if (!state.is(MNDBlocks.LETIOS_COMPOST.get()))
+            return 0;
+        if (!simulate) {
+            int stage = state.getValue(LetiosCompostBlock.FORGOTING);
+            level.setBlockAndUpdate(pos, stage == 9 ? MNDBlocks.RESURGENT_SOIL.get().defaultBlockState()
+                    : state.setValue(LetiosCompostBlock.FORGOTING, stage + 1));
         }
         return 250;
     }

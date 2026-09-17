@@ -7,7 +7,10 @@
     },
     "duck": {
       "parent": "block/block",
-      "loader": "create_integrated_farming:confluence_duck",
+      "loader": {
+        "id": "create_integrated_farming:confluence_duck",
+        "optional": true
+      },
       "render_type": "minecraft:cutout",
       "textures": {
         "duck": "terra_entity:entity/animal/duck/duck_1",

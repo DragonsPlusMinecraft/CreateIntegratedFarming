@@ -26,7 +26,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.block.CocoaBlock;
 import net.minecraft.world.level.block.CropBlock;
@@ -59,7 +58,7 @@ public final class StandardAreaHarvests {
 
         List<ItemStack> drops = new ArrayList<>();
         CustomHarvestBehaviour.harvestBlock(
-                context.level(), pos, Blocks.AIR.defaultBlockState(), null, context.tool(), 1.0F, drops::add);
+                context.level(), pos, state.getFluidState().createLegacyBlock(), null, context.tool(), 1.0F, drops::add);
 
         if (context.replant()
                 && definition.replantedState().canSurvive(context.level(), pos)

@@ -78,7 +78,7 @@
   "create_integrated_farming.ponder.roost.raise.text_3": "Механическая рука также может кормить",
   "create_integrated_farming.ponder.roost.raise.text_4": "После завершения задержки кормите снова, чтобы ускорять производство",
   "create_integrated_farming.ponder.spout.catalyze_letios_compost.header": "Катализацией Летейского компоста",
-  "create_integrated_farming.ponder.spout.catalyze_letios_compost.text_1": "Процесс созревания Летейского компоста можно ускорить через дозатор в сверхжарком измерении",
+  "create_integrated_farming.ponder.spout.catalyze_letios_compost.text_1": "В сверхжарких измерениях каждые 250 mB лавы из дозатора продвигают созревание Летейского компоста на одну стадию",
   "create_integrated_farming.ponder.spout.catalyze_organic_compost.header": "Катализацией органического компоста",
   "create_integrated_farming.ponder.spout.catalyze_organic_compost.text_1": "Процесс разложения органического компоста можно ускорить через дозатор",
   "create_integrated_farming.ponder.tag.farming_appliances": "Сельскохозяйственные устройства",

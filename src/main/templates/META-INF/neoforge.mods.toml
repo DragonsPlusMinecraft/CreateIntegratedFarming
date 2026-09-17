@@ -65,6 +65,41 @@ ${integration_mixin_blocks}
     side="BOTH"
 
 [[dependencies.${mod_id}]]
+    modId="neapolitan"
+    type="optional"
+    versionRange="${neapolitan_version_range}"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="atmospheric"
+    type="optional"
+    versionRange="${atmospheric_version_range}"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="supplementaries"
+    type="optional"
+    versionRange="${supplementaries_version_range}"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="hauntedharvest"
+    type="optional"
+    versionRange="${haunted_harvest_version_range}"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="netherexp"
+    type="optional"
+    versionRange="${nether_expansion_version_range}"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
     modId="tide"
     type="optional"
     versionRange="${tide_version_range}"

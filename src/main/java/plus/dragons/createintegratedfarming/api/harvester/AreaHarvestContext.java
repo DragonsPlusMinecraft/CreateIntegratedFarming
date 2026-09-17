@@ -18,9 +18,12 @@
 
 package plus.dragons.createintegratedfarming.api.harvester;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
@@ -34,6 +37,7 @@ public final class AreaHarvestContext {
     private final ItemStack tool;
     private final Consumer<ItemStack> collector;
     private final SeedExtractor seedExtractor;
+    private final Set<BlockPos> harvestedPlants = new HashSet<>();
 
     public AreaHarvestContext(
             Level level,
@@ -77,6 +81,14 @@ public final class AreaHarvestContext {
 
     public ItemStack extractSeed(Predicate<ItemStack> predicate, int amount) {
         return seedExtractor.extract(predicate, amount);
+    }
+
+    /**
+     * Claim a validated plant immediately before harvesting it. All its segments must use the same anchor.
+     * Create a fresh context for each area scan.
+     */
+    public boolean claimHarvest(BlockPos anchor) {
+        return harvestedPlants.add(anchor.immutable());
     }
 
     @FunctionalInterface

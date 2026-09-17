@@ -77,7 +77,7 @@
   "create_integrated_farming.ponder.roost.raise.text_3": "也可用动力臂喂食",
   "create_integrated_farming.ponder.roost.raise.text_4": "每次喂食冷却结束后再次喂食，可持续加快产出",
   "create_integrated_farming.ponder.spout.catalyze_letios_compost.header": "催化忘魂肥料",
-  "create_integrated_farming.ponder.spout.catalyze_letios_compost.text_1": "在极端炎热的维度，注液器能加速忘魂肥料的遗忘过程",
+  "create_integrated_farming.ponder.spout.catalyze_letios_compost.text_1": "在极端炎热的维度，注液器每注入 250 mB 熔岩，就会让忘魂肥料的遗忘过程推进一个阶段",
   "create_integrated_farming.ponder.spout.catalyze_organic_compost.header": "催化有机肥料",
   "create_integrated_farming.ponder.spout.catalyze_organic_compost.text_1": "注液器能加速有机肥料的降解过程",
   "create_integrated_farming.ponder.tag.farming_appliances": "农业用具",
