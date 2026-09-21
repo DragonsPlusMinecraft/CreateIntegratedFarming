@@ -306,6 +306,7 @@ dependencies {
 
     if (hasIntegration("culturaldelights")) {
         culturaldelightsLocalImplementation("maven.modrinth:YttyNOFA:${cultural_delights_version}")
+        localRuntime("maven.modrinth:QC7N8ljN:${cooks_collection_version}")
     }
 
     if (hasIntegration("hearthandharvest")) {
@@ -432,6 +433,7 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             create_version_range                : create_version_range,
             create_dragons_plus_version_range   : create_dragons_plus_version_range,
             farmers_delight_version_range       : farmers_delight_version_range,
+            cultural_delights_version_range     : cultural_delights_version_range,
             neapolitan_version_range            : neapolitan_version_range,
             atmospheric_version_range           : atmospheric_version_range,
             supplementaries_version_range       : supplementaries_version_range,

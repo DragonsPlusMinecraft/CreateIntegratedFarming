@@ -20,65 +20,37 @@ package plus.dragons.createintegratedfarming.integration.culturaldelights.farmin
 
 import com.baisylia.culturaldelights.block.ModBlocks;
 import com.baisylia.culturaldelights.block.custom.CornBlock;
-import com.baisylia.culturaldelights.block.custom.CornUpperBlock;
-import com.simibubi.create.content.contraptions.actors.harvester.HarvesterMovementBehaviour;
-import com.simibubi.create.content.contraptions.behaviour.MovementContext;
+import com.baisylia.culturaldelights.item.ModItems;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.Nullable;
 import plus.dragons.createintegratedfarming.api.harvester.AreaHarvestContext;
-import plus.dragons.createintegratedfarming.api.harvester.CustomHarvestBehaviour;
+import plus.dragons.createintegratedfarming.common.farming.harvest.AreaCompatibleHarvestBehaviour;
+import plus.dragons.createintegratedfarming.common.farming.harvest.HarvestOperations;
 
-public class CornHarvestBehaviour implements CustomHarvestBehaviour {
-    @Override
-    public void harvest(HarvesterMovementBehaviour behaviour, MovementContext context, BlockPos pos, BlockState state) {
-        CornParts parts = findMatureParts(context.world, pos);
-        if (parts == null)
-            return;
-        BlockState harvestedState = CustomHarvestBehaviour.replant()
-                ? parts.upperState().setValue(CornUpperBlock.CORN_AGE, 0)
-                : Blocks.AIR.defaultBlockState();
-        CustomHarvestBehaviour.harvestBlock(
-                context.world, parts.upperPos(), harvestedState, null,
-                CustomHarvestBehaviour.getHarvestTool(context), 1.0F,
-                stack -> behaviour.collectOrDropItem(context, stack));
-    }
-
+public class CornHarvestBehaviour extends AreaCompatibleHarvestBehaviour {
     @Override
     public boolean harvestInArea(AreaHarvestContext context, BlockPos pos, BlockState state) {
-        CornParts parts = findMatureParts(context.level(), pos);
-        if (parts == null)
+        if (!state.is(ModBlocks.CORN.get()))
             return false;
-        BlockState harvestedState = context.replant()
-                ? parts.upperState().setValue(CornUpperBlock.CORN_AGE, 0)
-                : Blocks.AIR.defaultBlockState();
-        CustomHarvestBehaviour.harvestBlock(
-                context.level(), parts.upperPos(), harvestedState, null,
-                context.tool(), 1.0F, context::collect);
-        return true;
+        int age = state.getValue(CornBlock.AGE);
+        if (age == 0 || (age < 7 && !context.harvestPartiallyGrown())
+                || state.getValue(CornBlock.HEIGHT) > CornBlock.getExpectedMaxHeight(age))
+            return false;
+        BlockPos root = pos.below(state.getValue(CornBlock.HEIGHT));
+        List<BlockPos> parts = new ArrayList<>();
+        for (int height = 0; height <= CornBlock.getExpectedMaxHeight(age); height++) {
+            BlockPos part = root.above(height);
+            if (!context.level().isLoaded(part))
+                return false;
+            BlockState partState = context.level().getBlockState(part);
+            if (!partState.is(ModBlocks.CORN.get()) || partState.getValue(CornBlock.HEIGHT) != height
+                    || partState.getValue(CornBlock.AGE) != age)
+                return false;
+            parts.add(part);
+        }
+        return HarvestOperations.harvestPlant(context, parts, root, ModBlocks.CORN.get().defaultBlockState(),
+                ModItems.CORN_KERNELS.get());
     }
-
-    private static @Nullable CornParts findMatureParts(Level level, BlockPos contactedPos) {
-        BlockState contactedState = level.getBlockState(contactedPos);
-        BlockPos rootPos;
-        if (contactedState.is(ModBlocks.CORN.get()))
-            rootPos = contactedPos;
-        else if (contactedState.is(ModBlocks.CORN_UPPER.get()))
-            rootPos = contactedPos.below();
-        else
-            return null;
-
-        BlockPos upperPos = rootPos.above();
-        BlockState rootState = level.getBlockState(rootPos);
-        BlockState upperState = level.getBlockState(upperPos);
-        if (!rootState.is(ModBlocks.CORN.get()) || !upperState.is(ModBlocks.CORN_UPPER.get()))
-            return null;
-        if (rootState.getValue(CornBlock.AGE) != 3 || upperState.getValue(CornUpperBlock.CORN_AGE) != 3)
-            return null;
-        return new CornParts(upperPos, upperState);
-    }
-
-    private record CornParts(BlockPos upperPos, BlockState upperState) {}
 }

@@ -39,6 +39,6 @@ public class CulturalDelightsHarvestBehaviours {
     }
 
     private static @Nullable CustomHarvestBehaviour createCorn(Block block) {
-        return block == ModBlocks.CORN.get() || block == ModBlocks.CORN_UPPER.get() ? CORN : null;
+        return block == ModBlocks.CORN.get() ? CORN : null;
     }
 }
