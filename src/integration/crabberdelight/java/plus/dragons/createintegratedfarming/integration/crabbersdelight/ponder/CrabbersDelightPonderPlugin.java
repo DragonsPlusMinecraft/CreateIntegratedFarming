@@ -33,7 +33,7 @@ public class CrabbersDelightPonderPlugin {
     }
 
     private static void registerTags(PonderTagRegistrationHelper<ResourceLocation> helper) {
-        helper.addToTag(CIFPonderTags.FISHING_APPLIANCES)
+        helper.addToTag(CIFPonderTags.FARMING_APPLIANCES)
                 .add(BuiltInRegistries.BLOCK.getKey(CDModBlocks.CRAB_TRAP.get()));
 
         helper.addToTag(ARM_TARGETS)

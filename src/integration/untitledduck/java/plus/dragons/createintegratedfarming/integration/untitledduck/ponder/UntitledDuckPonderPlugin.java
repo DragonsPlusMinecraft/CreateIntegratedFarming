@@ -34,19 +34,15 @@ public class UntitledDuckPonderPlugin {
     }
 
     private static void registerTags(PonderTagRegistrationHelper<ResourceLocation> helper) {
-        helper.addToTag(CIFPonderTags.RANCHING_APPLIANCES)
-                .add(UntitledDuckBlocks.DUCK_ROOST_NORMAL.getId())
-                .add(UntitledDuckBlocks.GOOSE_ROOST_NORMAL.getId());
-
-        helper.addToTag(AllCreatePonderTags.ARM_TARGETS)
-                .add(UntitledDuckBlocks.DUCK_ROOST_NORMAL.getId())
-                .add(UntitledDuckBlocks.GOOSE_ROOST_NORMAL.getId());
+        CIFPonderTags.addRoosts(helper, UntitledDuckBlocks.DUCK_ROOST_NORMAL.getId(), UntitledDuckBlocks.DUCK_ROOST_FEMALE.getId(), UntitledDuckBlocks.DUCK_ROOST_CAMPBELL.getId(), UntitledDuckBlocks.DUCK_ROOST_PEKIN.getId(),
+                UntitledDuckBlocks.GOOSE_ROOST_NORMAL.getId(), UntitledDuckBlocks.GOOSE_ROOST_CANADIAN.getId(), UntitledDuckBlocks.GOOSE_ROOST_GREYLAG.getId(), UntitledDuckBlocks.GOOSE_ROOST_PING.getId(), UntitledDuckBlocks.GOOSE_ROOST_SUS.getId(),
+                UntitledDuckBlocks.GOOSE_ROOST_UNTITLED.getId());
     }
 
     public static void registerScene(PonderSceneRegistrationHelper<ResourceLocation> helper) {
         helper.forComponents(UntitledDuckBlocks.DUCK_ROOST_NORMAL.getId(), UntitledDuckBlocks.DUCK_ROOST_FEMALE.getId(), UntitledDuckBlocks.DUCK_ROOST_CAMPBELL.getId(), UntitledDuckBlocks.DUCK_ROOST_PEKIN.getId(),
-                UntitledDuckBlocks.GOOSE_ROOST_NORMAL.getId(), UntitledDuckBlocks.GOOSE_ROOST_CANADIAN.getId(), UntitledDuckBlocks.GOOSE_ROOST_PING.getId(), UntitledDuckBlocks.GOOSE_ROOST_SUS.getId(),
+                UntitledDuckBlocks.GOOSE_ROOST_NORMAL.getId(), UntitledDuckBlocks.GOOSE_ROOST_CANADIAN.getId(), UntitledDuckBlocks.GOOSE_ROOST_GREYLAG.getId(), UntitledDuckBlocks.GOOSE_ROOST_PING.getId(), UntitledDuckBlocks.GOOSE_ROOST_SUS.getId(),
                 UntitledDuckBlocks.GOOSE_ROOST_UNTITLED.getId())
-                .addStoryBoard("roost/operate", RoostScene::operate, CIFPonderTags.RANCHING_APPLIANCES, AllCreatePonderTags.ARM_TARGETS);
+                .addStoryBoard("roost/operate", RoostScene::operate, CIFPonderTags.FARMING_APPLIANCES, AllCreatePonderTags.ARM_TARGETS);
     }
 }

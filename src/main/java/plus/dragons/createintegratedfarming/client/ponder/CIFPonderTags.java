@@ -23,70 +23,49 @@ import static com.simibubi.create.infrastructure.ponder.AllCreatePonderTags.CONT
 
 import com.simibubi.create.AllBlocks;
 import com.tterrag.registrate.util.entry.RegistryEntry;
-import net.createmod.catnip.registry.RegisteredObjectsHelper;
 import net.createmod.ponder.api.registration.PonderTagRegistrationHelper;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.ItemLike;
+import plus.dragons.createdragonsplus.client.ponder.PonderTagGroups;
 import plus.dragons.createintegratedfarming.common.CIFCommon;
 import plus.dragons.createintegratedfarming.common.registry.CIFBlocks;
 
 public class CIFPonderTags {
     public static final ResourceLocation FARMING_APPLIANCES = CIFCommon.asResource("farming_appliances");
-
-    public static final ResourceLocation RANCHING_APPLIANCES = CIFCommon.asResource("ranching_appliances");
-
-    public static final ResourceLocation FISHING_APPLIANCES = CIFCommon.asResource("fishing_appliances");
+    public static final ResourceLocation RANCHING_APPLIANCES = FARMING_APPLIANCES;
+    public static final ResourceLocation FISHING_APPLIANCES = FARMING_APPLIANCES;
+    public static final ResourceLocation OCCUPIED_ROOSTS = CIFCommon.asResource("occupied_roosts");
 
     public static void register(PonderTagRegistrationHelper<ResourceLocation> helper) {
         PonderTagRegistrationHelper<RegistryEntry<?, ?>> entryHelper = helper.withKeyFunction(RegistryEntry::getId);
-
-        PonderTagRegistrationHelper<ItemLike> itemHelper = helper.withKeyFunction(
-                RegisteredObjectsHelper::getKeyOrThrow);
-
         helper.registerTag(FARMING_APPLIANCES)
                 .addToIndex()
                 .item(AllBlocks.MECHANICAL_HARVESTER, true, false)
                 .title("Farming Appliances")
-                .description("Components about farming")
-                .register();
-
-        helper.registerTag(RANCHING_APPLIANCES)
-                .addToIndex()
-                .item(CIFBlocks.ROOST, true, false)
-                .title("Ranching Appliances")
-                .description("Components about ranching")
-                .register();
-
-        helper.registerTag(FISHING_APPLIANCES)
-                .addToIndex()
-                .item(CIFBlocks.FISHING_NET, true, false)
-                .title("Fishing Appliances")
-                .description("Components about fishing")
+                .description("Components for crop farming, animal husbandry and fishing")
                 .register();
 
         entryHelper.addToTag(FARMING_APPLIANCES)
                 .add(AllBlocks.MECHANICAL_HARVESTER)
                 .add(CIFBlocks.VACUUM_HARVESTER)
-                .add(AllBlocks.SPOUT);
-
-        entryHelper.addToTag(CONTRAPTION_ACTOR)
-                .add(CIFBlocks.VACUUM_HARVESTER);
-
-        entryHelper.addToTag(RANCHING_APPLIANCES)
+                .add(AllBlocks.SPOUT)
                 .add(CIFBlocks.ROOST)
-                .add(CIFBlocks.CHICKEN_ROOST);
-
-        entryHelper.addToTag(FISHING_APPLIANCES)
                 .add(CIFBlocks.FISHING_NET)
                 .add(AllBlocks.DEPLOYER);
-
+        entryHelper.addToTag(CONTRAPTION_ACTOR).add(CIFBlocks.VACUUM_HARVESTER);
         if (CIFBlocks.isLavaFishingNetEnabled()) {
-            entryHelper.addToTag(FISHING_APPLIANCES).add(CIFBlocks.LAVA_FISHING_NET);
+            entryHelper.addToTag(FARMING_APPLIANCES).add(CIFBlocks.LAVA_FISHING_NET);
             entryHelper.addToTag(CONTRAPTION_ACTOR).add(CIFBlocks.LAVA_FISHING_NET);
             entryHelper.addToTag(ARM_TARGETS).add(CIFBlocks.LAVA_FISHING_NET);
         }
+        Component title = Component.translatable("create_integrated_farming.ponder.group.occupied_roosts");
+        PonderTagGroups.registerGroup(FARMING_APPLIANCES, OCCUPIED_ROOSTS, title);
+        PonderTagGroups.registerGroup(ARM_TARGETS, OCCUPIED_ROOSTS, title);
+        addRoosts(helper, CIFBlocks.CHICKEN_ROOST.getId());
+    }
 
-        entryHelper.addToTag(ARM_TARGETS)
-                .add(CIFBlocks.CHICKEN_ROOST);
+    public static void addRoosts(PonderTagRegistrationHelper<ResourceLocation> helper, ResourceLocation... roosts) {
+        PonderTagGroups.addToGroup(helper, FARMING_APPLIANCES, OCCUPIED_ROOSTS).add(roosts);
+        PonderTagGroups.addToGroup(helper, ARM_TARGETS, OCCUPIED_ROOSTS).add(roosts);
     }
 }

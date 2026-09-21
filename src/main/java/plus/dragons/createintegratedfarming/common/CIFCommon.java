@@ -60,6 +60,7 @@ public class CIFCommon {
         REGISTRATE.addRawLang(
                 "create_integrated_farming.goggles.roost.output_inventory_full", "Output inventory full");
         REGISTRATE.addRawLang("create_integrated_farming.jei.roosting", "Roosting");
+        REGISTRATE.addRawLang("create_integrated_farming.ponder.group.occupied_roosts", "Occupied Roosts");
         REGISTRATE.addRawLang(
                 "create_integrated_farming.jei.roosting.optional_feeding", "Optional feeding");
         REGISTRATE.addRawLang(

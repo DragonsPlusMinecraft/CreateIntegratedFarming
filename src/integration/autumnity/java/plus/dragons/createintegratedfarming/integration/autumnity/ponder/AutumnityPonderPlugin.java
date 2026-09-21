@@ -34,14 +34,13 @@ public class AutumnityPonderPlugin {
     }
 
     private static void registerTags(PonderTagRegistrationHelper<ResourceLocation> helper) {
-        helper.addToTag(CIFPonderTags.RANCHING_APPLIANCES).add(AutumnityBlocks.TURKEY_ROOST.getId());
-        helper.addToTag(AllCreatePonderTags.ARM_TARGETS).add(AutumnityBlocks.TURKEY_ROOST.getId());
+        CIFPonderTags.addRoosts(helper, AutumnityBlocks.TURKEY_ROOST.getId());
     }
 
     private static void registerScenes(PonderSceneRegistrationHelper<ResourceLocation> helper) {
         helper.forComponents(AutumnityBlocks.TURKEY_ROOST.getId())
                 .addStoryBoard(
                         "roost/operate", RoostScene::operate,
-                        CIFPonderTags.RANCHING_APPLIANCES, AllCreatePonderTags.ARM_TARGETS);
+                        CIFPonderTags.FARMING_APPLIANCES, AllCreatePonderTags.ARM_TARGETS);
     }
 }

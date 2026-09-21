@@ -18,11 +18,14 @@
 
 package plus.dragons.createintegratedfarming.integration.vanillabackport;
 
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
+import net.neoforged.fml.loading.FMLLoader;
+import plus.dragons.createintegratedfarming.client.ponder.CIFPonderPlugin;
 import plus.dragons.createintegratedfarming.common.CIFCommon;
 import plus.dragons.createintegratedfarming.integration.ModIntegration;
 import plus.dragons.createintegratedfarming.integration.vanillabackport.registry.VanillaBackportBlockEntities;
@@ -33,8 +36,11 @@ import plus.dragons.createintegratedfarming.integration.vanillabackport.registry
 @Mod(CIFCommon.ID)
 public class VanillaBackportIntegration {
     public VanillaBackportIntegration(IEventBus modBus) {
-        if (ModIntegration.VANILLA_BACKPORT.enabled())
+        if (ModIntegration.VANILLA_BACKPORT.enabled()) {
             modBus.register(new Common(modBus));
+            if (FMLLoader.getDist() == Dist.CLIENT)
+                modBus.register(new Client());
+        }
     }
 
     public static class Common {
@@ -54,6 +60,13 @@ public class VanillaBackportIntegration {
         public void commonSetup(final FMLCommonSetupEvent event) {
             event.enqueueWork(VanillaBackportRoostCapturables::register);
             event.enqueueWork(VanillaBackportRoostingDisplayProfiles::register);
+        }
+    }
+
+    public static class Client {
+        @SubscribeEvent
+        public void construct(final FMLConstructModEvent event) {
+            CIFPonderPlugin.registerRoosts(VanillaBackportBlocks.CHICKEN_ROOST_WARM.getId(), VanillaBackportBlocks.CHICKEN_ROOST_COLD.getId());
         }
     }
 }

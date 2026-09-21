@@ -18,6 +18,7 @@
 
 package plus.dragons.createintegratedfarming.client.ponder;
 
+import com.simibubi.create.infrastructure.ponder.AllCreatePonderTags;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -25,11 +26,20 @@ import net.createmod.ponder.api.registration.PonderPlugin;
 import net.createmod.ponder.api.registration.PonderSceneRegistrationHelper;
 import net.createmod.ponder.api.registration.PonderTagRegistrationHelper;
 import net.minecraft.resources.ResourceLocation;
+import plus.dragons.createintegratedfarming.client.ponder.scene.RoostScene;
 import plus.dragons.createintegratedfarming.common.CIFCommon;
 
 public class CIFPonderPlugin implements PonderPlugin {
     public static final List<Consumer<PonderSceneRegistrationHelper<ResourceLocation>>> SCENES = new ArrayList<>();
     public static final List<Consumer<PonderTagRegistrationHelper<ResourceLocation>>> TAGS = new ArrayList<>();
+
+    public static void registerRoosts(ResourceLocation... roosts) {
+        ResourceLocation[] components = roosts.clone();
+        TAGS.add(helper -> CIFPonderTags.addRoosts(helper, components));
+        SCENES.add(helper -> helper.forComponents(components)
+                .addStoryBoard("roost/operate", RoostScene::operate,
+                        CIFPonderTags.FARMING_APPLIANCES, AllCreatePonderTags.ARM_TARGETS));
+    }
 
     @Override
     public String getModId() {

@@ -26,6 +26,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
 import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.client.event.ModelEvent;
+import plus.dragons.createintegratedfarming.client.ponder.CIFPonderPlugin;
 import plus.dragons.createintegratedfarming.common.CIFCommon;
 import plus.dragons.createintegratedfarming.common.fishing.net.FishingNetCatchProviders;
 import plus.dragons.createintegratedfarming.common.fishing.net.FishingNetMedium;
@@ -82,6 +83,7 @@ public class ConfluenceIntegration {
         @SubscribeEvent
         public void construct(final FMLConstructModEvent event) {
             ConfluenceFishingNetPonderExample.register();
+            CIFPonderPlugin.registerRoosts(ConfluenceBlocks.DUCK_ROOST_COMMON.getId(), ConfluenceBlocks.DUCK_ROOST_MALLARD.getId());
         }
     }
 }
