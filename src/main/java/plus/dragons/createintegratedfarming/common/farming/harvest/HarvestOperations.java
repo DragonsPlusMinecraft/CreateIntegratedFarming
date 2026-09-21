@@ -25,10 +25,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import plus.dragons.createintegratedfarming.api.harvester.AreaHarvestContext;
+import plus.dragons.createintegratedfarming.api.harvester.CustomHarvestBehaviour;
 
 /** Operations for validated multi-block crops; these do not infer a crop's structure or maturity. */
 public final class HarvestOperations {
@@ -45,8 +47,42 @@ public final class HarvestOperations {
                 && !context.level().restoringBlockSnapshots;
     }
 
+    /** Pick fruit without destroying its supporting plant or replacing its block entity. */
+    public static boolean pickFruit(AreaHarvestContext context, BlockPos pos, BlockState harvested, ItemStack... drops) {
+        if (!(context.level() instanceof ServerLevel level) || !canHarvest(context, List.of(pos))
+                || !context.claimHarvest(pos))
+            return false;
+        BlockState original = level.getBlockState(pos);
+        level.setBlock(pos, harvested, original.is(harvested.getBlock()) ? Block.UPDATE_CLIENTS : Block.UPDATE_ALL);
+        if (dropsEnabled(context))
+            for (ItemStack stack : drops)
+                context.collect(stack);
+        return true;
+    }
+
+    /** Remove a separate fruit block using its loot table, preserving any fluid at its position. */
+    public static boolean harvestFruitBlock(AreaHarvestContext context, BlockPos pos) {
+        if (!(context.level() instanceof ServerLevel) || !canHarvest(context, List.of(pos))
+                || !context.claimHarvest(pos))
+            return false;
+        CustomHarvestBehaviour.harvestBlock(context.level(), pos,
+                context.level().getFluidState(pos).createLegacyBlock(), null, context.tool(), 1, context::collect);
+        return true;
+    }
+
     public static boolean harvestPlant(AreaHarvestContext context, List<BlockPos> parts,
             BlockPos anchor, BlockState replanted, Item seed) {
+        return harvestPlant(context, parts, anchor, replanted, seed, false);
+    }
+
+    /** Harvest a growing vine while retaining its original starting segment when replanting is enabled. */
+    public static boolean harvestGrowingPlant(AreaHarvestContext context, List<BlockPos> parts,
+            BlockPos anchor, BlockState growingState) {
+        return harvestPlant(context, parts, anchor, growingState, Items.AIR, true);
+    }
+
+    private static boolean harvestPlant(AreaHarvestContext context, List<BlockPos> parts,
+            BlockPos anchor, BlockState replanted, Item seed, boolean keepRoot) {
         if (!(context.level() instanceof ServerLevel level) || !canHarvest(context, parts)
                 || !context.claimHarvest(anchor))
             return false;
@@ -56,7 +92,7 @@ public final class HarvestOperations {
         for (int i = 0; i < parts.size(); i++) {
             BlockPos part = parts.get(i);
             BlockState state = states.get(i);
-            if (dropsEnabled(context)) {
+            if (dropsEnabled(context) && !(keepRoot && context.replant() && part.equals(anchor))) {
                 drops.addAll(Block.getDrops(state, level, part, level.getBlockEntity(part), null, context.tool()));
                 state.spawnAfterBreak(level, part, context.tool(), true);
             }
@@ -65,7 +101,7 @@ public final class HarvestOperations {
         for (int i = 0; i < parts.size(); i++)
             level.setBlock(parts.get(i), states.get(i).getFluidState().createLegacyBlock(),
                     Block.UPDATE_CLIENTS | Block.UPDATE_KNOWN_SHAPE);
-        if (context.replant() && replanted.canSurvive(level, anchor) && consumeSeed(context, drops, seed))
+        if (context.replant() && replanted.canSurvive(level, anchor) && (keepRoot || consumeSeed(context, drops, seed)))
             level.setBlock(anchor, replanted, Block.UPDATE_CLIENTS | Block.UPDATE_KNOWN_SHAPE);
         // Publish neighbour changes only once the whole plant is in its final state.
         for (int i = 0; i < parts.size(); i++) {

@@ -19,6 +19,7 @@
 package plus.dragons.createintegratedfarming.integration.neapolitan;
 
 import com.teamabnormals.neapolitan.common.block.MintBlock;
+import com.teamabnormals.neapolitan.core.registry.NeapolitanBlocks;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
@@ -26,7 +27,10 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import plus.dragons.createintegratedfarming.api.harvester.CustomHarvestBehaviour;
 import plus.dragons.createintegratedfarming.common.CIFCommon;
 import plus.dragons.createintegratedfarming.integration.ModIntegration;
+import plus.dragons.createintegratedfarming.integration.neapolitan.farming.harvest.AdzukiHarvestBehaviour;
+import plus.dragons.createintegratedfarming.integration.neapolitan.farming.harvest.BananaHarvestBehaviour;
 import plus.dragons.createintegratedfarming.integration.neapolitan.farming.harvest.MintHarvestBehaviour;
+import plus.dragons.createintegratedfarming.integration.neapolitan.farming.harvest.VanillaHarvestBehaviour;
 
 @Mod(CIFCommon.ID)
 public class NeapolitanIntegration {
@@ -38,6 +42,13 @@ public class NeapolitanIntegration {
     public static class Common {
         @SubscribeEvent
         public void commonSetup(final FMLCommonSetupEvent event) {
+            event.enqueueWork(() -> {
+                var vanilla = new VanillaHarvestBehaviour();
+                CustomHarvestBehaviour.REGISTRY.register(NeapolitanBlocks.VANILLA_VINE.get(), vanilla);
+                CustomHarvestBehaviour.REGISTRY.register(NeapolitanBlocks.VANILLA_VINE_PLANT.get(), vanilla);
+                CustomHarvestBehaviour.REGISTRY.register(NeapolitanBlocks.BANANA_BUNDLE.get(), new BananaHarvestBehaviour());
+                CustomHarvestBehaviour.REGISTRY.register(NeapolitanBlocks.ADZUKI_SPROUTS.get(), new AdzukiHarvestBehaviour());
+            });
             CustomHarvestBehaviour.REGISTRY.registerProvider(block -> block instanceof MintBlock ? new MintHarvestBehaviour() : null);
         }
     }

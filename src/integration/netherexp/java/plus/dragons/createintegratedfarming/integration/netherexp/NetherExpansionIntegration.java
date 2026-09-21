@@ -19,6 +19,7 @@
 package plus.dragons.createintegratedfarming.integration.netherexp;
 
 import net.jadenxgamer.netherexp.core.block.WarpedWartBlock;
+import net.jadenxgamer.netherexp.registry.JNEBlocks;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
@@ -26,6 +27,8 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import plus.dragons.createintegratedfarming.api.harvester.CustomHarvestBehaviour;
 import plus.dragons.createintegratedfarming.common.CIFCommon;
 import plus.dragons.createintegratedfarming.integration.ModIntegration;
+import plus.dragons.createintegratedfarming.integration.netherexp.farming.harvest.CerebrageHarvestBehaviour;
+import plus.dragons.createintegratedfarming.integration.netherexp.farming.harvest.SorrowsquashHarvestBehaviour;
 import plus.dragons.createintegratedfarming.integration.netherexp.farming.harvest.WarpedWartHarvestBehaviour;
 
 @Mod(CIFCommon.ID)
@@ -38,6 +41,10 @@ public class NetherExpansionIntegration {
     public static class Common {
         @SubscribeEvent
         public void commonSetup(final FMLCommonSetupEvent event) {
+            event.enqueueWork(() -> {
+                CustomHarvestBehaviour.REGISTRY.register(JNEBlocks.CEREBRAGE_SKULL.get(), new CerebrageHarvestBehaviour());
+                CustomHarvestBehaviour.REGISTRY.register(JNEBlocks.SORROWSQUASH.get(), new SorrowsquashHarvestBehaviour());
+            });
             CustomHarvestBehaviour.REGISTRY.registerProvider(block -> block instanceof WarpedWartBlock ? new WarpedWartHarvestBehaviour() : null);
         }
     }

@@ -28,6 +28,7 @@ import plus.dragons.createintegratedfarming.api.harvester.CustomHarvestBehaviour
 import plus.dragons.createintegratedfarming.common.CIFCommon;
 import plus.dragons.createintegratedfarming.integration.ModIntegration;
 import plus.dragons.createintegratedfarming.integration.atmospheric.farming.harvest.AloeHarvestBehaviour;
+import plus.dragons.createintegratedfarming.integration.atmospheric.farming.harvest.AtmosphericFruitHarvestBehaviour;
 
 @Mod(CIFCommon.ID)
 public class AtmosphericIntegration {
@@ -39,6 +40,7 @@ public class AtmosphericIntegration {
     public static class Common {
         @SubscribeEvent
         public void commonSetup(final FMLCommonSetupEvent event) {
+            event.enqueueWork(AtmosphericFruitHarvestBehaviour::register);
             CustomHarvestBehaviour.REGISTRY.registerProvider(block -> block instanceof AloeVeraBlock || block instanceof AloeVeraTallBlock ? new AloeHarvestBehaviour() : null);
         }
     }

@@ -23,6 +23,7 @@ import com.simibubi.create.foundation.item.KineticStats;
 import com.simibubi.create.foundation.item.TooltipModifier;
 import net.createmod.catnip.lang.FontHelper;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -32,6 +33,8 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import plus.dragons.createdragonsplus.common.CDPRegistrate;
+import plus.dragons.createintegratedfarming.api.harvester.CustomHarvestBehaviour;
+import plus.dragons.createintegratedfarming.common.farming.harvest.GlowBerryHarvestBehaviour;
 import plus.dragons.createintegratedfarming.common.fishing.net.FishingNetCatchProviders;
 import plus.dragons.createintegratedfarming.common.fishing.net.FishingNetMedium;
 import plus.dragons.createintegratedfarming.common.network.CIFPackets;
@@ -121,6 +124,11 @@ public class CIFCommon {
 
     @SubscribeEvent
     public void onCommonSetup(final FMLCommonSetupEvent event) {
+        event.enqueueWork(() -> {
+            var glowBerries = new GlowBerryHarvestBehaviour();
+            CustomHarvestBehaviour.REGISTRY.register(Blocks.CAVE_VINES, glowBerries);
+            CustomHarvestBehaviour.REGISTRY.register(Blocks.CAVE_VINES_PLANT, glowBerries);
+        });
         event.enqueueWork(CIFBlockSpoutingBehaviours::register);
         event.enqueueWork(CIFRoostCapturables::register);
         event.enqueueWork(CIFRoostingDisplayProfiles::register);

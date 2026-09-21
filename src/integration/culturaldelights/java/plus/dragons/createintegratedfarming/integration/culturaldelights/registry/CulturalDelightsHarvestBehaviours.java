@@ -23,13 +23,21 @@ import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.Nullable;
 import plus.dragons.createintegratedfarming.api.harvester.CustomHarvestBehaviour;
 import plus.dragons.createintegratedfarming.integration.culturaldelights.farming.harvest.AvocadoHarvestBehaviour;
+import plus.dragons.createintegratedfarming.integration.culturaldelights.farming.harvest.BeansHarvestBehaviour;
 import plus.dragons.createintegratedfarming.integration.culturaldelights.farming.harvest.CornHarvestBehaviour;
+import plus.dragons.createintegratedfarming.integration.culturaldelights.farming.harvest.MintHarvestBehaviour;
 
 public class CulturalDelightsHarvestBehaviours {
     private static final AvocadoHarvestBehaviour AVOCADO = new AvocadoHarvestBehaviour();
     private static final CornHarvestBehaviour CORN = new CornHarvestBehaviour();
 
     public static void register() {
+        var beans = new BeansHarvestBehaviour();
+        CustomHarvestBehaviour.REGISTRY.register(ModBlocks.BEANS.get(), beans);
+        CustomHarvestBehaviour.REGISTRY.register(ModBlocks.BUDDING_BEANS.get(), beans);
+        CustomHarvestBehaviour.REGISTRY.register(ModBlocks.ROPE_BEANS.get(), beans);
+        CustomHarvestBehaviour.REGISTRY.register(ModBlocks.STICK_BEANS.get(), beans);
+        CustomHarvestBehaviour.REGISTRY.register(ModBlocks.MINT.get(), new MintHarvestBehaviour());
         CustomHarvestBehaviour.REGISTRY.registerProvider(CulturalDelightsHarvestBehaviours::createAvocado);
         CustomHarvestBehaviour.REGISTRY.registerProvider(CulturalDelightsHarvestBehaviours::createCorn);
     }
