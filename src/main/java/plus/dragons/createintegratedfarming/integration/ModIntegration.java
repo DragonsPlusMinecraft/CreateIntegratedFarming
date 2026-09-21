@@ -39,6 +39,9 @@ public enum ModIntegration {
     HAUNTED_HARVEST(Mods.HAUNTED_HARVEST),
     NETHER_EXPANSION(Mods.NETHER_EXPANSION),
     CULTURAL_DELIGHTS(Mods.CULTURAL_DELIGHTS),
+    COOKS_COLLECTION(Mods.COOKS_COLLECTION),
+    ENDERS_DELIGHT(Mods.ENDERS_DELIGHT),
+    UPGRADE_AQUATIC(Mods.UPGRADE_AQUATIC),
     HEARTH_AND_HARVEST(Mods.HEARTH_AND_HARVEST),
     WINDSWEPT(Mods.WINDSWEPT),
     FESTIVE_DELIGHT(Mods.FESTIVE_DELIGHT),
@@ -94,6 +97,9 @@ public enum ModIntegration {
         public static final String HAUNTED_HARVEST = "hauntedharvest";
         public static final String NETHER_EXPANSION = "netherexp";
         public static final String CULTURAL_DELIGHTS = "culturaldelights";
+        public static final String COOKS_COLLECTION = "cookscollection";
+        public static final String ENDERS_DELIGHT = "endersdelight";
+        public static final String UPGRADE_AQUATIC = "upgrade_aquatic";
         public static final String HEARTH_AND_HARVEST = "hearthandharvest";
         public static final String WINDSWEPT = "windswept";
         public static final String FESTIVE_DELIGHT = "festive_delight";

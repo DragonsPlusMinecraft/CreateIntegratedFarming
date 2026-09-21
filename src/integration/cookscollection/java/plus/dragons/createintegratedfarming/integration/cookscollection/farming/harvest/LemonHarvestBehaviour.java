@@ -1,0 +1,39 @@
+/*
+ * Copyright (C) 2025  DragonsPlus
+ * SPDX-License-Identifier: LGPL-3.0-or-later
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+package plus.dragons.createintegratedfarming.integration.cookscollection.farming.harvest;
+
+import com.baisylia.cookscollection.block.ModBlocks;
+import com.baisylia.cookscollection.block.custom.FruitingLeaves;
+import com.baisylia.cookscollection.item.ModItems;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
+import plus.dragons.createintegratedfarming.api.harvester.AreaHarvestContext;
+import plus.dragons.createintegratedfarming.common.farming.harvest.AreaCompatibleHarvestBehaviour;
+import plus.dragons.createintegratedfarming.common.farming.harvest.HarvestOperations;
+
+public class LemonHarvestBehaviour extends AreaCompatibleHarvestBehaviour {
+    @Override
+    public boolean harvestInArea(AreaHarvestContext context, BlockPos pos, BlockState state) {
+        if (!state.is(ModBlocks.FRUITING_LEMON_LEAVES.get()) || state.getValue(FruitingLeaves.AGE) != FruitingLeaves.MAX_AGE)
+            return false;
+        return HarvestOperations.pickFruit(context, pos, state.setValue(FruitingLeaves.AGE, 0),
+                new ItemStack(ModItems.LEMON.get(), 2 + context.level().random.nextInt(2)));
+    }
+}

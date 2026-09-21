@@ -39,6 +39,9 @@ def allIntegrationSourceSets = [
         "hauntedharvest",
         "netherexp",
         "culturaldelights",
+        "cookscollection",
+        "endersdelight",
+        "upgradeaquatic",
         "hearthandharvest",
         "windswept",
         "festivedelight",
@@ -57,6 +60,8 @@ def integrationSourceSetDependencies = [
         corndelight    : ["farmersdelight"],
         crabberdelight : ["farmersdelight"],
         culturaldelights: ["farmersdelight"],
+        cookscollection: ["farmersdelight"],
+        endersdelight  : ["farmersdelight"],
         hearthandharvest: ["farmersdelight"],
         festivedelight  : ["farmersdelight"],
         delightoflight : ["farmersdelight"],
@@ -306,7 +311,22 @@ dependencies {
 
     if (hasIntegration("culturaldelights")) {
         culturaldelightsLocalImplementation("maven.modrinth:YttyNOFA:${cultural_delights_version}")
-        localRuntime("maven.modrinth:QC7N8ljN:${cooks_collection_version}")
+        if (!hasIntegration("cookscollection")) {
+            localRuntime("maven.modrinth:QC7N8ljN:${cooks_collection_version}")
+        }
+    }
+
+    if (hasIntegration("cookscollection")) {
+        cookscollectionLocalImplementation("maven.modrinth:QC7N8ljN:${cooks_collection_version}")
+    }
+
+    if (hasIntegration("endersdelight")) {
+        endersdelightLocalImplementation("maven.modrinth:2uEhdGKt:${enders_delight_version}")
+    }
+
+    if (hasIntegration("upgradeaquatic")) {
+        upgradeaquaticLocalImplementation("maven.modrinth:blueprint:${blueprint_version}")
+        upgradeaquaticLocalImplementation("maven.modrinth:gTuTFFyz:${upgrade_aquatic_version}")
     }
 
     if (hasIntegration("hearthandharvest")) {
@@ -434,6 +454,9 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             create_dragons_plus_version_range   : create_dragons_plus_version_range,
             farmers_delight_version_range       : farmers_delight_version_range,
             cultural_delights_version_range     : cultural_delights_version_range,
+            cooks_collection_version_range      : cooks_collection_version_range,
+            enders_delight_version_range         : enders_delight_version_range,
+            upgrade_aquatic_version_range        : upgrade_aquatic_version_range,
             neapolitan_version_range            : neapolitan_version_range,
             atmospheric_version_range           : atmospheric_version_range,
             supplementaries_version_range       : supplementaries_version_range,

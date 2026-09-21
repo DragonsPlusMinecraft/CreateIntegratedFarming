@@ -65,6 +65,27 @@ ${integration_mixin_blocks}
     side="BOTH"
 
 [[dependencies.${mod_id}]]
+    modId="cookscollection"
+    type="optional"
+    versionRange="${cooks_collection_version_range}"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="endersdelight"
+    type="optional"
+    versionRange="${enders_delight_version_range}"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="upgrade_aquatic"
+    type="optional"
+    versionRange="${upgrade_aquatic_version_range}"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
     modId="netherdepthsupgrade"
     type="optional"
     versionRange="${nether_depths_upgrade_version_range}"
