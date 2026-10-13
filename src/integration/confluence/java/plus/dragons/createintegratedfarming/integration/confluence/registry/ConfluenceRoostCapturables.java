@@ -18,16 +18,17 @@
 
 package plus.dragons.createintegratedfarming.integration.confluence.registry;
 
-import org.confluence.terraentity.entity.animal.Duck;
-import org.confluence.terraentity.init.entity.TEAnimals;
+import static org.confluence.mod.common.init.entity.CritterEntities.DUCK;
+
+import org.confluence.mod.common.entity.animal.Duck;
 import plus.dragons.createintegratedfarming.common.ranching.roost.RoostCapturableProvider;
 
 public final class ConfluenceRoostCapturables {
     private ConfluenceRoostCapturables() {}
 
     public static void register() {
-        RoostCapturableProvider.REGISTRY.register(TEAnimals.DUCK.get(), entity -> {
-            if (entity instanceof Duck duck && duck.getVariant() == Duck.COMMON_ID)
+        RoostCapturableProvider.REGISTRY.register(DUCK.get(), entity -> {
+            if (entity instanceof Duck duck && duck.getVariant() == Duck.Variant.COMMON)
                 return ConfluenceBlocks.DUCK_ROOST_COMMON.get();
             return ConfluenceBlocks.DUCK_ROOST_MALLARD.get();
         });

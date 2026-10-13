@@ -389,7 +389,8 @@ dependencies {
     }
 
     if (hasIntegration("confluence")) {
-        confluenceLocalImplementation("maven.modrinth:9kp7blvl:${confluence_version}")
+        confluenceLocalImplementation("maven.modrinth:geckolib:${geckolib_version}")
+        confluenceLocalImplementation("curse.maven:confluence-1209464:${confluence_version}")
     }
 
     if (hasIntegration("vanillabackport")) {

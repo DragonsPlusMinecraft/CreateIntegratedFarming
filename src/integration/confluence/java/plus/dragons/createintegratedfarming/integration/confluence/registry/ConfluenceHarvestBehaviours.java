@@ -33,13 +33,13 @@ public final class ConfluenceHarvestBehaviours {
         register(NatureBlocks.STELLAR_BLOSSOM.get(), FoodItems.STELLAR_BLOSSOM_SEED.get());
         register(NatureBlocks.CLOUDWEAVER.get(), FoodItems.CLOUDWEAVER_SEED.get());
         register(NatureBlocks.FLOATING_WHEAT.get(), FoodItems.FLOATING_WHEAT_SEED.get());
-        register(ModBlocks.WATERLEAF.get(), FoodItems.WATERLEAF_SEED.get());
-        register(ModBlocks.FIREBLOSSOM.get(), FoodItems.FIREBLOSSOM_SEED.get());
-        register(ModBlocks.MOONGLOW.get(), FoodItems.MOONGLOW_SEED.get());
-        register(ModBlocks.BLINKROOT.get(), FoodItems.BLINKROOT_SEED.get());
-        register(ModBlocks.SHIVERTHORN.get(), FoodItems.SHIVERTHORN_SEED.get());
-        register(ModBlocks.DAYBLOOM.get(), FoodItems.DAYBLOOM_SEED.get());
-        register(ModBlocks.DEATHWEED.get(), FoodItems.DEATHWEED_SEED.get());
+        register(NatureBlocks.WATERLEAF.get(), FoodItems.WATERLEAF_SEED.get());
+        register(NatureBlocks.FIREBLOSSOM.get(), FoodItems.FIREBLOSSOM_SEED.get());
+        register(NatureBlocks.MOONGLOW.get(), FoodItems.MOONGLOW_SEED.get());
+        register(NatureBlocks.BLINKROOT.get(), FoodItems.BLINKROOT_SEED.get());
+        register(NatureBlocks.SHIVERTHORN.get(), FoodItems.SHIVERTHORN_SEED.get());
+        register(NatureBlocks.DAYBLOOM.get(), FoodItems.DAYBLOOM_SEED.get());
+        register(NatureBlocks.DEATHWEED.get(), FoodItems.DEATHWEED_SEED.get());
     }
 
     private static void register(CropBlock crop, Item seed) {

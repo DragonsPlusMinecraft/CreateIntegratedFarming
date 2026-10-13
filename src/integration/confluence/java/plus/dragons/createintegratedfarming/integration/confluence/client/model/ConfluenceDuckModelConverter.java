@@ -47,9 +47,9 @@ import software.bernie.geckolib.util.RenderUtil;
 
 final class ConfluenceDuckModelConverter {
     private static final ResourceLocation MODEL = ResourceLocation.fromNamespaceAndPath(
-            "terra_entity", "geo/entity/animal/duck.geo.json");
+            "confluence", "geo/entity/animal/duck.geo.json");
     private static final ResourceLocation ANIMATIONS = ResourceLocation.fromNamespaceAndPath(
-            "terra_entity", "animations/entity/animal/duck.animation.json");
+            "confluence", "animations/entity/animal/duck.animation.json");
     private static final String IDLE_ANIMATION = "misc.idle";
     private static final float GROUND_HEIGHT = 4.0F / 16.0F;
     private static final Object CACHE_LOCK = new Object();
