@@ -108,7 +108,8 @@ public class CIFServerConfig extends ConfigBase {
                 "\"Process\" means captured entity will be discard and all drops will be collected."
         };
         static final String[] fishingNetCapturedCreatureMaxSize = {
-                "The maximum size (width and height) of creatures that can be caught by the Fishing Net."
+                "The maximum size (width and height) of creatures that can be caught by the Fishing Net.",
+                "Creatures of exactly this size are also captured."
         };
         static final String[] fishingNetCapturedCreatureDropExpNugget = {
                 "If creatures captured by Fishing Net should drop Nugget of Experience."

@@ -51,6 +51,7 @@ def allIntegrationSourceSets = [
         "twilightdelight",
         "tide",
         "starcatcher",
+        "hybridaquatic",
         "confluence",
         "vanillabackport",
 ]
@@ -388,6 +389,14 @@ dependencies {
         starcatcherLocalImplementation("curse.maven:starcatcher-1357603:${starcatcher_version}")
     }
 
+    if (hasIntegration("hybridaquatic")) {
+        hybridaquaticLocalImplementation("maven.modrinth:hybrid-api:${hybrid_api_version}")
+        hybridaquaticLocalImplementation("maven.modrinth:hybrid-aquatic:${hybrid_aquatic_version}")
+        hybridaquaticLocalImplementation("maven.modrinth:geckolib:${geckolib_version}")
+        hybridaquaticLocalImplementation("maven.modrinth:lithostitched:${lithostitched_version}")
+        hybridaquaticLocalImplementation("maven.modrinth:kotlin-for-forge:${kotlin_for_forge_version}")
+    }
+
     if (hasIntegration("confluence")) {
         confluenceLocalImplementation("maven.modrinth:9kp7blvl:${confluence_version}")
     }
@@ -465,6 +474,8 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             nether_depths_upgrade_version_range : nether_depths_upgrade_version_range,
             tide_version_range                  : tide_version_range,
             starcatcher_version_range           : starcatcher_version_range,
+            hybrid_api_version_range            : hybrid_api_version_range,
+            hybrid_aquatic_version_range        : hybrid_aquatic_version_range,
             confluence_version_range            : confluence_version_range,
             vanilla_backport_version_range      : vanilla_backport_version_range,
             integration_mixin_blocks            : integrationMixinBlocks

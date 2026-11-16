@@ -50,6 +50,7 @@ public enum ModIntegration {
     SABLE(Mods.SABLE),
     TIDE(Mods.TIDE),
     STARCATCHER(Mods.STARCATCHER),
+    HYBRID_AQUATIC(Mods.HYBRID_AQUATIC),
     CONFLUENCE(Mods.CONFLUENCE),
     VANILLA_BACKPORT(Mods.VANILLA_BACKPORT),
     TWILIGHT_FOREST(Mods.TWILIGHT_FOREST),
@@ -108,6 +109,7 @@ public enum ModIntegration {
         public static final String SABLE = "sable";
         public static final String TIDE = "tide";
         public static final String STARCATCHER = "starcatcher";
+        public static final String HYBRID_AQUATIC = "hybrid_aquatic";
         public static final String CONFLUENCE = "confluence";
         public static final String VANILLA_BACKPORT = "vanillabackport";
         public static final String SIMULATED = "simulated";
