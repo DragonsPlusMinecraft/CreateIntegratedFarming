@@ -4,6 +4,7 @@
   "package": "plus.dragons.createintegratedfarming.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "LivingEntityAccessor",
     "create.BlockBreakingMovementBehaviourMixin",
     "create.HarvesterMovementBehaviourMixin",
     "create.SawBlockEntityMixin",

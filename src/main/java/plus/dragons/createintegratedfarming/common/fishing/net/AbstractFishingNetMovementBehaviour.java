@@ -18,23 +18,15 @@
 
 package plus.dragons.createintegratedfarming.common.fishing.net;
 
-import com.simibubi.create.AllItems;
 import com.simibubi.create.api.behaviour.movement.MovementBehaviour;
 import com.simibubi.create.content.contraptions.behaviour.MovementContext;
 import java.util.ArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.event.entity.player.ItemFishedEvent;
 import org.jetbrains.annotations.ApiStatus;
 import plus.dragons.createintegratedfarming.config.CIFConfig;
@@ -51,24 +43,7 @@ public abstract class AbstractFishingNetMovementBehaviour<T extends AbstractFish
     }
 
     protected void onCaptureEntity(MovementContext context, ServerLevel level, T fishing, LivingEntity entity) {
-        if (!entity.isBaby() && level.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT)) {
-            var lootTable = level.getServer().reloadableRegistries().getLootTable(entity.getLootTable());
-            var lootParams = fishing.buildCaptureLootContext(context, level, entity);
-            lootTable.getRandomItems(lootParams, entity.getLootTableSeed(), item -> collectOrDropItem(context, item));
-            if (entity instanceof Mob mob) {
-                for (var slot : EquipmentSlot.values()) {
-                    var stack = mob.getItemBySlot(slot);
-                    if (!stack.isEmpty() && !EnchantmentHelper.has(stack, EnchantmentEffectComponents.PREVENT_EQUIPMENT_DROP)
-                            && mob.getEquipmentDropChance(slot) > 1.0F)
-                        collectOrDropItem(context, stack);
-                }
-            }
-            if (CIFConfig.server().fishingNetCapturedCreatureDropExpNugget.get()) {
-                int experience = EventHooks.getExperienceDrop(entity, fishing.player, entity.getExperienceReward(level, entity));
-                collectOrDropItem(context, new ItemStack(AllItems.EXP_NUGGET.get(), Math.ceilDiv(experience, 3)));
-            }
-        }
-        entity.discard();
+        fishing.captureEntity(context, level, entity, stack -> collectOrDropItem(context, stack));
     }
 
     @Override

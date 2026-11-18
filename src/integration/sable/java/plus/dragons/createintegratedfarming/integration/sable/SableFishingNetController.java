@@ -18,7 +18,6 @@
 
 package plus.dragons.createintegratedfarming.integration.sable;
 
-import com.simibubi.create.AllItems;
 import com.simibubi.create.content.contraptions.behaviour.MovementContext;
 import dev.ryanhcode.sable.Sable;
 import dev.ryanhcode.sable.companion.math.BoundingBox3d;
@@ -45,16 +44,13 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate.StructureBlockInfo;
-import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.event.entity.player.ItemFishedEvent;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
@@ -458,19 +454,7 @@ public final class SableFishingNetController {
     private void onCaptureCreature(NetGroup group, long netPos, LivingEntity entity) {
         prepareContext(group, netPos);
         group.movementContext.position = entity.position();
-        if (!entity.isBaby() && level.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT)) {
-            LootTable lootTable = level.getServer().reloadableRegistries().getLootTable(entity.getLootTable());
-            var lootParams = group.context.buildCaptureLootContext(group.movementContext, level, entity);
-            lootTable.getRandomItems(lootParams, entity.getLootTableSeed(), stack -> output(group, netPos, stack));
-            if (CIFConfig.server().fishingNetCapturedCreatureDropExpNugget.get()) {
-                int experience = EventHooks.getExperienceDrop(
-                        entity,
-                        group.context.getPlayer(),
-                        entity.getExperienceReward(level, entity));
-                output(group, netPos, new ItemStack(AllItems.EXP_NUGGET.get(), Math.ceilDiv(experience, 3)));
-            }
-        }
-        entity.discard();
+        group.context.captureEntity(group.movementContext, level, entity, stack -> output(group, netPos, stack));
     }
 
     private void output(NetGroup group, long netPos, ItemStack stack) {

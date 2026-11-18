@@ -18,22 +18,29 @@
 
 package plus.dragons.createintegratedfarming.common.fishing.net;
 
+import com.simibubi.create.AllItems;
 import com.simibubi.create.content.contraptions.behaviour.MovementContext;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Consumer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.event.EventHooks;
 import org.jetbrains.annotations.ApiStatus;
 import plus.dragons.createintegratedfarming.config.CIFConfig;
+import plus.dragons.createintegratedfarming.mixin.LivingEntityAccessor;
 
 public abstract class AbstractFishingNetContext<T extends FishingHook> {
     protected final FishingNetFakePlayer player;
@@ -103,6 +110,32 @@ public abstract class AbstractFishingNetContext<T extends FishingHook> {
                 .withParameter(LootContextParams.DIRECT_ATTACKING_ENTITY, fishingHook)
                 .withParameter(LootContextParams.LAST_DAMAGE_PLAYER, player)
                 .create(LootContextParamSets.ENTITY);
+    }
+
+    @ApiStatus.Internal
+    public void captureEntity(MovementContext context, ServerLevel level, LivingEntity entity, Consumer<ItemStack> output) {
+        if (!entity.isBaby() && level.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT)) {
+            var lootParams = buildCaptureLootContext(context, level, entity);
+            var lootTable = level.getServer().reloadableRegistries().getLootTable(entity.getLootTable());
+            lootTable.getRandomItems(lootParams, entity.getLootTableSeed(), output);
+
+            var customDrops = new ArrayList<ItemEntity>();
+            var previousDrops = entity.captureDrops(customDrops);
+            try {
+                // An unattended capture collects guaranteed equipment and the creature's own drops.
+                ((LivingEntityAccessor) entity).createintegratedfarming$dropCustomDeathLoot(
+                        level, lootParams.getParameter(LootContextParams.DAMAGE_SOURCE), false);
+            } finally {
+                entity.captureDrops(previousDrops);
+            }
+            customDrops.forEach(drop -> output.accept(drop.getItem()));
+
+            if (CIFConfig.server().fishingNetCapturedCreatureDropExpNugget.get()) {
+                int experience = EventHooks.getExperienceDrop(entity, player, entity.getExperienceReward(level, entity));
+                output.accept(new ItemStack(AllItems.EXP_NUGGET.get(), Math.ceilDiv(experience, 3)));
+            }
+        }
+        entity.discard();
     }
 
     public FishingNetCatchContext buildFishingCatchContext(
