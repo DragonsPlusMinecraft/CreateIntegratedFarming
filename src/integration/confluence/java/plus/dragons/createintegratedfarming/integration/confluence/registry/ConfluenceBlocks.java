@@ -28,18 +28,18 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.data.loading.DatagenModLoader;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
-import org.confluence.terraentity.entity.animal.Duck;
+import org.confluence.mod.common.entity.animal.Duck;
 import plus.dragons.createintegratedfarming.common.registry.CIFCreativeModeTabs;
 import plus.dragons.createintegratedfarming.integration.confluence.ranching.roost.ConfluenceDuckRoostBlock;
 
 public final class ConfluenceBlocks {
-    public static final BlockEntry<ConfluenceDuckRoostBlock> DUCK_ROOST_MALLARD = registerDuckRoost("confluence_duck_roost_mallard", "Mallard Duck Roost", Duck.MALLARD_ID);
-    public static final BlockEntry<ConfluenceDuckRoostBlock> DUCK_ROOST_COMMON = registerDuckRoost("confluence_duck_roost_common", "Common Duck Roost", Duck.COMMON_ID);
+    public static final BlockEntry<ConfluenceDuckRoostBlock> DUCK_ROOST_MALLARD = registerDuckRoost("confluence_duck_roost_mallard", "Mallard Duck Roost", Duck.Variant.MALLARD);
+    public static final BlockEntry<ConfluenceDuckRoostBlock> DUCK_ROOST_COMMON = registerDuckRoost("confluence_duck_roost_common", "Common Duck Roost", Duck.Variant.COMMON);
 
     private ConfluenceBlocks() {}
 
     private static BlockEntry<ConfluenceDuckRoostBlock> registerDuckRoost(
-            String path, String name, int variant) {
+            String path, String name, Duck.Variant variant) {
         return REGISTRATE.block(path, properties -> new ConfluenceDuckRoostBlock(properties, ROOST, variant))
                 .lang(name)
                 .properties(properties -> {
