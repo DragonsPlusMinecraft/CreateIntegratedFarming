@@ -56,7 +56,7 @@ public class StarcatcherFishingNetCatchProvider implements FishingNetCatchProvid
             if (selected == null)
                 return List.of();
             ItemStack stack = FishApi.makeItemStackNonBucket(
-                    selected, context.random().nextFloat() * 100.0F, false, context.player(), false);
+                    bob, selected, context.random().nextFloat() * 100.0F, false, context.player(), false);
             return stack.isEmpty() ? List.of() : List.of(stack);
         } finally {
             bob.discard();

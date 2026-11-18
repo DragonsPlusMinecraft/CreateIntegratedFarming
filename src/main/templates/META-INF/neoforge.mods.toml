@@ -142,6 +142,20 @@ ${integration_mixin_blocks}
     side="BOTH"
 
 [[dependencies.${mod_id}]]
+    modId="hapi"
+    type="optional"
+    versionRange="${hybrid_api_version_range}"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="hybrid_aquatic"
+    type="optional"
+    versionRange="${hybrid_aquatic_version_range}"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
     modId="confluence"
     type="optional"
     versionRange="${confluence_version_range}"

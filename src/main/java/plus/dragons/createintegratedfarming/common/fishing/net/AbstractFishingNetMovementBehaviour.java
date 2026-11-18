@@ -24,8 +24,12 @@ import com.simibubi.create.content.contraptions.behaviour.MovementContext;
 import java.util.ArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.phys.AABB;
@@ -51,6 +55,14 @@ public abstract class AbstractFishingNetMovementBehaviour<T extends AbstractFish
             var lootTable = level.getServer().reloadableRegistries().getLootTable(entity.getLootTable());
             var lootParams = fishing.buildCaptureLootContext(context, level, entity);
             lootTable.getRandomItems(lootParams, entity.getLootTableSeed(), item -> collectOrDropItem(context, item));
+            if (entity instanceof Mob mob) {
+                for (var slot : EquipmentSlot.values()) {
+                    var stack = mob.getItemBySlot(slot);
+                    if (!stack.isEmpty() && !EnchantmentHelper.has(stack, EnchantmentEffectComponents.PREVENT_EQUIPMENT_DROP)
+                            && mob.getEquipmentDropChance(slot) > 1.0F)
+                        collectOrDropItem(context, stack);
+                }
+            }
             if (CIFConfig.server().fishingNetCapturedCreatureDropExpNugget.get()) {
                 int experience = EventHooks.getExperienceDrop(entity, fishing.player, entity.getExperienceReward(level, entity));
                 collectOrDropItem(context, new ItemStack(AllItems.EXP_NUGGET.get(), Math.ceilDiv(experience, 3)));

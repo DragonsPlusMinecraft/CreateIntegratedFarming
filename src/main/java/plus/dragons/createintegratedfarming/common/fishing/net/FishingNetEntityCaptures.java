@@ -52,6 +52,6 @@ public final class FishingNetEntityCaptures {
             return false;
         var dimensions = entity.getDimensions(Pose.SWIMMING);
         float maxSize = CIFConfig.server().fishingNetCapturedCreatureMaxSize.getF();
-        return dimensions.height() < maxSize && dimensions.width() < maxSize;
+        return dimensions.height() <= maxSize && dimensions.width() <= maxSize;
     }
 }
