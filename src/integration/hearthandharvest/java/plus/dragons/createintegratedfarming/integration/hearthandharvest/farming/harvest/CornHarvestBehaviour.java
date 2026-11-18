@@ -21,52 +21,40 @@ package plus.dragons.createintegratedfarming.integration.hearthandharvest.farmin
 import alabaster.hearthandharvest.common.block.CornStalkBlock;
 import alabaster.hearthandharvest.common.registry.HHModBlocks;
 import alabaster.hearthandharvest.common.registry.HHModItems;
-import com.simibubi.create.content.contraptions.actors.harvester.HarvesterMovementBehaviour;
-import com.simibubi.create.content.contraptions.behaviour.MovementContext;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.Nullable;
+import net.neoforged.fml.ModList;
+import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
 import plus.dragons.createintegratedfarming.api.harvester.AreaHarvestContext;
-import plus.dragons.createintegratedfarming.api.harvester.CustomHarvestBehaviour;
+import plus.dragons.createintegratedfarming.common.farming.harvest.AreaCompatibleHarvestBehaviour;
+import plus.dragons.createintegratedfarming.common.farming.harvest.HarvestOperations;
+import plus.dragons.createintegratedfarming.integration.ModIntegration;
 
-public class CornHarvestBehaviour implements CustomHarvestBehaviour {
-    @Override
-    public void harvest(HarvesterMovementBehaviour behaviour, MovementContext context, BlockPos pos, BlockState state) {
-        BlockState mature = getMatureState(context.world, pos);
-        if (mature == null)
-            return;
-        behaviour.collectOrDropItem(context, createDrop(mature));
-        reset(context.world, pos, mature);
-    }
+public class CornHarvestBehaviour extends AreaCompatibleHarvestBehaviour {
+    // Starting with 1.4, picking corn rolls the block loot table, including corn husks.
+    private static final boolean USE_LOOT_TABLE = ModList.get().getModContainerById(ModIntegration.HEARTH_AND_HARVEST.id())
+            .orElseThrow().getModInfo().getVersion().compareTo(new DefaultArtifactVersion("1.4.0")) >= 0;
 
     @Override
     public boolean harvestInArea(AreaHarvestContext context, BlockPos pos, BlockState state) {
-        BlockState mature = getMatureState(context.level(), pos);
-        if (mature == null)
+        if (!(context.level() instanceof ServerLevel level))
             return false;
-        context.collect(createDrop(mature));
-        reset(context.level(), pos, mature);
-        return true;
-    }
-
-    private static @Nullable BlockState getMatureState(Level level, BlockPos pos) {
-        BlockState state = level.getBlockState(pos);
-        if (!state.is(HHModBlocks.CORN_STALK.get()) || state.getValue(CornStalkBlock.AGE) < 4)
-            return null;
-        return state;
-    }
-
-    private static ItemStack createDrop(BlockState state) {
-        int count = state.getValue(CornStalkBlock.AGE) == 5 ? 2 : 1;
-        return new ItemStack(HHModItems.CORN.get(), count);
-    }
-
-    private static void reset(Level level, BlockPos pos, BlockState state) {
-        level.setBlock(pos, state.setValue(CornStalkBlock.AGE, 3), 3);
+        BlockState current = level.getBlockState(pos);
+        if (!current.is(HHModBlocks.CORN_STALK.get()) || current.getValue(CornStalkBlock.AGE) < 4)
+            return false;
+        if (HarvestOperations.dropsEnabled(context)) {
+            if (USE_LOOT_TABLE)
+                Block.getDrops(current, level, pos, null, null, context.tool()).forEach(context::collect);
+            else
+                context.collect(new ItemStack(HHModItems.CORN.get(), current.getValue(CornStalkBlock.AGE) == 5 ? 2 : 1));
+        }
+        level.setBlock(pos, current.setValue(CornStalkBlock.AGE, 3), Block.UPDATE_ALL);
         level.playSound(null, pos, SoundEvents.CROP_BREAK, SoundSource.BLOCKS, 1.0F, 1.0F);
+        return true;
     }
 }

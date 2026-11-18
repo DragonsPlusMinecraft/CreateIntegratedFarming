@@ -26,7 +26,7 @@ import plus.dragons.createintegratedfarming.api.harvester.CustomHarvestBehaviour
 import plus.dragons.createintegratedfarming.integration.hearthandharvest.farming.harvest.BerryHarvestBehaviour;
 import plus.dragons.createintegratedfarming.integration.hearthandharvest.farming.harvest.CornHarvestBehaviour;
 import plus.dragons.createintegratedfarming.integration.hearthandharvest.farming.harvest.CottonHarvestBehaviour;
-import plus.dragons.createintegratedfarming.integration.hearthandharvest.farming.harvest.GrapeHarvestBehaviour;
+import plus.dragons.createintegratedfarming.integration.hearthandharvest.farming.harvest.TrellisHarvestBehaviour;
 
 public class HearthAndHarvestHarvestBehaviours {
     private static final BerryHarvestBehaviour BLUEBERRY = new BerryHarvestBehaviour(
@@ -35,13 +35,12 @@ public class HearthAndHarvestHarvestBehaviours {
             HHModBlocks.RASPBERRY_BUSH, HHModItems.RASPBERRY);
     private static final CornHarvestBehaviour CORN = new CornHarvestBehaviour();
     private static final CottonHarvestBehaviour COTTON = new CottonHarvestBehaviour();
-    private static final GrapeHarvestBehaviour GRAPE = new GrapeHarvestBehaviour();
 
     public static void register() {
         CustomHarvestBehaviour.REGISTRY.registerProvider(HearthAndHarvestHarvestBehaviours::createBerry);
         CustomHarvestBehaviour.REGISTRY.registerProvider(HearthAndHarvestHarvestBehaviours::createCorn);
         CustomHarvestBehaviour.REGISTRY.registerProvider(HearthAndHarvestHarvestBehaviours::createCotton);
-        CustomHarvestBehaviour.REGISTRY.registerProvider(HearthAndHarvestHarvestBehaviours::createGrape);
+        CustomHarvestBehaviour.REGISTRY.registerProvider(TrellisHarvestBehaviour::create);
     }
 
     private static @Nullable CustomHarvestBehaviour createBerry(Block block) {
@@ -58,9 +57,5 @@ public class HearthAndHarvestHarvestBehaviours {
 
     private static @Nullable CustomHarvestBehaviour createCotton(Block block) {
         return block == HHModBlocks.COTTON_CROP.get() ? COTTON : null;
-    }
-
-    private static @Nullable CustomHarvestBehaviour createGrape(Block block) {
-        return block == HHModBlocks.GRAPE_TRELLIS.get() ? GRAPE : null;
     }
 }
