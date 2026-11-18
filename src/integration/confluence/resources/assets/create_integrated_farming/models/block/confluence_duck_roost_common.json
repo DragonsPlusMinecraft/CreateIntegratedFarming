@@ -13,8 +13,8 @@
       },
       "render_type": "minecraft:cutout",
       "textures": {
-        "duck": "terra_entity:entity/animal/duck/duck_2",
-        "particle": "terra_entity:entity/animal/duck/duck_2"
+        "duck": "confluence:entity/animal/duck/duck_2",
+        "particle": "confluence:entity/animal/duck/duck_2"
       }
     }
   },

@@ -18,7 +18,6 @@
 
 package plus.dragons.createintegratedfarming.integration.confluence.ranching.roost;
 
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
@@ -29,17 +28,17 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import org.confluence.terraentity.entity.animal.Duck;
-import org.confluence.terraentity.init.TESounds;
-import org.confluence.terraentity.init.entity.TEAnimals;
+import org.confluence.mod.common.entity.animal.Duck;
+import org.confluence.mod.common.init.ModSoundEvents;
+import org.confluence.mod.common.init.entity.CritterEntities;
 import org.jetbrains.annotations.Nullable;
 import plus.dragons.createintegratedfarming.common.ranching.roost.BirdRoostBlock;
 import plus.dragons.createintegratedfarming.integration.confluence.registry.ConfluenceBlockEntities;
 
 public class ConfluenceDuckRoostBlock extends BirdRoostBlock<Duck, ConfluenceDuckRoostBlockEntity> {
-    private final int variant;
+    private final Duck.Variant variant;
 
-    public ConfluenceDuckRoostBlock(Properties properties, Holder<Block> empty, int variant) {
+    public ConfluenceDuckRoostBlock(Properties properties, Holder<Block> empty, Duck.Variant variant) {
         super(properties, empty);
         this.variant = variant;
     }
@@ -51,7 +50,7 @@ public class ConfluenceDuckRoostBlock extends BirdRoostBlock<Duck, ConfluenceDuc
 
     @Override
     protected EntityType<Duck> getBirdType() {
-        return TEAnimals.DUCK.get();
+        return CritterEntities.DUCK.get();
     }
 
     @Override
@@ -69,12 +68,12 @@ public class ConfluenceDuckRoostBlock extends BirdRoostBlock<Duck, ConfluenceDuc
 
     @Override
     protected SoundEvent getHurtSound() {
-        return TESounds.ROUTINE_HURT.get();
+        return ModSoundEvents.ROUTINE_HURT.get();
     }
 
     @Override
     protected boolean isBirdJockey(Duck bird) {
-        return bird.isChickenJockey();
+        return false;
     }
 
     @Override
@@ -82,7 +81,7 @@ public class ConfluenceDuckRoostBlock extends BirdRoostBlock<Duck, ConfluenceDuc
         return RecordCodecBuilder.mapCodec(instance -> instance.group(
                 propertiesCodec(),
                 BuiltInRegistries.BLOCK.holderByNameCodec().fieldOf("empty").forGetter(block -> block.empty),
-                Codec.intRange(Duck.MALLARD_ID, Duck.COMMON_ID)
+                Duck.Variant.CODEC
                         .fieldOf("variant")
                         .forGetter(block -> block.variant))
                 .apply(instance, ConfluenceDuckRoostBlock::new));
